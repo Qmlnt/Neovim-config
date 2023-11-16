@@ -1,0 +1,2 @@
+return { -- almost no configuration
+}
