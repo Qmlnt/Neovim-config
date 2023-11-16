@@ -14,5 +14,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- lua/plugins/*.lua are dinamically merged in the main plugin spec
-require("lazy").setup("plugins")
+-- dynamically merge lua/plugins.lua and lua/plugins/*.lua to the main plugin spec
+require("lazy").setup("plugins", { -- defaults.lazy = false -- lazy-load plugins?
+  ui = {
+    border = "rounded"             -- :help nvim_open_win
+  }
+})
