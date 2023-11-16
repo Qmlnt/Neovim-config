@@ -3,7 +3,7 @@ vim.g.maplocalleader = ' '
 vim.o.langmap = 'hi,HI,jJ,JK,ko,KO,le,LE,nj,Nn,ek,EN,ih,IH,ol,OL'
 
 vim.o.undofile = true
-vim.o.clipboard='unnamedplus'
+vim.o.clipboard = 'unnamedplus'
 vim.o.wrap = false
 vim.o.autoindent = true
 vim.o.mouse = 'a'
@@ -32,24 +32,24 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
-require("lazy").setup{
+require("lazy").setup {
   {
-    "navarasu/onedark.nvim",
-    lazy = false, -- for priority to work
+    "folke/tokyonight.nvim",
+    lazy = false,    -- for priority to work
     priority = 1000, -- load before all other start plugins
-    config = function() vim.cmd.colorscheme "onedark" end
+    --opts = { style = "night" },
+    config = function() vim.cmd.colorscheme "tokyonight-night" end
   },
 
-  { "folke/tokyonight.nvim", lazy = true, opts = { style = "night" } },
+  { "navarasu/onedark.nvim", lazy = true },
 
-  { 
+  {
     "dstein64/vim-startuptime",
     cmd = "StartupTime", -- lazy-load on a command
     -- init is called during startup. Configuration for vim plugins typically should be set in an init function
     init = function() vim.g.startuptime_tries = 10 end
   },
 
-  
 
 }
 
