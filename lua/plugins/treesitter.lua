@@ -2,17 +2,19 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        event = "VeryLazy", -- TODO check LazyVim for 'LazyFile' event
-        cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+        event = "VeryLazy", -- wait till UI loads
         opts = {
             highlight = { enable = true },
             indent = { enable = true },
+            auto_install = true,
+            sync_install = false, -- only for ensure_installed
             ensure_installed = {
                 "bash",
                 "c",
+                "cpp",
                 "diff",
                 "html",
-                "javascript",
+                --"javascript",
                 "lua",
                 "luadoc",
                 "luap",
@@ -25,20 +27,10 @@ return {
                 "vim",
                 "vimdoc",
                 "yaml",
+                "comment"
             }
         },
         config = function(_, opts)
-            if type(opts.ensure_installed) == "table" then
-                ---@type table<string, boolean>
-                local added = {}
-                opts.ensure_installed = vim.tbl_filter(function(lang)
-                    if added[lang] then
-                        return false
-                    end
-                    added[lang] = true
-                    return true
-                end, opts.ensure_installed)
-            end
             require("nvim-treesitter.configs").setup(opts)
         end,
     },

@@ -15,8 +15,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- dynamically merge lua/plugins.lua and lua/plugins/*.lua to the main plugin spec
-require("lazy").setup("plugins", { -- defaults.lazy = false -- lazy-load plugins?
-  ui = {
-    border = "rounded"             -- :help nvim_open_win
-  }
+require("lazy").setup("plugins", {
+  ui = { border = "single" } -- :help nvim_open_win for borders
 })
