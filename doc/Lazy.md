@@ -83,8 +83,7 @@ require("lazy").setup(plugins, opts)
 			  ```
 		- [LazyVim](https://github.com/LazyVim/LazyVim) is an amazing example of this structure.
 		- Both of the `setup()` calls are equivalent:
-		  ```lua
-		require("lazy").setup("plugins")
-		require("lazy").setup({{import = "plugins"}})
-		```
-
+			 ```lua
+			require("lazy").setup("plugins")
+			require("lazy").setup({{import = "plugins"}})
+			```
