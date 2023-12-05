@@ -44,6 +44,9 @@ vim.treesitter.language.register("bash", "apkbuild")
 ### Textobjects
 _A nvim-treesitter module which provides syntax aware text-objects: **select**, **move**, **swap**, and **peek**._
 - `select` – select objects when doing `d`, `c`, `y`, or even `v`. For [[Which-key]] to display descriptions, `desc` can be used when defining keymaps.
+	- `lookaround = true` will find and select an object even if it is not under the cursor.
+	- `lookbehind` is also available, though it clashes with `lookaround`.
+	- `include_surrounding_whitespace = true` to also select a space. Succeeding space has priority.
 - `swap` – swap the node under the cursor with the next or previous one.
 - `move` – jump to the next or previous object.
 
