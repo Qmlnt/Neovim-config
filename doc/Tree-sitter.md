@@ -46,9 +46,10 @@ _A nvim-treesitter module which provides syntax aware text-objects: **select**, 
 - `select` – select objects when doing `d`, `c`, `y`, or even `v`. For [[Which-key]] to display descriptions, `desc` can be used when defining keymaps.
 	- `lookaround = true` will find and select an object even if it is not under the cursor.
 	- `lookbehind` is also available, though it clashes with `lookaround`.
-	- `include_surrounding_whitespace = true` to also select a space. Succeeding space has priority.
+	- `include_surrounding_whitespace = true` to also select a space. Succeeding space has priority. _In Python `true` messes up the function body deletion by putting next function inside instead of a space_...
 - `swap` – swap the node under the cursor with the next or previous one.
 - `move` – jump to the next or previous object.
+	- `set_jumps = true`set jumps in the jumplist. `C-o` – back, `C-i` (which is `Tab`) – forward.
 
 You can make the movements repeatable like `;` and `,`.
 ```lua
@@ -70,7 +71,7 @@ vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
 vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
 ```
 
-Furthermore, you can make any custom movements (e.g. from another plugin) repeatable with the same keys. This doesn't need to be treesitter-related.
+Furthermore, you can make any custom movements (e.g. from another plugin) repeatable with the same keys. _This doesn't need to be treesitter-related_.
 ```lua
 -- example: make gitsigns.nvim movement repeatable with ; and , keys.
 local gs = require("gitsigns")

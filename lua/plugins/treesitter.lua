@@ -52,33 +52,51 @@ return {
             select = {
                 enable = true,
                 lookahead = true, -- look for an object futher in the file
-                include_surrounding_whitespace = true, -- succeeding > preceeding
-                keymaps = { -- a: around, i: inner  |  a: attribute, i: if
-                    ["aa"] = "@parameter.outer",    ["ia"] = "@parameter.inner",
-                    ["ai"] = "@conditional.outer",  ["ii"] = "@conditional.inner",
-                    ["al"] = "@loop.outer",         ["il"] = "@loop.inner",
-                    ["af"] = "@function.outer",     ["if"] = "@function.inner",
-                    ["ac"] = "@class.outer",        ["ic"] = "@class.inner",
+                include_surrounding_whitespace = false, -- disabled for Python
+                keymaps = { -- a: around, i: inner
+                    ["ap"] = "@parameter.outer",   ["ip"] = "@parameter.inner",
+                    ["ac"] = "@conditional.outer", ["ic"] = "@conditional.inner",
+                    ["al"] = "@loop.outer",        ["il"] = "@loop.inner",
+                    ["af"] = "@function.outer",    ["if"] = "@function.inner",
+                    ["ao"] = "@class.outer",       ["io"] = "@class.inner",
+                    ["an"] = "@comment.outer",     ["in"] = "@comment.inner",
                 },
             },
             swap = {
                 enable = true,
-                swap_next     = { ["<leader>a"] = "@parameter.inner" },
-                swap_previous = { ["<leader>A"] = "@parameter.inner" },
+                swap_next     = { ["<leader>tp"] = "@parameter.inner", ["<leader>tf"] = "@function.outer" },
+                swap_previous = { ["<leader>tP"] = "@parameter.inner", ["<leader>tF"] = "@function.outer" },
             },
             move = {
                 enable = true,
                 set_jumps = true, -- <C-o> back, <C-i> (=Tab which I remapped '>.<) forward
-                goto_next           = { ["]p"] = "@parameter.outer" },
-                goto_previous       = { ["[p"] = "@parameter.outer" },
-                goto_next_start     = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]r"] = "@comment.outer" },
-                goto_next_end       = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
-                goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[r"] = "@comment.outer" },
-                goto_previous_end   = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
+                goto_next           = { ["]p"] = "@parameter.outer", ["]a"] = "@assignment" },
+                goto_previous       = { ["[p"] = "@parameter.outer", ["[a"] = "@assignment" },
+                goto_next_start     = { ["]f"] = "@function.outer",  ["]o"] = "@class.outer", ["]n"] = "@comment.outer" },
+                goto_next_end       = { ["]F"] = "@function.outer",  ["]O"] = "@class.outer" },
+                goto_previous_start = { ["[f"] = "@function.outer",  ["[o"] = "@class.outer", ["[n"] = "@comment.outer" },
+                goto_previous_end   = { ["[F"] = "@function.outer",  ["[O"] = "@class.outer" },
+            },
+            lsp_interop = { --TODO
+                enable = false,
+                border = 'none',
+                floating_preview_opts = {},
+                peek_definition_code = {
+                    ["<leader>df"] = "@function.outer",
+                    ["<leader>do"] = "@class.outer",
+                },
             },
         },
     },
+
     config = function(_, opts)
         require("nvim-treesitter.configs").setup(opts)
+        local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+        vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+        vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+        vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+        vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+        vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+        vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
     end,
 }
