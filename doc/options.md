@@ -1,12 +1,11 @@
 - <`parameter`> = <`default value`>: <`notes`>
 - `backup` and `writebackup` = off; on:
-	-
-	  ```
-	  'backup' 'writebackup'	action	 
-	   off	    off		no backup made
-	   off	    on		backup current file, deleted afterwards (default)
-	   on	     	off		delete old backup, backup current file
-	   on	     	on		delete old backup, backup current file
+	- ```
+	  'backup' 'writebackup'		action	 
+	   off	      off	  no backup made
+	   off	      on	  backup current file, deleted afterwards (default)
+	   on	      off	  delete old backup, backup current file
+	   on	      on	  delete old backup, backup current file
 	  ```
 - `numberwidth` = 4: num of columns **-1** (the space before text) to use for the line number. If `numberwidth` = 4, and the number is 1000, then 5 columns would be used.
 - `smartindent` = off: normally `autoindent`(=on) should be also **on**.
