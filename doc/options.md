@@ -15,3 +15,8 @@
 - `softtabstop` = 0(off): Number of spaces that a `<Tab>` counts for while performing editing operations. It "feels" like `<Tab>`s are being inserted, while in fact a mix of spaces and `<Tab>`s is used.
 - `title` = off: Better window title – `filename [+=-] (path) - NVIM`
 - `updatetime` = 4000: If this many milliseconds nothing is typed the swap file will be.  Also used for the `CursorHold` autocommand event.
+- `conceallevel` = 0: 0 – normal text; ... 3 – Concealed text (markdown ^.^) is completely hidden.
+- `confirm` = off: confirm writing to a changed buffer on `:q` instead of throwing an **ERROR**.
+- `ignorecase` = off and `smartcase` = off: If the `ignorecase` option is on, the case of normal letters is ignored. `smartcase` can be set to ignore case when the pattern contains lowercase letters only. In search use `\c` for **ignorecase** and ignore **smartcase**, and `\C` for case sensetive search.
+- `list` show tabs as "`>`", trailing spaces as "`-`", and non-breakable space characters as "`+`".
+- `undolevel` = 1000: Maximum number of changes that can be undone.  Since undo information is kept in memory, higher numbers will cause more memory to be used.
