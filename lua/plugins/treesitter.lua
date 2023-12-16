@@ -64,12 +64,12 @@ return {
             },
             swap = {
                 enable = true,
-                swap_next     = { ["<leader>sp"] = "@parameter.inner", ["<leader>sf"] = "@function.outer" },
-                swap_previous = { ["<leader>sP"] = "@parameter.inner", ["<leader>sF"] = "@function.outer" },
+                swap_next     = { ["<Leader>sp"] = "@parameter.inner", ["<Leader>sf"] = "@function.outer" },
+                swap_previous = { ["<Leader>sP"] = "@parameter.inner", ["<Leader>sF"] = "@function.outer" },
             },
             move = {
                 enable = true,
-                set_jumps = true, -- <C-o> back, <C-i> (=Tab which I remapped '>.<) forward
+                set_jumps = true, -- <C-o> back, <C-i> forward
                 goto_next           = { ["]p"] = "@parameter.outer", ["]a"] = "@assignment" },
                 goto_previous       = { ["[p"] = "@parameter.outer", ["[a"] = "@assignment" },
                 goto_next_start     = { ["]f"] = "@function.outer",  ["]o"] = "@class.outer", ["]n"] = "@comment.outer" },
@@ -82,8 +82,8 @@ return {
                 border = "none",
                 floating_preview_opts = {},
                 peek_definition_code = {
-                    ["<leader>df"] = "@function.outer",
-                    ["<leader>do"] = "@class.outer",
+                    ["<Leader>df"] = "@function.outer",
+                    ["<Leader>do"] = "@class.outer",
                 },
             },
         },

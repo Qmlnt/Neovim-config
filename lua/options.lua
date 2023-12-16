@@ -15,7 +15,7 @@ o.incsearch = true -- default
 o.confirm = true -- :q when there are changes
 o.wildmode = "longest:full,full" -- cmd completion
 o.mouse = "a"
--- o.clipboard = "unnamedplus" -- TODO
+--o.clipboard = "unnamed"plus?
 o.formatoptions:append "n" -- indents for numbered lists
 -- movement
 o.scrolloff     = 7 -- vertical
