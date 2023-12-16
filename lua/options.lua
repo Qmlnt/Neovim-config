@@ -5,7 +5,7 @@ o.swapfile = false
 o.undofile = true
 o.undolevels = 10000
 o.updatetime = 1000 -- Save swap, trigger CursorHold
-o.timeoutlen = 400 -- ms to wait for a mapped sequence
+o.timeoutlen = 400 -- ms to wait for a mapping sequence
 o.splitbelow = true
 o.splitright = true
 o.ignorecase = true
@@ -15,7 +15,8 @@ o.incsearch = true -- default
 o.confirm = true -- :q when there are changes
 o.wildmode = "longest:full,full" -- cmd completion
 o.mouse = "a"
-o.clipboard = "unnamedplus" -- TODO
+-- o.clipboard = "unnamedplus" -- TODO
+o.formatoptions:append "n" -- indents for numbered lists
 -- movement
 o.scrolloff     = 7 -- vertical
 o.sidescrolloff = 10
@@ -40,8 +41,7 @@ o.conceallevel = 3 -- hide markup
 o.number = true
 o.numberwidth = 1 -- automatic width ^.^
 o.relativenumber = true
-o.termguicolors = true -- RGB true colors
-o.formatoptions:append "n" -- numbered lists
+o.termguicolors = true -- RGB True color
 o.fillchars = {
     fold = " ",
     foldopen = "",
