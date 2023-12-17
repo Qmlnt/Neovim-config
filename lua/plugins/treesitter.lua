@@ -54,28 +54,55 @@ return {
                 lookahead = true, -- look for an object futher in the file
                 include_surrounding_whitespace = false, -- disabled for Python
                 keymaps = { -- a: around, i: inner
-                    ["ap"] = "@parameter.outer",   ["ip"] = "@parameter.inner",
-                    ["ac"] = "@conditional.outer", ["ic"] = "@conditional.inner",
                     ["al"] = "@loop.outer",        ["il"] = "@loop.inner",
-                    ["af"] = "@function.outer",    ["if"] = "@function.inner",
+                    ["ab"] = "@block.outer",       ["ib"] = "@block.inner",
                     ["ao"] = "@class.outer",       ["io"] = "@class.inner",
                     ["an"] = "@comment.outer",     ["in"] = "@comment.inner",
+                    ["af"] = "@function.outer",    ["if"] = "@function.inner",
+                    ["ap"] = "@parameter.outer",   ["ip"] = "@parameter.inner",
+                    ["ac"] = "@conditional.outer", ["ic"] = "@conditional.inner",
                 },
             },
             swap = {
                 enable = true,
-                swap_next     = { ["<Leader>sp"] = "@parameter.inner", ["<Leader>sf"] = "@function.outer" },
-                swap_previous = { ["<Leader>sP"] = "@parameter.inner", ["<Leader>sF"] = "@function.outer" },
+                swap_next = {
+                    [")f"] = "@function.outer",  [")b"] = "@block.outer",
+                    [")p"] = "@parameter.inner", [")o"] = "@class.outer",
+                },
+                swap_previous = {
+                    ["(f"] = "@function.outer",  ["(b"] = "@block.outer",
+                    ["(p"] = "@parameter.inner", ["(o"] = "@class.outer",
+                },
             },
             move = {
                 enable = true,
                 set_jumps = true, -- <C-o> back, <C-i> forward
-                goto_next           = { ["]p"] = "@parameter.outer", ["]a"] = "@assignment" },
-                goto_previous       = { ["[p"] = "@parameter.outer", ["[a"] = "@assignment" },
-                goto_next_start     = { ["]f"] = "@function.outer",  ["]o"] = "@class.outer", ["]n"] = "@comment.outer" },
-                goto_next_end       = { ["]F"] = "@function.outer",  ["]O"] = "@class.outer" },
-                goto_previous_start = { ["[f"] = "@function.outer",  ["[o"] = "@class.outer", ["[n"] = "@comment.outer" },
-                goto_previous_end   = { ["[F"] = "@function.outer",  ["[O"] = "@class.outer" },
+                goto_next     = { ["]a"] = "@assignment" },
+                goto_previous = { ["[a"] = "@assignment" },
+                goto_next_start = {
+                    ["]l"] = "@loop.outer", ["]c"] = "@conditional.outer",
+                    ["]b"] = "@block.outer",  ["]p"] = "@parameter.outer",
+                    ["]o"] = "@class.outer",   ["]f"] = "@function.outer",
+                    ["]r"] = "@return.outer",   ["]n"] = "@comment.outer",
+                },
+                goto_next_end = {
+                    ["]L"] = "@loop.outer", ["]C"] = "@conditional.outer",
+                    ["]B"] = "@block.outer",  ["]P"] = "@parameter.outer",
+                    ["]O"] = "@class.outer",   ["]F"] = "@function.outer",
+                    ["]R"] = "@return.outer",   ["]N"] = "@comment.outer",
+                },
+                goto_previous_start = {
+                    ["[l"] = "@loop.outer", ["[c"] = "@conditional.outer",
+                    ["[b"] = "@block.outer",  ["[p"] = "@parameter.outer",
+                    ["[o"] = "@class.outer",   ["[f"] = "@function.outer",
+                    ["[r"] = "@return.outer",   ["[n"] = "@comment.outer",
+                },
+                goto_previous_end = {
+                    ["[L"] = "@loop.outer", ["[C"] = "@conditional.outer",
+                    ["[B"] = "@block.outer",  ["[P"] = "@parameter.outer",
+                    ["[O"] = "@class.outer",   ["[F"] = "@function.outer",
+                    ["[R"] = "@return.outer",   ["[N"] = "@comment.outer",
+                },
             },
             lsp_interop = { --TODO
                 enable = false,
