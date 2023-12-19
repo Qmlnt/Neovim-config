@@ -2,14 +2,15 @@ vim.g.mapleader = " " -- must be before any plugins
 vim.g.maplocalleader = " "
 local map = vim.keymap.set
 
--- programs?
+
+--      LEADER
 map("n", "<Leader>nw", vim.cmd.Ex)
 map("n", "<Leader>l", "<CMD>Lazy<CR>")
-
--- handy
-map("n", "<C-i>", "<C-i>") -- jump list
-map({ "n", "i" }, "<Esc>", "<CMD>noh<CR><Esc>")
-
+-- turning/disabling stuff
+map("n", "<Leader>sw", "<CMD>set wrap<CR>")
+map("n", "<Leader>uw", "<CMD>set nowrap<CR>")
+map("n", "<Leader>sc", "<CMD>set colorcolumn=80<CR>")
+map("n", "<Leader>uc", "<CMD>set colorcolumn=<CR>")
 -- clipboard stuff
 map("x", "<Leader>p", [["_dP]])
 map("n", "<Leader>p", [["+p]])
@@ -17,6 +18,17 @@ map({ "n", "v" }, "<Leader>d", [["_d]])
 map({ "n", "v" }, "<Leader>y", [["+y]])
 map({ "n", "v" }, "<Leader>Y", [["+Y]])
 
+
+--      ADDITIONAL
+map("n", "))", ")") -- )* taken by treesitter
+map("n", "((", "(")
+map("n", "<C-i>", "<C-i>") -- jump list
+map({ "n", "i" }, "<Esc>", "<Esc><CMD>noh<CR>")
+-- visual stuff
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+map("v", "<S-Down>", ":move '>+1<CR>gv=gv")
+map("v", "<S-UP>",   ":move '<-2<CR>gv=gv")
 -- lock the cursor at the buffer center
 map("n", "J", "mjJ`j")
 map("n", "n", "nzvzz")
@@ -27,14 +39,9 @@ map("n", "g*", "g*zvzz")
 map("n", "g#", "g#zvzz")
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
-
--- visual stuff
-map("v", "<", "<gv")
-map("v", ">", ">gv")
-map("v", "<S-Down>", ":move '>+1<CR>gv=gv")
-map("v", "<S-UP>",   ":move '<-2<CR>gv=gv")
-
 -- down/up on wrapped lines
+map("i", "<Down>", "<CMD>norm! gj<CR>")
+map("i", "<Up>",   "<CMD>norm! gk<CR>")
 map({ "n", "x" }, "<Down>", "j", { remap = true })
 map({ "n", "x" }, "<Up>",   "k", { remap = true })
 map({ "n", "x" }, "j", [[v:count == 0 ? "gj" : "j"]], { expr = true })

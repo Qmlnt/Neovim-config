@@ -1,0 +1,4 @@
+- <CMD> to <Cmd> in mappings
+- Navigation
+- Statusline
+- Lsp stuff

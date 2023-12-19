@@ -53,53 +53,58 @@ return {
                 enable = true,
                 lookahead = true, -- look for an object futher in the file
                 include_surrounding_whitespace = false, -- disabled for Python
-                keymaps = { -- a: around, i: inner
+                keymaps = { -- i - invocation, o - object, n - note, a - argument
+                    ["ai"] = "@call.outer",        ["ii"] = "@call.inner",
                     ["al"] = "@loop.outer",        ["il"] = "@loop.inner",
                     ["ab"] = "@block.outer",       ["ib"] = "@block.inner",
                     ["ao"] = "@class.outer",       ["io"] = "@class.inner",
                     ["an"] = "@comment.outer",     ["in"] = "@comment.inner",
                     ["af"] = "@function.outer",    ["if"] = "@function.inner",
-                    ["ap"] = "@parameter.outer",   ["ip"] = "@parameter.inner",
+                    ["aa"] = "@parameter.outer",   ["ia"] = "@parameter.inner",
                     ["ac"] = "@conditional.outer", ["ic"] = "@conditional.inner",
                 },
             },
             swap = {
                 enable = true,
                 swap_next = {
-                    [")f"] = "@function.outer",  [")b"] = "@block.outer",
-                    [")p"] = "@parameter.inner", [")o"] = "@class.outer",
+                    [")i"] = "@call.outer", [")c"] = "@conditional.outer",
+                    [")l"] = "@loop.outer",   [")a"] = "@parameter.inner",
+                    [")b"] = "@block.outer",   [")f"] = "@function.outer",
+                    [")o"] = "@class.outer",     [")r"] = "@return.outer",
                 },
                 swap_previous = {
-                    ["(f"] = "@function.outer",  ["(b"] = "@block.outer",
-                    ["(p"] = "@parameter.inner", ["(o"] = "@class.outer",
+                    ["(i"] = "@call.outer", ["(c"] = "@conditional.outer",
+                    ["(l"] = "@loop.outer",   ["(a"] = "@parameter.inner",
+                    ["(b"] = "@block.outer",   ["(f"] = "@function.outer",
+                    ["(o"] = "@class.outer",     ["(r"] = "@return.outer",
                 },
             },
             move = {
                 enable = true,
                 set_jumps = true, -- <C-o> back, <C-i> forward
-                goto_next     = { ["]a"] = "@assignment" },
-                goto_previous = { ["[a"] = "@assignment" },
+                goto_next     = { ["]i"] = "@call.outer" },
+                goto_previous = { ["[i"] = "@call.outer" },
                 goto_next_start = {
                     ["]l"] = "@loop.outer", ["]c"] = "@conditional.outer",
-                    ["]b"] = "@block.outer",  ["]p"] = "@parameter.outer",
+                    ["]b"] = "@block.outer",  ["]a"] = "@parameter.outer",
                     ["]o"] = "@class.outer",   ["]f"] = "@function.outer",
                     ["]r"] = "@return.outer",   ["]n"] = "@comment.outer",
                 },
                 goto_next_end = {
                     ["]L"] = "@loop.outer", ["]C"] = "@conditional.outer",
-                    ["]B"] = "@block.outer",  ["]P"] = "@parameter.outer",
+                    ["]B"] = "@block.outer",  ["]A"] = "@parameter.outer",
                     ["]O"] = "@class.outer",   ["]F"] = "@function.outer",
                     ["]R"] = "@return.outer",   ["]N"] = "@comment.outer",
                 },
                 goto_previous_start = {
                     ["[l"] = "@loop.outer", ["[c"] = "@conditional.outer",
-                    ["[b"] = "@block.outer",  ["[p"] = "@parameter.outer",
+                    ["[b"] = "@block.outer",  ["[a"] = "@parameter.outer",
                     ["[o"] = "@class.outer",   ["[f"] = "@function.outer",
                     ["[r"] = "@return.outer",   ["[n"] = "@comment.outer",
                 },
                 goto_previous_end = {
                     ["[L"] = "@loop.outer", ["[C"] = "@conditional.outer",
-                    ["[B"] = "@block.outer",  ["[P"] = "@parameter.outer",
+                    ["[B"] = "@block.outer",  ["[A"] = "@parameter.outer",
                     ["[O"] = "@class.outer",   ["[F"] = "@function.outer",
                     ["[R"] = "@return.outer",   ["[N"] = "@comment.outer",
                 },
