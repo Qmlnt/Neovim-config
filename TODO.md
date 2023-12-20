@@ -1,4 +1,5 @@
-- <CMD> to <Cmd> in mappings
-- Navigation
-- Statusline
-- Lsp stuff
+- buffer mappings
+- Plugins:
+    - Navigation
+    - Statusline
+    - Lsp stuff
