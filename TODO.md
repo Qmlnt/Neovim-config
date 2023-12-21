@@ -1,4 +1,3 @@
-- buffer mappings
 - Plugins:
     - Navigation
     - Statusline

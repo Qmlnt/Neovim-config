@@ -5,12 +5,11 @@ local map = vim.keymap.set
 
 --      LEADER
 map("n", "<Leader>nw", vim.cmd.Ex)
-map("n", "<Leader>l", "<Cmd>Lazy<CR>")
--- enabling/disabling stuff
-map("n", "<Leader>sw", "<Cmd>set wrap<CR>")
-map("n", "<Leader>uw", "<Cmd>set nowrap<CR>")
-map("n", "<Leader>sc", "<Cmd>set colorcolumn=80<CR>")
-map("n", "<Leader>uc", "<Cmd>set colorcolumn=<CR>")
+map("n", "<Leader>ul", "<Cmd>Lazy<CR>")
+map("n", "<Leader>um", "<Cmd>Mason<CR>")
+-- toggle stuff
+map("n", "<Leader>tw", "<Cmd>set wrap!<CR>")
+map("n", "<Leader>tc", function() vim.o.colorcolumn=vim.o.colorcolumn=="" and "80" or "" end)
 -- clipboard stuff
 map("x", "<Leader>p", [["_dP]])
 map("n", "<Leader>p", [["+p]])
@@ -40,9 +39,9 @@ map("n", "<Leader>wk", "<C-W>K", { desc = "Move up"    })
 map("n", "<Leader>wh", "<C-W>H", { desc = "Move left"  })
 map("n", "<Leader>wl", "<C-W>L", { desc = "Move right" })
 -- kinda pointless
-map("n", "<Leader>ww", "<C-W>n", { desc = "New window" })
 map("n", "<Leader>wn", "<C-W>w", { desc = "Next" })
 map("n", "<Leader>wN", "<C-W>W", { desc = "Prev" })
+map("n", "<Leader>ww", "<C-W>n", { desc = "New window" })
 map("n", "<Leader>wp", "<C-W>p", { desc = "Last accessed" })
 map("n", "<Leader>wc", "<C-W>c", { desc = "Close"        })
 map("n", "<Leader>wo", "<C-W>o", { desc = "Close others" })
@@ -56,7 +55,7 @@ map("n", "<Leader>we", "<C-W>=", { desc = "Equal dimensions" })
 
 --      ADDITIONAL
 map("n", "))", ")") -- )* taken by treesitter
-map("n", "((", "(") --     can't keep ( and )
+map("n", "((", "(") -- TODO: can't keep ( and )
 map("n", "<C-I>", "<C-I>") -- jump list
 map({ "n", "i" }, "<Esc>", "<Esc><Cmd>noh<CR>")
 -- visual stuff

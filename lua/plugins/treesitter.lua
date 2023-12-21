@@ -58,6 +58,7 @@ return {
                     ["al"] = "@loop.outer",        ["il"] = "@loop.inner",
                     ["ab"] = "@block.outer",       ["ib"] = "@block.inner",
                     ["ao"] = "@class.outer",       ["io"] = "@class.inner",
+                    ["ar"] = "@return.outer",      ["ir"] = "@return.inner",
                     ["an"] = "@comment.outer",     ["in"] = "@comment.inner",
                     ["af"] = "@function.outer",    ["if"] = "@function.inner",
                     ["aa"] = "@parameter.outer",   ["ia"] = "@parameter.inner",
