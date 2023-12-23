@@ -112,8 +112,9 @@ return {
             },
             lsp_interop = { --TODO
                 enable = false,
-                border = "none",
-                floating_preview_opts = {},
+                floating_preview_opts = { -- vim.lsp.util.open_floating_preview
+                    border = "single"
+                },
                 peek_definition_code = {
                     ["<Leader>df"] = "@function.outer",
                     ["<Leader>do"] = "@class.outer",

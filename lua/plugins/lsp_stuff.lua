@@ -18,7 +18,7 @@ return {
     {
         "williamboman/mason-lspconfig.nvim",
         dependencies = { "mason.nvim" }, -- load Mason first
-        lazy=false,
+        lazy=true,
         opts = {
             ensure_installed = {
                 "arduino_language_server",
@@ -32,8 +32,34 @@ return {
                 "ruff_lsp", -- Python
                 "rust_analyzer",
             },
-            automatic_installation = true,
-            handlers = nil -- TODO
-        } 
+
+            handlers = { -- automatic server setup
+                function (server_name) -- default handler
+                    require("lspconfig")[server_name].setup {}
+                end,
+
+                ["lua_ls"] = function ()
+                    require("lspconfig").lua_ls.setup {
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { "vim" }
+                                }
+                            }
+                        }
+                    }
+                end,
+            }
+        }
+    },
+
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = { "mason-lspconfig.nvim" },
+        lazy = false,
+        config = function()
+            vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+        end
     }
 }
