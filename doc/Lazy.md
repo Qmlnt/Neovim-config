@@ -6,7 +6,7 @@ _Modern plugin manager_.
 - Lockfile `lazy-lock.json` to keep track of installed plugins.
 - Statusline component to see the number of pending updates.
 
-Some commands:
+### Сommands:
 - `:Lazy check` Check for updates and show the log (git fetch).
 - `:Lazy update` Update plugins. This will also update the lockfile.
 - `:Lazy clean` Clean plugins that are no longer needed.
@@ -21,11 +21,16 @@ Command with a **bang** waits till it is finished. Sync lazy from the cmdline:
 $ nvim --headless "+Lazy! sync" +qa
 ```
 
+### Lazy-loading
 Plugins will be lazy-loaded when one of the following is `true`:
 - The plugin only exists as a dependency in your spec
 - It has an `event`, `cmd`, `ft` or `keys` key
 - `config.defaults.lazy == true`
+### Dependencies
+- Lua dependencies don't need to be explicitly set. So if a package uses lua modules from another plugin, you don't need to add those dependencies. That's being done automatically.
+- Cases where you **do** need to specify dependencies is where you need to make sure that certain plugin (the dependencies) are loaded **before** the parent plugin should load.
 
+### Setup
 Set `mapleader` before lazy for plugin mappings to work correctly
 ```lua
 vim.g.mapleader = " "

@@ -32,6 +32,7 @@ o.virtualedit = "block" -- move cursor anywhere in visual block mode
 o.pumheight = 10 -- lines in cmp menu
 o.pumblend  = 10 -- cmp menu transparency
 o.wrap = false
+o.breakindent = true -- for wrapped blocks to have indent
 o.title = true -- better window title
 o.list = true -- show trailing invisible chars
 o.listchars = "tab:󰌒 ,trail:·,nbsp:%"

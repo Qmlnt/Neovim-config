@@ -34,7 +34,7 @@ return {
             "toml",
             "vim",
             "vimdoc",
-            "yaml"
+            "yaml",
         },
         --      MODULES
         highlight = { enable = true },

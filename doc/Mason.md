@@ -12,12 +12,14 @@ Packages are installed in Neovim's data directory ([`:h standard-path`](https://
 - `:MasonUninstall <package> ...` - uninstalls the provided packages
 - `:MasonUninstallAll` - uninstalls all packages
 - `:MasonLog` - opens the `mason.nvim` log file in a new tab window
+
 ### Plugins to use
 Although many packages are perfectly usable out of the box through Neovim builtins, it is recommended to use other 3rd party plugins to further integrate these. The following plugins are recommended:
 - LSP: [`lspconfig`](https://github.com/neovim/nvim-lspconfig) & [`mason-lspconfig.nvim`](https://github.com/williamboman/mason-lspconfig.nvim)
 - DAP: [`nvim-dap`](https://github.com/mfussenegger/nvim-dap) & [`nvim-dap-ui`](https://github.com/rcarriga/nvim-dap-ui)
 - Linters: [`null-ls.nvim`](https://github.com/jose-elias-alvarez/null-ls.nvim) or [`nvim-lint`](https://github.com/mfussenegger/nvim-lint)
 - Formatters: [`null-ls.nvim`](https://github.com/jose-elias-alvarez/null-ls.nvim) or [`formatter.nvim`](https://github.com/mhartington/formatter.nvim)
+
 ### Requirements
 For Unix systems:
 - `git(1)`
@@ -27,5 +29,6 @@ For Unix systems:
 - `gzip(1)`
 
 Note that `mason.nvim` will regularly shell out to external package managers, such as `cargo` and `npm`. Depending on your personal usage, some of these will also need to be installed. Refer to `:checkhealth mason` for a full list.
+
 ### Setup
 **`mason.nvim` is optimized to load as little as possible during setup. Lazy-loading the plugin, or somehow deferring the setup, is not recommended.**
