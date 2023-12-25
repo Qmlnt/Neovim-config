@@ -1,0 +1,15 @@
+return {
+    "williamboman/mason.nvim",
+    lazy = true, -- lazy-loading not recommended tho
+    opts = {
+        ui = {
+            height = 0.8,
+            border = "single",
+            icons = {
+                package_pending = "󱦳",
+                package_installed = "",
+                package_uninstalled = "⤫"
+            }
+        }
+    }
+}

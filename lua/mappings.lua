@@ -9,6 +9,7 @@ map("n", "<Leader>un", vim.cmd.Ex)
 map("n", "<Leader>ul", "<Cmd>Lazy<CR>")
 map("n", "<Leader>um", "<Cmd>Mason<CR>")
 -- toggle stuff
+map("n", "<Leader>tn", "<Cmd>set number!<CR>")
 map("n", "<Leader>tw", "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
 map("n", "<Leader>tc", function() vim.o.colorcolumn=vim.o.colorcolumn=="" and "80" or "" end)
 -- clipboard stuff

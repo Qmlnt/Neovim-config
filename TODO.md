@@ -1,4 +1,12 @@
+- Highlight on yank
+    - Autocommands
+- Whichkey
+- Lsp stuff
+    - Diagnostics stuff
+        - Unicode diagnostic-signs
+        - Poke colo for better highlights
 - Plugins:
     - Navigation
+        - Telescope
+        - Harpoon?
     - Statusline
-    - Lsp stuff

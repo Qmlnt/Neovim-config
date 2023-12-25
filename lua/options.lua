@@ -43,6 +43,7 @@ o.conceallevel = 3 -- hide markup
 o.number = true
 o.numberwidth = 1 -- automatic width ^.^
 o.relativenumber = true
+o.signcolumn = "number"
 o.termguicolors = true -- RGB True color
 o.fillchars = {
     fold = " ",

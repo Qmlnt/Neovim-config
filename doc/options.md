@@ -22,7 +22,8 @@
 
 ### look
 - `title` = off: Better window title – `filename [+=-] (path) - NVIM`
-- `numberwidth` = 4: num of columns **-1** (the space before text) to use for the line number. If `numberwidth` = 4, and the number is 1000, then 5 columns would be used.
+- `numberwidth` = 4: minimal number of columns **-1** (the space before text) to use for the line number. If `numberwidth` = 4, and the number is 1000, then 5 columns would be used.
+- `o.signcolumn` = auto: set to `number` to display signs on the `numbercolumn`.
 - `conceallevel` = 0: 0 – normal text; ... 3 – Concealed text (markdown ^.^) is completely hidden.
 - `ignorecase` = off and `smartcase` = off: If the `ignorecase` option is on, the case of normal letters is ignored. `smartcase` can be set to ignore case when the pattern contains lowercase letters only. In search use `\c` for **ignorecase** and ignore **smartcase**, and `\C` for case sensitive search.
 - `list` = off: Show tabs as "`>`", trailing spaces as "`-`", and non-breakable space characters as "`+`".
