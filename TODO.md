@@ -1,7 +1,7 @@
 - Highlight on yank
     - Autocommands
-- Whichkey
 - Lsp stuff
+    - Configure LSPs
     - Diagnostics stuff
         - Unicode diagnostic-signs
         - Poke colo for better highlights

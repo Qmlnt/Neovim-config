@@ -1,7 +1,7 @@
 return {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "mason.nvim" }, -- load Mason first
-    lazy = true,
+    dependencies = { "mason.nvim", "nvim-lspconfig" }, -- load those first
+    lazy = false,
     opts = {
         ensure_installed = {
             "arduino_language_server",
@@ -17,11 +17,11 @@ return {
         },
 
         handlers = { -- automatic server setup
-            function (server_name) -- default handler
+            function(server_name) -- default handler
                 require("lspconfig")[server_name].setup {}
             end,
 
-            ["lua_ls"] = function ()
+            ["lua_ls"] = function()
                 require("lspconfig").lua_ls.setup {
                     settings = {
                         Lua = {

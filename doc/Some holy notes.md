@@ -51,4 +51,7 @@ Configuration options accept one of the following:
 - `table`: Enable this feature with overrides. Use an empty table to use default values.
 - `function`: Function with signature (namespace, bufnr) that returns any of the above.
 
+### functions
+`setloclist()` is local to the current window. `:lw`
+`setqflist()` is `setloclist()` globally. `:cw`
 
