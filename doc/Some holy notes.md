@@ -55,3 +55,7 @@ Configuration options accept one of the following:
 `setloclist()` is local to the current window. `:lw`
 `setqflist()` is `setloclist()` globally. `:cw`
 
+
+
+## lspconfig
+

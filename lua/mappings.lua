@@ -4,8 +4,9 @@ local map = vim.keymap.set
 
 
 --      LEADER
+map("n", "<Leader>r", "<C-R>")
 -- utilities
-map("n", "<Leader>un", vim.cmd.Ex)
+map("n", "<Leader>un", vim.cmd.Ex, { desc = "Netrw" })
 map("n", "<Leader>ul", "<Cmd>Lazy<CR>")
 map("n", "<Leader>um", "<Cmd>Mason<CR>")
 -- toggle stuff

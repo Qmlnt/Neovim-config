@@ -2,8 +2,6 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-        key_labels = { ["<leader>"] = "L" },
-        plugins = { spelling = { suggestions = 40 } },
         window = {
             border = "single",
             padding = { 0, 1, 0, 1 }
@@ -14,6 +12,8 @@ return {
             width = { min = 1 },
             height = { min = 1, max = 15 }
         },
+        key_labels = { ["<leader>"] = "L" },
+        plugins = { spelling = { suggestions = 40 } },
     },
 
     init = function()
@@ -25,6 +25,8 @@ return {
         require("which-key").setup(opts)
         require("which-key").register({
             l = "LSP",
+            lw = "Workspace",
+            lg = "Diagnostics",
             u = "Utils",
             t = "Toggle",
             b = "Buffer",

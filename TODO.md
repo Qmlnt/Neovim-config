@@ -1,6 +1,7 @@
 - Highlight on yank
     - Autocommands
 - Lsp stuff
+    - make permanent vim.lsp mappings, and some on LspAttach event
     - Configure LSPs
     - Diagnostics stuff
         - Unicode diagnostic-signs
