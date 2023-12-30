@@ -2,8 +2,6 @@ require "options"
 require "mappings"
 require "autocmds"
 
-definition = vim.lsp.buf.definition
-print(vim.lsp.buf.declaraction)
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

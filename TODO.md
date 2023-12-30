@@ -1,6 +1,8 @@
 - Highlight on yank
     - Autocommands
+
 - Lsp stuff
+    - Make hover window better
     - make permanent vim.lsp mappings, and some on LspAttach event
     - Configure LSPs
     - Diagnostics stuff

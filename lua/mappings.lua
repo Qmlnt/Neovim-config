@@ -18,9 +18,9 @@ map("n", "<Leader>tc", function() vim.o.colorcolumn=vim.o.colorcolumn=="" and "8
 -- clipboard stuff
 map("x", "<Leader>p", [["_dP]], { desc = "Void paste" })
 map("n", "<Leader>p", [["+p]],  { desc = "Clipboard paste" })
-map({ "n", "v" }, "<Leader>d", [["_d]], { desc = "Void delete" })
-map({ "n", "v" }, "<Leader>y", [["+y]], { desc = "Clipboard yank" })
-map({ "n", "v" }, "<Leader>Y", [["+Y]], { desc = "Clipboard Yank" })
+map({ "n", "x" }, "<Leader>d", [["_d]], { desc = "Void delete" })
+map({ "n", "x" }, "<Leader>y", [["+y]], { desc = "Clipboard yank" })
+map({ "n", "x" }, "<Leader>Y", [["+Y]], { desc = "Clipboard Yank" })
 -- buffers
 map("n", "<Leader>bn", "<Cmd>bnext<CR>", { desc = "Next" })
 map("n", "<Leader>bN", "<Cmd>bprev<CR>", { desc = "Prev" })
@@ -61,15 +61,15 @@ map("n", "<Leader>wC", "<C-W>p<C-W>c", { desc = "Close last accessed" })
 
 
 --      ADDITIONAL
+map("n", "<C-I>", "<C-I>") -- jump list
+map("", "<Esc>", "<Esc><Cmd>noh<CR>")
 map("n", "))", ")", { desc = "Sentence forward"  }) -- )* taken by treesitter
 map("n", "((", "(", { desc = "Sentence backward" })
-map("n", "<C-I>", "<C-I>") -- jump list
-map({ "n", "i" }, "<Esc>", "<Esc><Cmd>noh<CR>")
 -- visual stuff
-map("v", "<", "<gv")
-map("v", ">", ">gv")
-map("v", "<S-Down>", ":move '>+1<CR>gv=gv")
-map("v", "<S-UP>",   ":move '<-2<CR>gv=gv")
+map("x", "<", "<gv")
+map("x", ">", ">gv")
+map("x", "<S-Down>", ":move '>+1<CR>gv=gv")
+map("x", "<S-UP>",   ":move '<-2<CR>gv=gv")
 -- lock the cursor at the buffer center
 map("n", "J", "mjJ`j")
 map("n", "n", "nzvzz")
