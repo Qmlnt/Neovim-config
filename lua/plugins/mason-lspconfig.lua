@@ -2,6 +2,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "mason.nvim", "nvim-lspconfig" }, -- load those first
     lazy = false,
+    -- event = "BufReadPost",
     opts = {
         ensure_installed = {
             "arduino_language_server",

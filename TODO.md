@@ -3,13 +3,15 @@
 
 - Lsp stuff
     - Make hover window better
-    - make permanent vim.lsp mappings, and some on LspAttach event
+    - LspAttach event
     - Configure LSPs
-    - Diagnostics stuff
-        - Unicode diagnostic-signs
-        - Poke colo for better highlights
+    - What is codelens?
 - Plugins:
     - Navigation
         - Telescope
         - Harpoon?
     - Statusline
+    - Undootree
+    - Git intergration?
+- Optimization:
+    - yoink LazyFile from LazyVim

@@ -27,6 +27,7 @@ return {
             l = "LSP",
             lw = "Workspace",
             lg = "Diagnostics",
+            lp = "Peek definiton",
             u = "Utils",
             t = "Toggle",
             b = "Buffer",

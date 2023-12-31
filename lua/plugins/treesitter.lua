@@ -111,13 +111,13 @@ return {
                 },
             },
             lsp_interop = { --TODO
-                enable = false,
+                enable = true,
                 floating_preview_opts = { -- vim.lsp.util.open_floating_preview
                     border = "single"
                 },
                 peek_definition_code = {
-                    ["<Leader>df"] = "@function.outer",
-                    ["<Leader>do"] = "@class.outer",
+                    ["<Leader>lpo"] = { query = "@class.outer", desc = "Class" },
+                    ["<Leader>lpf"] = { query = "@function.outer", desc = "Function" },
                 },
             },
         },
@@ -125,6 +125,7 @@ return {
 
     config = function(_, opts)
         require("nvim-treesitter.configs").setup(opts)
+
         local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
         vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
         vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
