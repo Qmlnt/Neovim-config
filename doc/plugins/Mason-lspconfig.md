@@ -19,7 +19,7 @@ Its main responsibilities are to:
 - Make sure to set up `mason` and `mason-lspconfig.nvim` before setting up servers via `lspconfig`
 
 #### Order:
-1. `mason.nvim`, load`lspconfig` in `rtp`
+1. `mason.nvim`, load `lspconfig` in `rtp`
 2. `mason-lspconfig.nvim`
 3. Setup servers via `lspconfig`
 

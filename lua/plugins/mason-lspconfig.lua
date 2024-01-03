@@ -10,7 +10,7 @@ return {
             "clangd", -- C/C++
             "cmake",
             --"csharp_ls", -- piece of 󰱵
-            --"hls", -- Haskell
+            "hls", -- Haskell
             "jsonls",
             "lua_ls",
             "ruff_lsp", -- Python

@@ -45,7 +45,7 @@ require("lazy").setup(plugins, opts)
 		- **init** `fun(LazyPlugin)`; Always executed during startup. Configuration for VIM plugins typically should be set in an init function.
 		- **opts** `table`; Setting this option will call `config(LazyPlugin, opts)`.
 		- **config** `fun(LazyPlugin, opts)`/`true`; Executed when plugin loads. The default implementation calls `requrie(MAIN).setup(opts)`. Set to `true` to call `requrie(MAIN).setup({})`, though _`opts={}` is the **preferred** way!_ Don't forget to call `requrie('plugin').setup(opts)` in your own implementation!
-		-  **main** `string`; You can specify the `MAIN` module to use for `config()` and `opts()`, in case it can not be determined automatically.
+		- **main** `string`; You can specify the `MAIN` module to use for `config()` and `opts()`, in case it can not be determined automatically.
 		- **enabled**; When `false`, or if the `function` returns false, then this plugin will not be included in the spec.
 		- **build** `fun(LazyPlugin)`/ `string`/list of build cmds; Executed when a plugin is installed or updated. `string` – shell command, `:string` – Neovim command. Some plugins provide their own `build.lua` which is automatically used by lazy.
 		- **event**; Lazy-load on event. You can use `VeryLazy` event for things that can load **later** and are not important for the initial UI.

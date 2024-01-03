@@ -4,7 +4,7 @@ return {
     opts = {
         ui = {
             height = 0.8,
-            border = "single",
+            border = require("assets").border,
             icons = {
                 package_pending = "󱦳",
                 package_installed = "",

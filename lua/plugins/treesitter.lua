@@ -113,7 +113,7 @@ return {
             lsp_interop = { --TODO
                 enable = true,
                 floating_preview_opts = { -- vim.lsp.util.open_floating_preview
-                    border = "single"
+                    border = require("assets").border_bleed
                 },
                 peek_definition_code = {
                     ["<Leader>lpo"] = { query = "@class.outer", desc = "Class" },

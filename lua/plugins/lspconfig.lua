@@ -5,33 +5,36 @@ return {
         diagnostics = { -- :h vim.diagnostic.config()
             underline = true,
             virtual_text = {
+                severity = { min = vim.diagnostic.severity.INFO },
                 source = "if_many",
                 spacing = 4,
-                prefix = "󱈸",
-                --prefix = "icons", -- TODO in NVIM v10
+                prefix = function(diagnostics)
+                    return (require("assets").diagnostics_signs)[diagnostics.severity] or "?"
+                end,
             },
-            float = { border = "single" },
+            signs = { text = require("assets").diagnostics_signs },
+            float = { border = require("assets").border_bleed },
             update_in_insert = false,
             severity_sort = true,
         },
-        default_config = {
+        default_lspconfig = {
             handlers = {
-                ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single", max_width = 80 }),
-                ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single", max_width = 80 })
+                ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+                    border = require("assets").border_bleed, max_width = 80
+                }),
+                ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+                    border = require("assets").border_bleed, max_width = 80
+                })
             }
         }
     },
 
     config = function(_, opts)
         vim.diagnostic.config(opts.diagnostics)
-        vim.fn.sign_define("DiagnosticSignInfo",  { text = "󰙎", texthl = "DiagnosticSignInfo" })
-        vim.fn.sign_define("DiagnosticSignHint",  { text = "󱠃", texthl = "DiagnosticSignHint" })
-        vim.fn.sign_define("DiagnosticSignWarn",  { text = "", texthl = "DiagnosticSignWarn" })
-        vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
 
-        require("lspconfig.ui.windows").default_options.border = "single" -- :LspInfo
+        require("lspconfig.ui.windows").default_options.border = require("assets").border -- :LspInfo
         local lspconfig = require("lspconfig")
-        lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, opts.default_config)
+        lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, opts.default_lspconfig)
 
 
         local map = vim.keymap.set -- TODO? codelens
@@ -39,7 +42,6 @@ return {
         vim.api.nvim_create_autocmd("LspAttach", { -- only when LSP server available
             callback = function(args)
                 vim.bo[args.buf].omnifunc = "v:lua.vim.lsp.omnifunc" -- <c-x><c-o>
-                map("n", "K",  vim.lsp.buf.hover, { buffer = args.buf })
                 map("n", "gd", vim.lsp.buf.definition, { buffer = args.buf })
                 map("n", "gD", vim.lsp.buf.declaration, { buffer = args.buf })
             end,
@@ -74,12 +76,17 @@ return {
         map({ "n", "x" }, "<Leader>la", vim.lsp.buf.code_action, { desc = "Code action" })
         map({ "n", "x" }, "<Leader>lf", function() vim.lsp.buf.format { async = true } end, { desc = "Format" })
         map("n", "<Leader>lc", function()
-            vim.lsp.util.open_floating_preview({ vim.lsp.semantic_tokens.get_at_pos()[1].type }, nil, { border = "single" })
+            vim.lsp.util.open_floating_preview(
+                { vim.lsp.semantic_tokens.get_at_pos()[1].type },
+                nil,
+                { border = require("assets").border_bleed })
         end, { desc = "Type under cursor" })
         -- workspace
-        map("n", "<Leader>lws", vim.lsp.buf.workspace_symbol, { desc = "Symbols list" })
-        map("n", "<Leader>lwa", vim.lsp.buf.add_workspace_folder, { desc = "Add folder" })
-        map("n", "<Leader>lwr", vim.lsp.buf.remove_workspace_folder, { desc = "Remove folder" })
-        map("n", "<Leader>lwl", function() vim.print(vim.lsp.buf.list_workspace_folders()) end, { desc = "List folders" })
+        map("n", "<Leader>lR", vim.lsp.buf.workspace_symbol, { desc = "Symbols list" })
+        map("n", "<Leader>lw", vim.lsp.buf.add_workspace_folder, { desc = "Add workspace" })
+        map("n", "<Leader>lW", vim.lsp.buf.remove_workspace_folder, { desc = "Remove workspace" })
+        map("n", "<Leader>lL", function()
+            vim.print(vim.lsp.buf.list_workspace_folders())
+        end, { desc = "List folders" })
     end
 }

@@ -3,8 +3,8 @@ return {
     event = "VeryLazy",
     opts = {
         window = {
-            border = "single",
-            padding = { 0, 1, 0, 1 }
+            border = require("assets").border,
+            padding = { 0, 1, 0, 1 } -- ^, <, _, >
         },
         layout = {
             spacing = 4,
@@ -25,7 +25,6 @@ return {
         require("which-key").setup(opts)
         require("which-key").register({
             l = "LSP",
-            lw = "Workspace",
             lg = "Diagnostics",
             lp = "Peek definiton",
             u = "Utils",

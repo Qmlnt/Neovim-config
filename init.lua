@@ -11,6 +11,6 @@ vim.opt.rtp:prepend(lazypath)
 
 -- dynamically merge lua/plugins{,/*}.lua to the main plugin spec
 require("lazy").setup("plugins", {
-    ui = { border = "single" }, -- :h nvim_open_win
+    ui = { border = require("assets").border },
     change_detection = { notify = false }
 })
