@@ -1,4 +1,4 @@
-[GitHub link](https://github.com/folke/lazy.nvim/tree/main)
+[GitHub link](https://github.com/folke/lazy.nvim)
 _Modern plugin manager_.
 - Caching and bytecode compilation of Lua modules.
 - Lazy-load on events, commands, filetypes, and key mappings.

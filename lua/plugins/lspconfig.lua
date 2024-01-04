@@ -8,9 +8,9 @@ return {
                 severity = { min = vim.diagnostic.severity.INFO },
                 source = "if_many",
                 spacing = 4,
-                prefix = function(diagnostics)
+                --[[prefix = function(diagnostics)
                     return (require("assets").diagnostics_signs)[diagnostics.severity] or "?"
-                end,
+                end,]]
             },
             signs = { text = require("assets").diagnostics_signs },
             float = { border = require("assets").border_bleed },
@@ -25,7 +25,9 @@ return {
                 ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
                     border = require("assets").border_bleed, max_width = 80
                 })
-            }
+            },
+            capabilities = require("assets").protected_require("cmp_nvim_lsp",
+                function(cmp) return cmp.default_capabilities() end)
         }
     },
 
@@ -34,8 +36,7 @@ return {
 
         require("lspconfig.ui.windows").default_options.border = require("assets").border -- :LspInfo
         local lspconfig = require("lspconfig")
-        lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, opts.default_lspconfig)
-
+        lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, opts.default_lspconfig)
 
         local map = vim.keymap.set -- TODO? codelens
 

@@ -1,9 +1,11 @@
+check fillchar option
+
+
 - Highlight on yank
     - Autocommands
 
 - Lsp stuff
     - Make hover window better
-    - LspAttach event
     - Configure LSPs
     - What is codelens?
 - Plugins:
@@ -15,3 +17,4 @@
     - Git intergration?
 - Optimization:
     - yoink LazyFile from LazyVim
+

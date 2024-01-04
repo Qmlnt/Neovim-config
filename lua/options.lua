@@ -15,6 +15,7 @@ o.hlsearch  = true -- default
 o.incsearch = true -- default
 o.confirm = true -- :q when there are changes
 o.wildmode = "longest:full,full" -- cmd completion
+o.completeopt = "menu,menuone,longest" -- omnifunc completion
 o.mouse = "a"
 --o.clipboard = "unnamed"plus?
 o.formatoptions:append "n" -- indents for numbered lists
@@ -37,7 +38,7 @@ o.showbreak = "🞄" -- 🞄➣◜◞◟◝╴└╰... at the beginning of w
 o.breakindent = true -- for wrapped blocks to have indent
 o.title = true -- better window title
 o.list = true -- show trailing invisible chars
-o.listchars = "tab:󰌒 ,trail:·,nbsp:%"
+o.listchars = "tab:󰌒 ,trail:·,nbsp:%,leadmultispace:                ▏" -- ▎▍
 o.colorcolumn = "80,120"
 o.cursorline  = true
 o.laststatus = 3 -- only one statusline
@@ -58,7 +59,6 @@ o.fillchars = {
 
 -- o.showmode = false -- there is statusline for this
 -- o.cursorlineopt = number,screenline -- can't determine for now
---vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 --vim.opt.shortmess = "atoOFIcC" -- completions
 
 --o.whichwrap:append "<,>,[,]"

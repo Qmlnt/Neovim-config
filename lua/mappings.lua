@@ -11,6 +11,7 @@ map("n", "<Leader>un", vim.cmd.Ex, { desc = "Netrw" })
 map("n", "<Leader>ul", "<Cmd>Lazy<CR>")
 map("n", "<Leader>um", "<Cmd>Mason<CR>")
 map("n", "<Leader>uL", "<Cmd>LspInfo<CR>")
+map("n", "<Leader>uc", "<Cmd>CmpStatus<CR>")
 -- toggle stuff
 map("n", "<Leader>tn", "<Cmd>set number!<CR>", { desc = "number" })
 map("n", "<Leader>tw", "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>", { desc = "wrap" })
