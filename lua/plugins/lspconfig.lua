@@ -9,10 +9,10 @@ return {
                 source = "if_many",
                 spacing = 4,
                 --[[prefix = function(diagnostics)
-                    return (require("assets").diagnostics_signs)[diagnostics.severity] or "?"
+                    return ({ "⤬", "!", "󰙎", "󱠃" })[diagnostics.severity] or "?"
                 end,]]
             },
-            signs = { text = require("assets").diagnostics_signs },
+            signs = { text = { "⤬", "!", "󰙎", "󱠃" } }, -- E, W, I, H
             float = { border = require("assets").border_bleed },
             update_in_insert = false,
             severity_sort = true,

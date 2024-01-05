@@ -1,11 +1,6 @@
 check fillchar option
 
-
-- Highlight on yank
-    - Autocommands
-
 - Lsp stuff
-    - Make hover window better
     - Configure LSPs
     - What is codelens?
 - Plugins:

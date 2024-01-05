@@ -3,7 +3,7 @@ local M = {}
 ---Handle require fails
 ---@param module_name string
 ---@param success_callback fun(module: table): any | any
----@param error_callback? fun(module: table): any | any
+---@param error_callback? fun(error: string): any | any
 ---@return any
 function M.protected_require(module_name, success_callback, error_callback)
     local status, module = pcall(require, module_name)
@@ -23,7 +23,5 @@ end
 
 M.border = "single" -- :h nvim_open_win
 M.border_bleed = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" } -- full-bleed
-
-M.diagnostics_signs = { "⤬", "!", "󰙎", "󱠃" } -- E, W, I, H
 
 return M

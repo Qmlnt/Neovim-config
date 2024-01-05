@@ -1,8 +1,8 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
-    build = ":TSUpdate",
     event = "VeryLazy", -- don't slow down startup
+    build = ":TSUpdate",
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     opts = {
         auto_install = true,
         sync_install = false,

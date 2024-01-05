@@ -21,7 +21,10 @@ To de-/activate autosnippets use `option = { show_autosnippets = true } }`
 
 If you want to just hide some autosnippets consider the hidden option of luaSnip
 
-## []()
+## [cmp-buffer](https://github.com/hrsh7th/cmp-buffer)
+Buffer words completion source
+
+
 ## []()
 
 
@@ -32,29 +35,6 @@ If you want to just hide some autosnippets consider the hidden option of luaSnip
 
 `cmp.setup()` can be called multiple times
 
-Mappings can be done with:
-```vim
-<Cmd>lua require('cmp').complete()<CR>
-```
-
-It is possible to specify the modes the mapping should be active in (`i` = insert mode, `c` = command mode, `s` = select mode):
-```lua
-cmp.setup {
-    mapping = {
-        ['<CR>'] = cmp.mapping(your_mapping_function, { 'i', 'c' })
-    }
-}
-```
-Different mappings for different modes:
-```lua
-cmp.setup {
-    mapping = {
-        ['<CR>'] = cmp.mapping(your_mapping_function, { 'i', 'c' })
-    }
-}
-```
-
-If you don't want to see `buffer` source items while `nvim-lsp` source is available:
 ```lua
 cmp.setup {
     sources = {
@@ -71,4 +51,11 @@ cmp.setup {
         { { name = 'buffer'   } })
 }
 ```
+## My findings
+`cmp.setup(c)` = `cmp.setup.global(c)`,
+calls `config.set_global(c)`
+calls `config.global = config.normalize(misc.merge(c, config.global))`
+`config.normalize(c)` repaces each `k` and `v` in `c.mapping` with `keymap.normalize(k)` and `mapping(v, { 'i' })` respectively.
+
+SO, using `mapping = {...}` instead of `cmp.mapping.preset.insert({...})` is legal.
 
