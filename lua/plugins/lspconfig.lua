@@ -83,7 +83,7 @@ return {
                 { border = require("assets").border_bleed })
         end, { desc = "Type under cursor" })
         -- workspace
-        map("n", "<Leader>lR", vim.lsp.buf.workspace_symbol, { desc = "Symbols list" })
+        map("n", "<Leader>lR", vim.lsp.buf.workspace_symbol, { desc = "Workspace references" })
         map("n", "<Leader>lw", vim.lsp.buf.add_workspace_folder, { desc = "Add workspace" })
         map("n", "<Leader>lW", vim.lsp.buf.remove_workspace_folder, { desc = "Remove workspace" })
         map("n", "<Leader>lL", function()

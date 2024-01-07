@@ -23,6 +23,9 @@ If `!` is given, mappings won't be used. Without `!` the `{commands}` will be re
 :noremap z :norm! x<CR> " will press x
 ```
 
+# feedkeys()
+feedkeys() is about inserting keys into the typeahead buffer. Keys from this buffer are only consumed after the current command / function has ended (or if you explicitly read keys, e.g. via getchar()). That explains you struggles to have the keys processed immediately;
+
 # getchar(), nr2char() and getcharstr()
 **getchar**(`expr`) and **getcharstr**(`expr`)
 Get a single character from the user or input stream.

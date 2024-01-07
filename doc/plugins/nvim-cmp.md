@@ -24,6 +24,9 @@ If you want to just hide some autosnippets consider the hidden option of luaSnip
 ## [cmp-buffer](https://github.com/hrsh7th/cmp-buffer)
 Buffer words completion source
 
+Can freely edit the buffer while it is being indexed.
+`indexing_batch_size` lines are taken from the buffer scanned, then sleep for `indexing_interval` milliseconds. Decreasing interval and/or increasing the batch size = faster indexing, higher CPU usage and more lag when editing the file while indexing is still in progress.
+
 
 ## []()
 
@@ -52,7 +55,8 @@ cmp.setup {
 }
 ```
 ## My findings
-`cmp.setup(c)` = `cmp.setup.global(c)`,
+1. `preselect = cmp.PreselectMode.Item` is for LSP preselection, when the LSP server explicitly asks to preselect certain item, and that item is not necessarily the first one in the list.
+2. `cmp.setup(c)` = `cmp.setup.global(c)`,
 calls `config.set_global(c)`
 calls `config.global = config.normalize(misc.merge(c, config.global))`
 `config.normalize(c)` repaces each `k` and `v` in `c.mapping` with `keymap.normalize(k)` and `mapping(v, { 'i' })` respectively.
