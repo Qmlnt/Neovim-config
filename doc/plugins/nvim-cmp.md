@@ -56,7 +56,8 @@ cmp.setup {
 ```
 ## My findings
 1. `preselect = cmp.PreselectMode.Item` is for LSP preselection, when the LSP server explicitly asks to preselect certain item, and that item is not necessarily the first one in the list.
-2. `cmp.setup(c)` = `cmp.setup.global(c)`,
+2. Remove `noselect` from `completion.completeopt` and get broken `cmp.complete_common_string` *>.<
+3. `cmp.setup(c)` = `cmp.setup.global(c)`,
 calls `config.set_global(c)`
 calls `config.global = config.normalize(misc.merge(c, config.global))`
 `config.normalize(c)` repaces each `k` and `v` in `c.mapping` with `keymap.normalize(k)` and `mapping(v, { 'i' })` respectively.
