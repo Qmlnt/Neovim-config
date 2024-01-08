@@ -1,14 +1,13 @@
 local M = {
     "hrsh7th/nvim-cmp",
     --event = "VeryLazy",
-    --event = { "InsertEnter", "CmdlineEnter" },
+    event = { "InsertEnter" }, -- , "CmdlineEnter"
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
 
         "L3MON4D3/LuaSnip", -- jsregexp is optional
         "saadparwaiz1/cmp_luasnip",
-
     }
 }
 
@@ -51,6 +50,27 @@ local function format_completion_entries(entry, vim_item) -- :h complete-items
     return vim_item
 end
 
+
+-- Close the damn completion window
+---@return true
+local function exit_completion()
+    vim.api.nvim_feedkeys("gi", "n", false)
+    return true
+end
+
+---@return true
+local function register_oneshots()
+    local oneshot_keymap = require("assets").oneshot_keymap
+    for _, key in ipairs { "<CR>", "<Tab>", "<Space>", "<Down>", "<Up>", "<Left>", "<Right>" } do
+        local keys = vim.api.nvim_replace_termcodes(key, true, false, true)
+        oneshot_keymap("i", key, function()
+            exit_completion()
+            vim.api.nvim_feedkeys(keys, "n", false)
+        end, { buffer = 0 })
+    end
+    return true
+end
+
 local function get_completion_buffers()
     local buffers = {}
     for _, win_id in ipairs(vim.api.nvim_list_wins()) do -- only visible buffers
@@ -66,39 +86,7 @@ local function get_completion_buffers()
 end
 
 
-local function exit_completion()
-    vim.api.nvim_feedkeys("gi", "n", false)
-end
-
-local function trigger_or_next_completion()
-    local cmp = require "cmp"
-    if cmp.visible() then
-        return cmp.select_next_item()
-    end
-
-    cmp.complete()
-    if not cmp.get_selected_entry() then
-        cmp.select_next_item()
-    end
-
-    -- Close the damn completion window
-    local oneshot_keymap = require("assets").oneshot_keymap
-    for _, key in ipairs { "<CR>", "<Tab>", "<Space>", "<Down>", "<Up>", "<Left>", "<Right>" } do
-        oneshot_keymap("i", key, function()
-            exit_completion()
-            local keys = vim.api.nvim_replace_termcodes(key, true, false, true)
-            vim.api.nvim_feedkeys(keys, "n", false)
-        end, { buffer = 0 })
-    end
-end
-
-local function longest_or_trigger_completion()
-    local cmp = require "cmp"
-
-    if cmp.visible() then
-        return cmp.confirm { select = true,
-            behavior = cmp.ConfirmBehavior.Replace }
-    end
+local function longest_common_completion(cmp)
     -- TODO use most common instead of just common
     cmp.complete { config = { -- should be fast asf
         sources = {
@@ -113,33 +101,45 @@ local function longest_or_trigger_completion()
             fetching_timeout = 100
         },
         preselect = cmp.PreselectMode.None, -- not to mess up common_string
-        formatting = {
-            format = function(_, vim_item)
-                vim_item.kind = nil
-                return vim_item
-            end
-        }
+        formatting = { format = false }
     } }
-    return cmp.complete_common_string() and exit_completion()
+    return cmp.complete_common_string()
 end
 
-local function jump_snippet_or_toggle_docs()
-    local cmp = require "cmp"
+local function setup_mappings(cmp)
+    local mappings = { -- My Caps is BS cuz caps is bs.
+        ["<C-N>"] = cmp.mapping.scroll_docs(4),
+        ["<C-E>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-Space>"] = cmp.mapping.select_prev_item(),
+        ["<C-CR>"] = cmp.mapping.confirm { select = true }, -- Insert
+    }
 
-    if not cmp.visible() then
-        return require("luasnip").expand_or_jump()
+    -- and = exec if prev=true; or = exec if prev=false
+    mappings["<S-Tab>"] = function()
+        return cmp.visible and cmp.open_docs() or cmp.close_docs()
+    end
+    mappings["<S-BS>"] = cmp.mapping(function()
+        return cmp.visible() and exit_completion()
+        or require("luasnip").expand_or_jump()
+    end, { "i", "s" })
+    mappings["<C-BS>"] = cmp.mapping(function()
+        return cmp.visible() and cmp.abort() and exit_completion()
+        or require("luasnip").jump(-1)
+    end, { "i", "s" })
+    -- it's that simple and that hard
+    mappings["<S-Space>"] = function()
+        return (cmp.visible() or (
+            cmp.complete() and register_oneshots() and not cmp.get_selected_entry()
+        )) and cmp.select_next_item()
+    end
+    mappings["<S-CR>"] = function()
+        return cmp.visible()
+            and cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
+            or longest_common_completion(cmp) and exit_completion() or register_oneshots()
     end
 
-    if cmp.visible_docs() then
-        return cmp.close_docs()
-    end
-    cmp.open_docs()
+    return mappings
 end
-
-local function jump_prev_snippet()
-    require("luasnip").jump(-1)
-end
-
 
 
 function M.config()
@@ -148,7 +148,7 @@ function M.config()
     cmp.setup.global { -- = cmp.setup
         completion = {
             autocomplete = false,
-            completeopt = "menu,menuone,noselect" -- noselect for common_string
+            completeopt = "menu,menuone,noselect" -- noselect for complete_common_string
         },
         performance = {
             --debounce = 60,
@@ -156,30 +156,20 @@ function M.config()
             --fetching_timeout = 500,
             max_view_entries = 40, -- 200
         },
+        mapping = setup_mappings(cmp),
         preselect = cmp.PreselectMode.Item, -- Honour LSP preselect requests
-        view = {
-            docs = { auto_open = true },
-            entries = { name = "custom", selection_order = "near_cursor" }
-        },
+        --experimental = { ghost_text = true }
         snippet = {
             expand = function(args) require("luasnip").lsp_expand(args.body) end
         },
-        mapping = { -- mapped for insert mode
-            ["<S-Space>"] = trigger_or_next_completion,
-            ["<C-Space>"] = cmp.mapping.select_prev_item(),
-            ["<S-CR>"] = longest_or_trigger_completion,         -- Replace
-            ["<C-CR>"] = cmp.mapping.confirm { select = true }, -- Insert
-            ["<S-BS>"] = exit_completion, -- My Caps is BS cuz caps is bs.
-            ["<C-BS>"] = function() cmp.abort() exit_completion() end,
-            ["<S-Tab>"] = cmp.mapping(jump_snippet_or_toggle_docs, { "i", "s" }),
-            ["<C-Tab>"] = cmp.mapping(jump_prev_snippet, { "i", "s" }),
-            ["<C-N>"] = cmp.mapping.scroll_docs(4),
-            ["<C-E>"] = cmp.mapping.scroll_docs(-4),
-        },
-        formatting = { -- TODO
+        formatting = {
             expandable_indicator = true,
             fields = { "abbr", "kind", "menu" },
             format = format_completion_entries,
+        },
+        view = {
+            docs = { auto_open = true },
+            entries = { name = "custom", selection_order = "near_cursor" }
         },
         sources = {
             { name = "nvim_lsp", group_index = 1 },
@@ -201,8 +191,7 @@ function M.config()
                 side_padding = 0,
                 border = require("assets").border_bleed
             }
-        },
-        --experimental = { ghost_text = true }
+        }
     }
 end
 
