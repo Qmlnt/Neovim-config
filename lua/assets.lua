@@ -20,24 +20,10 @@ function M.protected_require(module_name, success_callback, error_callback)
     return error_callback
 end
 
----Remove lua function mapping after it was triggered
----@param mode string|table
----@param keys string
----@param func fun(any)
----@param buffer? integer
-function M.oneshot_lua_keymap(mode, keys, func, buffer)
-    local function call_and_dell()
-        func()
-        vim.keymap.del(mode, keys, buffer and { buffer = buffer })
-    end
-
-    vim.keymap.set(mode, keys, call_and_dell, buffer and { buffer = buffer })
-end
-
 ---vim.keymap.set but one-time-use
----@param mode string|table
+---@param mode string | table
 ---@param lhs string
----@param rhs fun(any)|string
+---@param rhs fun(any) | string
 ---@param opts? table
 function M.oneshot_keymap(mode, lhs, rhs, opts)
     local buffer = opts and opts.buffer and { buffer = opts.buffer }
@@ -67,6 +53,7 @@ function M.tests()
     print("end")
     vim.schedule(function() print("last?") end)
 end
+
 
 M.border = "single" -- :h nvim_open_win
 M.border_bleed = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" } -- full-bleed

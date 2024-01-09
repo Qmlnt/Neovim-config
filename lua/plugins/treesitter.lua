@@ -1,6 +1,7 @@
 local M = {
     "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy", -- don't slow down startup
+    --event = "VeryLazy", TODO
+    --event = "User HalfLazy",
     build = ":TSUpdate",
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" }
 }
@@ -40,8 +41,8 @@ local treesitter_config = {
         "yaml",
     },
     --      MODULES
-    highlight = { enable = true },
     indent = { enable = true }, -- for the `=` formatting
+    highlight = { enable = true },
     incremental_selection = {
         enable = true,
         keymaps = {
