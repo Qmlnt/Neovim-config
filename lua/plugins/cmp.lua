@@ -40,6 +40,7 @@ local kinds = {
     TypeParameter = " TpPrm",
 }
 
+
 local function format_completion_entries(entry, vim_item) -- :h complete-items
     vim_item.menu = ({
         buffer = "[Buf]",

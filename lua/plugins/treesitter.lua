@@ -1,6 +1,6 @@
 local M = {
     "nvim-treesitter/nvim-treesitter",
-    event = "User HalfLazy",
+    event = "User HalfLazy", -- "VeryLazy" },
     build = ":TSUpdate",
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" }
 }
@@ -135,6 +135,7 @@ treesitter_config.textobjects = {
         peek_definition_code = {
             ["<Leader>lpo"] = { query = "@class.outer", desc = "Class" },
             ["<Leader>lpf"] = { query = "@function.outer", desc = "Function" },
+            ["<Leader>lpa"] = { query = "@parameter.inner", desc = "Parameter" },
             ["<Leader>lps"] = { query = "@assignment.outer", desc = "Assignment" },
         },
     },
