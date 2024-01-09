@@ -1,7 +1,6 @@
 local M = {
     "nvim-treesitter/nvim-treesitter",
-    --event = "VeryLazy", TODO
-    --event = "User HalfLazy",
+    event = "User HalfLazy",
     build = ":TSUpdate",
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" }
 }

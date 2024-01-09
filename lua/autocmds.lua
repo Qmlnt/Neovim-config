@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "BufNewFile" }, {
     end)
 })
 
-for _, event in ipairs { "BufReadPost", "VimEnter", "BufEnter" } do
+--[[for _, event in ipairs { "BufReadPost", "VimEnter", "BufEnter" } do
     vim.api.nvim_create_autocmd(event, {
         callback = function() print(event) end
     })
@@ -18,4 +18,4 @@ end
 vim.api.nvim_create_autocmd("User", {
     pattern = "HalfLazy",
     callback = function() print("LazyFile") end
-})
+})]]

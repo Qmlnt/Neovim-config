@@ -8,9 +8,9 @@ return {
                 severity = { min = vim.diagnostic.severity.INFO },
                 source = "if_many",
                 spacing = 4,
-                prefix = function(diagnostics)
-                    return ({ "⤬", "!", "󰙎", "󱠃" })[diagnostics.severity] or "?"
-                end
+                --prefix = function(diagnostics)
+                --    return ({ "⤬", "!", "󰙎", "󱠃" })[diagnostics.severity] or "?"
+                --end
             },
             signs = { text = { "⤬", "!", "󰙎", "󱠃" } }, -- E, W, I, H
             float = { border = require("assets").border_bleed },

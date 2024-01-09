@@ -1,7 +1,6 @@
-return {
+local M = {
     "williamboman/mason-lspconfig.nvim",
-    lazy = false,
-    -- event = "BufReadPost",
+    event = "BufReadPre",
     dependencies = { "mason.nvim", "nvim-lspconfig" }, -- load those first
     opts = {
         ensure_installed = {
@@ -20,20 +19,19 @@ return {
         handlers = { -- automatic server setup
             function(server_name) -- default handler
                 require("lspconfig")[server_name].setup {}
-            end,
-
-            ["lua_ls"] = function()
-                require("lspconfig").lua_ls.setup {
-                    settings = {
-                        Lua = {
-                            diagnostics = {
-                                globals = { "vim" }
-                            }
-                        }
-                    }
-                }
-            end,
-
+            end
         }
     }
 }
+
+M.opts.handlers.lua_ls = function()
+    require("lspconfig").lua_ls.setup {
+        settings = {
+            Lua = {
+                diagnostics = { globals = { "vim" } }
+            }
+        }
+    }
+end
+
+return M
