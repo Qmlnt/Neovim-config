@@ -14,6 +14,7 @@ o.smartcase  = true -- don't ignore case for CAPITALS
 o.hlsearch  = true -- default
 o.incsearch = true -- default
 o.confirm = true -- :q when there are changes
+o.iskeyword:append "-" -- is part of the word
 o.wildmode = "longest:full,full" -- cmd completion
 o.completeopt = "menu,menuone,longest" -- omnifunc completion
 o.mouse = "a"
@@ -30,8 +31,10 @@ o.softtabstop = 4
 o.shiftwidth  = 4  -- >> and <<
 o.virtualedit = "block" -- move cursor anywhere in visual block mode
 -- look
+o.cmdheight = 1  -- 0 is experimental
 o.pumheight = 10 -- lines in cmp menu
 o.pumblend  = 10 -- cmp menu transparency
+o.showmode = false -- in statusline
 o.wrap = false
 o.linebreak = true -- when `wrap`, break lines at `breakat`
 o.showbreak = "🞄" -- 🞄➣◜◞◟◝╴└╰... at the beginning of wrapped lines
@@ -39,9 +42,9 @@ o.breakindent = true -- for wrapped blocks to have indent
 o.title = true -- better window title
 o.list = true -- show trailing invisible chars
 o.listchars = "tab:󰌒 ,trail:·,nbsp:%,leadmultispace:                ▏" -- ▎▍
-o.colorcolumn = "80,120"
+o.colorcolumn = "80,100"
 o.cursorline  = true
-o.laststatus = 3 -- only one statusline
+o.laststatus = 3 -- statusline only on last win; 0 to hide
 o.conceallevel = 3 -- hide markup
 o.number = true
 o.numberwidth = 1 -- automatic width ^.^
@@ -54,15 +57,12 @@ o.fillchars = {
     foldclose = "",
     foldsep = " ",
     diff = "╱",
-    eob = " "
+    eob = " ",
+    lastline = "❭"
 }
 
--- o.showmode = false -- there is statusline for this
--- o.cursorlineopt = number,screenline -- can't determine for now
 --vim.opt.shortmess = "atoOFIcC" -- completions
 
---o.whichwrap:append "<,>,[,]"
---o.iskeyword:append "-"
 --vim.g.netrw_banner = 0 -- TODO
 --vim.g.netrw_mouse = 2 -- TODO
 -- TODO? check sessionoptions and :makesession

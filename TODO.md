@@ -1,7 +1,4 @@
 :Tutor
-check fillchar option
-treesitter swap inner for conditional
-
 - Lsp stuff
     - Configure LSPs
     - What is codelens?

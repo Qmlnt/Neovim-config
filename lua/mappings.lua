@@ -15,7 +15,7 @@ map("n", "<Leader>uc", "<Cmd>CmpStatus<CR>")
 -- toggle stuff
 map("n", "<Leader>tn", "<Cmd>set number!<CR>", { desc = "number" })
 map("n", "<Leader>tw", "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>", { desc = "wrap" })
-map("n", "<Leader>tc", function() vim.o.colorcolumn=vim.o.colorcolumn=="" and "80,120" or "" end, { desc = "column" })
+map("n", "<Leader>tc", function() vim.o.colorcolumn=vim.o.colorcolumn=="" and "80,100" or "" end, { desc = "column" })
 -- clipboard stuff
 map("x", "<Leader>p", [["_dP]], { desc = "Void paste" })
 map("n", "<Leader>p", [["+p]],  { desc = "Clipboard paste" })
