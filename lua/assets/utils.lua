@@ -54,8 +54,4 @@ function M.tests()
     vim.schedule(function() print("last?") end)
 end
 
-
-M.border = "single" -- :h nvim_open_win
-M.border_bleed = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" } -- full-bleed
-
 return M

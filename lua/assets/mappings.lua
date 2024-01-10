@@ -1,28 +1,29 @@
-vim.g.mapleader = " " -- must be before any plugins
-vim.g.maplocalleader = " "
 local map = vim.keymap.set
+local diag = vim.diagnostic
+local lsp = vim.lsp.buf
 
 
 --      LEADER
 map("n", "<Leader>r", "<C-R>")
--- utilities
+-- Utilities
 map("n", "<Leader>un", vim.cmd.Ex, { desc = "Netrw" })
---map("n", "<Leader>ul", vim.cmd.Lazy) TODO?
 map("n", "<Leader>ul", "<Cmd>Lazy<CR>")
 map("n", "<Leader>um", "<Cmd>Mason<CR>")
 map("n", "<Leader>uL", "<Cmd>LspInfo<CR>")
 map("n", "<Leader>uc", "<Cmd>CmpStatus<CR>")
--- toggle stuff
-map("n", "<Leader>tn", "<Cmd>set number!<CR>", { desc = "number" })
-map("n", "<Leader>tw", "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>", { desc = "wrap" })
-map("n", "<Leader>tc", function() vim.o.colorcolumn=vim.o.colorcolumn=="" and "80,100" or "" end, { desc = "column" })
--- clipboard stuff
+-- Toggle stuff
+map("n", "<Leader>tn", "<Cmd>set number!<CR>", { desc = "Number" })
+map("n", "<Leader>tw", "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>", { desc = "Wrap" })
+map("n", "<Leader>tc", function()
+    vim.o.colorcolumn = vim.o.colorcolumn == "" and "80,100" or ""
+end, { desc = "Column" })
+-- Clipboard stuff
 map("x", "<Leader>p", [["_dP]], { desc = "Void paste" })
 map("n", "<Leader>p", [["+p]],  { desc = "Clipboard paste" })
 map({ "n", "x" }, "<Leader>d", [["_d]], { desc = "Void delete" })
 map({ "n", "x" }, "<Leader>y", [["+y]], { desc = "Clipboard yank" })
 map({ "n", "x" }, "<Leader>Y", [["+Y]], { desc = "Clipboard Yank" })
--- buffers
+-- Buffers
 map("n", "<Leader>bn", "<Cmd>bnext<CR>", { desc = "Next" })
 map("n", "<Leader>bN", "<Cmd>bprev<CR>", { desc = "Prev" })
 map("n", "<Leader>bd", "<Cmd>bdelete<CR>", { desc = "Delete" })
@@ -35,7 +36,7 @@ map("n", "<Leader>bv", "<Cmd>vert sbnext<CR>",   { desc = "V| split with next" }
 map("n", "<Leader>bV", "<Cmd>vert sbprev<CR>",   { desc = "V| split with prev" })
 map("n", "<Leader>bs", "<Cmd>vert sbuffer#<CR>", { desc = "V| split with last" })
 map("n", "<Leader>bS", "<Cmd>sbuffer#<CR>",      { desc = "H- split with last" })
--- windows
+-- Windows 
 map("n", "<Leader>w<Down>",  "<C-W>J", { desc = "Move down"  })
 map("n", "<Leader>w<Up>",    "<C-W>K", { desc = "Move up"    })
 map("n", "<Leader>w<Left>",  "<C-W>H", { desc = "Move left"  })
@@ -59,6 +60,45 @@ map("n", "<Leader>wR", "<C-W>R", { desc = "Rotate upwards"   })
 map("n", "<Leader>ws", "<C-W>v", { desc = "V| split" })
 map("n", "<Leader>wS", "<C-W>s", { desc = "H- split" })
 map("n", "<Leader>wC", "<C-W>p<C-W>c", { desc = "Close last accessed" })
+
+-- Diagnostics
+map("n", "]d", diag.goto_next, { desc = "Next diagnostic" })
+map("n", "[d", diag.goto_prev, { desc = "Prev diagnostic" })
+map("n", "<Leader>lgs", diag.show,    { desc = "Show" })
+map("n", "<Leader>lgh", diag.hide,    { desc = "Hide" })
+map("n", "<Leader>lge", diag.enable,  { desc = "Enable" })
+map("n", "<Leader>lgd", diag.disable, { desc = "Disable" })
+map("n", "<Leader>lo",  diag.open_float, { desc = "Floating diagnostics" })
+map("n", "<Leader>ll",  diag.setloclist, { desc = "Location list (local)" })
+map("n", "<Leader>lq",  diag.setqflist,  { desc = "Quickfix list (global)" })
+
+-- LSP
+map("n", "<Leader>lh", lsp.hover,               { desc = "Hover" })
+map("n", "<Leader>ln", lsp.rename,              { desc = "Rename" })
+map("n", "<Leader>ld", lsp.definition,          { desc = "Definition" })
+map("n", "<Leader>lD", lsp.declaration,         { desc = "Declaration" })
+map("n", "<Leader>lt", lsp.type_definition,     { desc = "Type definition" })
+map("n", "<Leader>li", lsp.implementation,      { desc = "Implementation" })
+map("n", "<Leader>lr", lsp.references,          { desc = "References" })
+map("n", "<Leader>lv", lsp.document_highlight,  { desc = "Highlight references" })
+map("n", "<Leader>lV", lsp.clear_references,    { desc = "Clear highlight" })
+map("n", "<Leader>lQ", lsp.document_symbol,     { desc = "Quickfix of keywords" })
+map("n", "<Leader>ls", lsp.signature_help,      { desc = "Signature help" })
+map("n", "<Leader>lI", lsp.incoming_calls,      { desc = "Incoming calls" })
+map("n", "<Leader>lO", lsp.outgoing_calls,      { desc = "Outgoing calls" })
+map({ "n", "x" }, "<Leader>la", lsp.code_action, { desc = "Code action" })
+map({ "n", "x" }, "<Leader>lf", function() lsp.format { async = true } end, { desc = "Format" })
+map("n", "<Leader>lc", function() vim.lsp.util.open_floating_preview(
+    { vim.lsp.semantic_tokens.get_at_pos()[1].type },
+    nil, { border = require("assets.assets").border_bleed })
+end, { desc = "Type under cursor" })
+-- Workspace
+map("n", "<Leader>lR", lsp.workspace_symbol, { desc = "Workspace references" })
+map("n", "<Leader>lw", lsp.add_workspace_folder, { desc = "Add workspace" })
+map("n", "<Leader>lW", lsp.remove_workspace_folder, { desc = "Remove workspace" })
+map("n", "<Leader>lL", function() vim.print(lsp.list_workspace_folders())
+end, { desc = "List folders" })
+
 
 
 --      ADDITIONAL

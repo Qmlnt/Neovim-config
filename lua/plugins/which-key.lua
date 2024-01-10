@@ -3,7 +3,7 @@ return {
     event = "VeryLazy",
     opts = {
         window = {
-            border = require("assets").border,
+            border = require("assets.assets").border,
             padding = { 0, 1, 0, 1 } -- ^, <, _, >
         },
         layout = {

@@ -61,7 +61,7 @@ end
 
 ---@return true
 local function register_oneshots()
-    local oneshot_keymap = require("assets").oneshot_keymap
+    local oneshot_keymap = require("assets.utils").oneshot_keymap
     for _, key in ipairs { "<CR>", "<Tab>", "<Space>", "<Down>", "<Up>", "<Left>", "<Right>" } do
         local keys = vim.api.nvim_replace_termcodes(key, true, false, true)
         oneshot_keymap("i", key, function()
@@ -186,11 +186,11 @@ function M.config()
             completion = cmp.config.window.bordered {
                 side_padding = 0,
                 scrollbar = false,
-                border = require("assets").border_bleed
+                border = require("assets.assets").border_bleed
             },
             documentation = cmp.config.window.bordered {
                 side_padding = 0,
-                border = require("assets").border_bleed
+                border = require("assets.assets").border_bleed
             }
         }
     }

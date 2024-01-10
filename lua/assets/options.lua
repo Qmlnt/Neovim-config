@@ -1,5 +1,8 @@
 local o = vim.opt
 
+vim.g.mapleader = " " -- must be before any plugins
+vim.g.maplocalleader = " "
+
 -- behaviour
 o.swapfile = false
 o.undofile = true
