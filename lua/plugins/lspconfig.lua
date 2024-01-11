@@ -3,6 +3,7 @@ local M = {
     lazy = true
 }
 
+
 local diagnostic_config = { -- :h vim.diagnostic.config()
     underline = true,
     virtual_text = {

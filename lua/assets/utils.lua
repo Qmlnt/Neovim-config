@@ -1,5 +1,12 @@
 local M = {}
 
+---function() y(1,2) end = with(y,1,2)
+function M.with(func, ...)
+    local args = {...}
+    return function() func(unpack(args)) end
+end
+
+
 ---Handle require fails
 ---@param module_name string
 ---@param success_callback fun(module: table): any | any
@@ -19,6 +26,7 @@ function M.protected_require(module_name, success_callback, error_callback)
     end
     return error_callback
 end
+
 
 ---vim.keymap.set but one-time-use
 ---@param mode string | table

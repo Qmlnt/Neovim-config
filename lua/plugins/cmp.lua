@@ -104,6 +104,7 @@ local function longest_common_completion(cmp)
         preselect = cmp.PreselectMode.None, -- not to mess up common_string
         formatting = { format = false }
     } }
+
     return cmp.complete_common_string()
 end
 
@@ -111,8 +112,8 @@ local function setup_mappings(cmp)
     local mappings = { -- My Caps is BS cuz caps is bs.
         ["<C-N>"] = cmp.mapping.scroll_docs(4),
         ["<C-E>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-Space>"] = cmp.mapping.select_prev_item(),
-        ["<C-CR>"] = cmp.mapping.confirm { select = true }, -- Insert
+        ["<C-Space>"] = cmp.select_prev_item,
+        ["<C-CR>"] = function() cmp.confirm { select = true } end, -- Insert
     }
 
     -- and = exec if prev=true; or = exec if prev=false
