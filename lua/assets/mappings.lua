@@ -3,7 +3,7 @@ local diag = vim.diagnostic
 local lsp = vim.lsp.buf
 
 
---      LEADER
+--      LEADER  TODO yoink Lmap from gitsigns?
 map("n", "<Leader>r", "<C-R>")
 -- Utilities
 map("n", "<Leader>un", vim.cmd.Ex, { desc = "Netrw" })
@@ -64,10 +64,10 @@ map("n", "<Leader>wC", "<C-W>p<C-W>c", { desc = "Close last accessed" })
 -- Diagnostics
 map("n", "]d", diag.goto_next, { desc = "Next diagnostic" })
 map("n", "[d", diag.goto_prev, { desc = "Prev diagnostic" })
-map("n", "<Leader>lgs", diag.show,    { desc = "Show" })
-map("n", "<Leader>lgh", diag.hide,    { desc = "Hide" })
-map("n", "<Leader>lge", diag.enable,  { desc = "Enable" })
-map("n", "<Leader>lgd", diag.disable, { desc = "Disable" })
+map("n", "<Leader>lcs", diag.show,    { desc = "Show" })
+map("n", "<Leader>lch", diag.hide,    { desc = "Hide" })
+map("n", "<Leader>lce", diag.enable,  { desc = "Enable" })
+map("n", "<Leader>lcd", diag.disable, { desc = "Disable" })
 map("n", "<Leader>lo",  diag.open_float, { desc = "Floating diagnostics" })
 map("n", "<Leader>ll",  diag.setloclist, { desc = "Location list (local)" })
 map("n", "<Leader>lq",  diag.setqflist,  { desc = "Quickfix list (global)" })
@@ -88,7 +88,7 @@ map("n", "<Leader>lI", lsp.incoming_calls,      { desc = "Incoming calls" })
 map("n", "<Leader>lO", lsp.outgoing_calls,      { desc = "Outgoing calls" })
 map({ "n", "x" }, "<Leader>la", lsp.code_action, { desc = "Code action" })
 map({ "n", "x" }, "<Leader>lf", function() lsp.format { async = true } end, { desc = "Format" })
-map("n", "<Leader>lc", function() vim.lsp.util.open_floating_preview(
+map("n", "<Leader>lT", function() vim.lsp.util.open_floating_preview(
     { vim.lsp.semantic_tokens.get_at_pos()[1].type },
     nil, { border = require("assets.assets").border_bleed })
 end, { desc = "Type under cursor" })

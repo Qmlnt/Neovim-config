@@ -1,9 +1,49 @@
+-- I'm just having tons of fun here, nothing special
 local M = {}
 
+--[[function M.protected_plugin(plugin)
+    return setmetatable({}, {
+    __index = function(k) return plugin[k] end,
+    })
+    if package.loaded[plugin_name] then
+        return package.loaded[plugin_name]
+    end
+end]]
+
+
+---function() y("1") end = with(y) "1"
 ---function() y(1,2) end = with(y,1,2)
 function M.with(func, ...)
+    if ... then
+        local args = {...}
+        return function() func(unpack(args)) end
+    end
+    return function(arg)
+        return function() func(arg) end
+    end
+end
+
+local map = vim.keymap.set -- maybe will help with speed?
+---vim.keymap.set("n","<Leader>t",":Lazy<CR",{desc="D"}) = Lmap("t", "D", ":Lazy<CR>")
+---vim.keymap.set({"n","v"},"<Leader>XD",":Lazy<CR",{desc="XD"}) = Lmap("t", "nv", "D", ":Lazy<CR>")
+function M.Lmap(...)
+    -- k,       f
+    -- k,    d, f
+    -- k, m, d, f
     local args = {...}
-    return function() func(unpack(args)) end
+
+    if #args == 3 then
+        return map("n", "<Leader>"..args[1], args[3], { desc = args[2] })
+    end
+    if #args == 2 then
+        return map("n", "<Leader>"..args[1], args[2])
+    end
+
+    local modes = {}
+    for i = 1, #args[2] do
+        table.insert(modes, args[2][i])
+    end
+    map(modes, "<Leader>"..args[1], args[4], { desc = args[3] })
 end
 
 
@@ -50,6 +90,7 @@ function M.oneshot_keymap(mode, lhs, rhs, opts)
     vim.keymap.set(mode, lhs, trigger_oneshot, buffer)
 end
 
+
 function M.tests()
     vim.keymap.set("n", "z", function() print "hi" end)
     vim.api.nvim_feedkeys("z", "m", false)
@@ -61,5 +102,6 @@ function M.tests()
     print("end")
     vim.schedule(function() print("last?") end)
 end
+
 
 return M

@@ -1,145 +1,91 @@
 local M = {
     "lewis6991/gitsigns.nvim",
-    event = "VeryLazy",
-    enabled = false
+    event = "User HalfLazy",
+    enabled = true
 }
 
 
 local gitsigns_config = {
-    signs = {
-        add          = { text = "│" },
-        change       = { text = "│" },
-        delete       = { text = "_" },
-        topdelete    = { text = "‾" },
-        changedelete = { text = "~" },
-        untracked    = { text = "┆" },
-    },
-    signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`
-    numhl      = true,  -- Toggle with `:Gitsigns toggle_numhl`
-    linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-    word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
-    watch_gitdir = {
-        follow_files = true
-    },
     auto_attach = true,
-    attach_to_untracked = true,
-    current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-    current_line_blame_opts = {
-        virt_text = true,
-        virt_text_pos = "eol", -- "eol" | "overlay" | "right_align"
-        delay = 1000,
-        ignore_whitespace = false,
-        virt_text_priority = 100,
-    },
-    current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
+    attach_to_untracked = false, -- use keymap
+    max_file_length = 10000,
+    update_debounce = 500,
+    -- base = "@", -- index by default
+    -- worktrees = {}, -- TODO for dotfiles
+    numhl = true,
+    signcolumn = false,
+    current_line_blame = false,
     sign_priority = 6,
-    update_debounce = 100, --TODO lag?
-    status_formatter = nil, -- Use default
-    max_file_length = 10000, -- Disable if file is longer than this (in lines)
-    preview_config = {
-        -- Options passed to nvim_open_win
-        border = require("assets.assets").border,
-        style = "minimal",
-        relative = "cursor",
-        row = 0,
-        col = 1
+
+    diff_opts = {
+        internal = true, -- for linematch
+        linematch = true, -- align lines
+        algorithm = "histogram", -- myers, minimal, patience, histrogram
     },
-    yadm = {
-        enable = false
-    },
+    preview_config = { border = require("assets.assets").border_bleed },
 }
 
 
-local function setup_mappings(gitsigns)
+local function setup_mappings()
+    local gs = package.loaded.gitsigns
+
     local map = vim.keymap.set
-    --local w = require("assets.utils").with
+    local w = require("assets.utils").with
+    local Lmap = require("assets.utils").Lmap
+    --[[ local function Lmap(keys, desc, func, mode) -- wasn't a fan of these, but damn
+        map(mode or "n", "<Leader>"..keys, func, { desc = desc })
+    end ]]
 
-    map("n", "<Leader>hga", gitsigns.attach,     { desc = "Attach" })
-    map("n", "<Leader>hgd", gitsigns.detach,     { desc = "Detach" })
-    map("n", "<Leader>hgD", gitsigns.detach_all, { desc = "Detach all" })
-    map("n", "<Leader>hgr", gitsigns.refresh,    { desc = "Refresh" })
+    Lmap("hga", "Attach",               gs.attach)
+    Lmap("hgd", "Detach",               gs.detach)
+    Lmap("hgD", "Detach all",           gs.detach_all)
+    Lmap("hgr", "Refresh",              gs.refresh)
 
-    map("n", "<Leader>hs", gitsigns.show,  { desc = "Staged version" })
-    map("n", "<Leader>hc", function() gitsigns.show "@" end,  { desc = "Commited version" })
+    Lmap("hts", "Signs",                gs.toggle_signs)
+    Lmap("htn", "Number hl",            gs.toggle_numhl)
+    Lmap("htl", "Line hl",              gs.toggle_linehl)
+    Lmap("htd", "Deleted",              gs.toggle_deleted)
+    Lmap("htw", "Word diff",            gs.toggle_word_diff)
+    Lmap("htb", "Blame",                gs.toggle_current_line_blame)
 
-    map("n", "<Leader>hl", gitsigns.setloclist, { desc = "Location list" })
-    map("n", "<Leader>hQ", function() gitsigns.setqflist "all" end, { desc = "Quickfix all" })
-    map("n", "<Leader>hq", function() gitsigns.setqflist "attached" end,  { desc = "Quickfix attched" })
+    Lmap("hl",  "Location list",        gs.setloclist)
+    Lmap("hQ",  "Quickfix all",       w(gs.setqflist) "all")
+    Lmap("hq",  "Quickfix attched",   w(gs.setqflist) "attached")
+    -- View file
+    Lmap("hs",  "Staged version",       gs.show)
+    Lmap("hc",  "Commited version",   w(gs.show) "@")
+    Lmap("hc",  "Previous version",   w(gs.show) "~")
     -- Diff
-    map("n", "<Leader>hdd", function() gitsigns.diffthis(nil,  { split = "belowright" }) end, { desc = "With indexed" })
-    map("n", "<Leader>hdD", function() gitsigns.diffthis("@", { split = "belowright" }) end, { desc = "With HEAD" })
-    map("n", "<Leader>hds", function() gitsigns.change_base() end, { desc = "Base to stage" })
-    map("n", "<Leader>hdh", function() gitsigns.change_base "@" end, { desc = "Base to HEAD" })
+    Lmap("hdd", "With indexed",       w(gs.diffthis, nil, { split = "belowright" }))
+    Lmap("hdD", "With HEAD",          w(gs.diffthis, "@", { split = "belowright" }))
+    Lmap("hdp", "With previous",      w(gs.diffthis, "~", { split = "belowright" }))
+    Lmap("hds", "Base to stage",        gs.change_base)
+    Lmap("hdS", "To staged globally", w(gs.change_base, nil, true))
+    Lmap("hdh", "Base to HEAD",       w(gs.change_base) "@")
+    Lmap("hdH", "To HEAD globally",   w(gs.change_base, "@", true))
 
-    map("n", "<Leader>hb", gitsigns.blame_line,  { desc = "Blame line" })
-    map("n", "<Leader>hi", gitsigns.preview_hunk_inline,  { desc = "Preview inline" })
-    map("n", "<Leader>hp", gitsigns.preview_hunk,  { desc = "Preview hunk" })
+    Lmap("hb",  "Blame line",           gs.blame_line)
+    Lmap("hB",  "Blame line",         w(gs.blame_line) { full = true })
+    Lmap("hi",  "Preview inline",       gs.preview_hunk_inline)
+    Lmap("hp",  "Preview hunk",         gs.preview_hunk)
+    Lmap("hs",  "Stage hunk",           gs.stage_hunk)
+    Lmap("hr",  "Reset hunk",           gs.reset_hunk)
+    Lmap("hS",  "Stage buffer",         gs.stage_buffer)
+    Lmap("hR",  "Reset buffer",         gs.reset_buffer)
+    Lmap("hu",  "Undo stage hunk",      gs.undo_stage_hunk) -- only for current session
 
-    map("n", "[h", gitsigns.prev_hunk,  { desc = "Previous hunk" })
-    map("n", "]h", gitsigns.next_hunk,  { desc = "Next hunk" })
+    Lmap("hs",  "Stage hunk", function() gs.stage_hunk { vim.fn.line ".", vim.fn.line "v" } end, "x")
+    Lmap("hr",  "Reset hunk", function() gs.reset_hunk { vim.fn.line ".", vim.fn.line "v" } end, "x")
 
-    map("n", "<Leader>hs", gitsigns.stage_buffer, { desc = "Stage buffer" })
-    map("n", "<Leader>h?", gitsigns.stage_hunk, { desc = "Stage hunk" })
-    map("v", "<leader>h?", function() gitsigns.stage_hunk {vim.fn.line("."), vim.fn.line("v")} end, { desc = "Stage hunk" })
-    map("n", "<Leader>hu", gitsigns.undo_stage_hunk, { desc = "Undo stage hunk" }) -- only for current session
-
-    map("n", "<Leader>htd", gitsigns.toggle_deleted, { desc = "Deleted" })
-    map("n", "<Leader>htb", gitsigns.toggle_current_line_blame, { desc = "Blame" })
-    map("n", "<Leader>htw", gitsigns.toggle_word_diff,  { desc = "Word diff" })
-    map("n", "<Leader>htl", gitsigns.toggle_linehl,  { desc = "Line highlight" })
-    map("n", "<Leader>htn", gitsigns.toggle_numhl,  { desc = "Number highlight" })
-    map("n", "<Leader>hts", gitsigns.toggle_signs,  { desc = "Signs" })
-    --map("n", "<Leader>h?", gitsigns.,  { desc = "" })
-
-
+    map("n", "[h", gs.prev_hunk, { desc = "Previous hunk" })
+    map("n", "]h", gs.next_hunk, { desc = "Next hunk" })
+    map({"x", "o"}, "ih", gs.select_hunk, { desc = "Select hunk" })
 end
 
 
 function M.config()
-    --[[ gitsigns_config.on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
-
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
-
-        -- Navigation
-        map("n", "]c", function()
-            if vim.wo.diff then return "]c" end
-            vim.schedule(function() gs.next_hunk() end)
-            return "<Ignore>"
-        end, {expr=true})
-
-        map("n", "[c", function()
-            if vim.wo.diff then return "[c" end
-            vim.schedule(function() gs.prev_hunk() end)
-            return "<Ignore>"
-        end, {expr=true})
-
-        -- Actions
-        map("n", "<leader>hs", gs.stage_hunk)
-        map("n", "<leader>hr", gs.reset_hunk)
-        map("v", "<leader>hs", function() gs.stage_hunk {vim.fn.line("."), vim.fn.line("v")} end)
-        map("v", "<leader>hr", function() gs.reset_hunk {vim.fn.line("."), vim.fn.line("v")} end)
-        map("n", "<leader>hS", gs.stage_buffer)
-        map("n", "<leader>hu", gs.undo_stage_hunk)
-        map("n", "<leader>hR", gs.reset_buffer)
-        map("n", "<leader>hp", gs.preview_hunk)
-        map("n", "<leader>hb", function() gs.blame_line{full=true} end)
-        map("n", "<leader>tb", gs.toggle_current_line_blame)
-        map("n", "<leader>hd", gs.diffthis)
-        map("n", "<leader>hD", function() gs.diffthis("~") end)
-        map("n", "<leader>td", gs.toggle_deleted)
-
-        -- Text object
-        map({"o", "x"}, "ih", ":<C-U>Gitsigns select_hunk<CR>")
-    end ]]
-
-    local gitsigns = require "gitsigns"
-    gitsigns.setup(gitsigns_config)
-    setup_mappings(gitsigns)
+    require("gitsigns").setup(gitsigns_config)
+    setup_mappings()
 end
 
 return M

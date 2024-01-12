@@ -7,7 +7,7 @@ local M = {
         "hrsh7th/cmp-buffer",
 
         "L3MON4D3/LuaSnip", -- jsregexp is optional
-        "saadparwaiz1/cmp_luasnip",
+        "saadparwaiz1/cmp_luasnip", -- TODO
     }
 }
 
@@ -87,7 +87,8 @@ local function get_completion_buffers()
 end
 
 
-local function longest_common_completion(cmp)
+local function longest_common_completion()
+    local cmp = package.loaded.cmp
     -- TODO use most common instead of just common
     cmp.complete { config = { -- should be fast asf
         sources = {
@@ -108,17 +109,19 @@ local function longest_common_completion(cmp)
     return cmp.complete_common_string()
 end
 
-local function setup_mappings(cmp)
+local function setup_mappings()
+    local cmp = package.loaded.cmp
+
     local mappings = { -- My Caps is BS cuz caps is bs.
         ["<C-N>"] = cmp.mapping.scroll_docs(4),
         ["<C-E>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-Space>"] = cmp.select_prev_item,
+        ["<C-Space>"] = function() cmp.select_prev_item() end,
         ["<C-CR>"] = function() cmp.confirm { select = true } end, -- Insert
     }
 
     -- and = exec if prev=true; or = exec if prev=false
     mappings["<S-Tab>"] = function()
-        return cmp.visible and cmp.open_docs() or cmp.close_docs()
+        return cmp.visible() and cmp.open_docs() or cmp.close_docs()
     end
     mappings["<S-BS>"] = cmp.mapping(function()
         return cmp.visible() and exit_completion()
@@ -137,7 +140,7 @@ local function setup_mappings(cmp)
     mappings["<S-CR>"] = function()
         return cmp.visible()
             and cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
-            or longest_common_completion(cmp) and exit_completion() or register_oneshots()
+            or longest_common_completion() and exit_completion() or register_oneshots()
     end
 
     return mappings
@@ -158,14 +161,14 @@ function M.config()
             --fetching_timeout = 500,
             max_view_entries = 40, -- 200
         },
-        mapping = setup_mappings(cmp),
+        mapping = setup_mappings(),
         preselect = cmp.PreselectMode.Item, -- Honour LSP preselect requests
         --experimental = { ghost_text = true }
         snippet = {
             expand = function(args) require("luasnip").lsp_expand(args.body) end
         },
         formatting = {
-            expandable_indicator = true,
+            expandable_indicator = true, -- show ~ indicator
             fields = { "abbr", "kind", "menu" },
             format = format_completion_entries,
         },
