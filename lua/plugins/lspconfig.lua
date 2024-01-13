@@ -35,12 +35,11 @@ local lspconfig_overrides = {
 
 
 function M.config()
-    vim.diagnostic.config(diagnostic_config)
-
-    local lspconfig = require("lspconfig")
+    local lspconfig = require "lspconfig"
     lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, lspconfig_overrides)
-
     require("lspconfig.ui.windows").default_options.border = require("assets.assets").border -- :LspInfo
+
+    vim.diagnostic.config(diagnostic_config)
 end
 
 return M

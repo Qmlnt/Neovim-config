@@ -24,16 +24,16 @@ return {
     config = function(_, opts)
         require("which-key").setup(opts)
         require("which-key").register({
+            c =  "Qlist",
+            C =  "Llist",
             u  = "Utils",
             t  = "Toggle",
             b  = "Buffer",
             w  = "Window",
             l  = "LSP",
             ll = "List",
-            lg = "Go to",
             lc = "Control",
             lw = "Workspace",
-            ld = "Diagnostics",
             lp = "Peek definiton",
             h  = "Gitsigns",
             ht = "Toggle",

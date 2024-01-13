@@ -25,8 +25,10 @@ local gitsigns_config = {
 }
 
 
-local function setup_mappings()
-    local gs = package.loaded.gitsigns
+function M.config()
+    local gs = require "gitsigns"
+    gs.setup(gitsigns_config)
+
     local map = vim.keymap.set
     local w = require("assets.utils").with
     local Lmap = require("assets.utils").Lmap
@@ -74,12 +76,6 @@ local function setup_mappings()
     map("n", "[h", gs.prev_hunk, { desc = "Previous hunk" })
     map("n", "]h", gs.next_hunk, { desc = "Next hunk" })
     map({"x", "o"}, "ih", gs.select_hunk, { desc = "Select hunk" })
-end
-
-
-function M.config()
-    require("gitsigns").setup(gitsigns_config)
-    setup_mappings()
 end
 
 return M

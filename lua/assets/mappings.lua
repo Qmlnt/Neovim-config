@@ -1,12 +1,9 @@
 local map = vim.keymap.set
-local diag = vim.diagnostic
-local lsp = vim.lsp.buf
+
+--      LEADER
 local w = require("assets.utils").with
 local Lmap = require("assets.utils").Lmap
 
-
--- TODO quickfix mappings
---      LEADER
 Lmap("r", "<C-R>")
 
 -- Utilities
@@ -15,24 +12,41 @@ Lmap("um", "<Cmd>Mason<CR>")
 Lmap("uL", "<Cmd>LspInfo<CR>")
 Lmap("uc", "<Cmd>CmpStatus<CR>")
 Lmap("un", "Netrw", vim.cmd.Ex)
-
 -- Toggle stuff
 Lmap("tn", "Number", "<Cmd>set number!<CR>")
 Lmap("tw", "Wrap",   "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
 Lmap("tc", "Column", function() vim.o.colorcolumn = vim.o.colorcolumn == "" and "80,100" or "" end)
-
 -- Clipboard stuff
-Lmap("p", "Clipboard paste", [["+p]])
-Lmap("p", "x", "Void paste", [["_dP]])
-Lmap("d", "nx", "Void delete",   [["_d]])
+Lmap("p", "Clipboard paste",      [["+p]])
+Lmap("p", "x", "Void paste",      [["_dP]])
+Lmap("d", "nx", "Void delete",    [["_d]])
 Lmap("y", "nx", "Clipboard yank", [["+y]])
 Lmap("Y", "nx", "Clipboard Yank", [["+Y]])
 
+-- Quickfix list
+Lmap("co", "Open",        "<Cmd>ccopen<CR>")
+Lmap("cc", "Close",       "<Cmd>cclose<CR>")
+Lmap("cn", "Next item",   "<Cmd>cnext<CR>")
+Lmap("ce", "Prev item",   "<Cmd>cprev<CR>")
+Lmap("cN", "Newer list",  "<Cmd>cnewer<CR>")
+Lmap("cE", "Older list",  "<Cmd>colder<CR>")
+Lmap("cl", "Last item",   "<Cmd>clast<CR>")
+Lmap("cf", "First item",  "<Cmd>cfirst<CR>")
+-- Location list
+Lmap("Co", "Open",        "<Cmd>lcopen<CR>")
+Lmap("Cc", "Close",       "<Cmd>lclose<CR>")
+Lmap("Cn", "Next item",   "<Cmd>lnext<CR>")
+Lmap("Ce", "Prev item",   "<Cmd>lprev<CR>")
+Lmap("CN", "Newer list",  "<Cmd>lnewer<CR>")
+Lmap("CE", "Older list",  "<Cmd>lolder<CR>")
+Lmap("Cl", "Last item",   "<Cmd>llast<CR>")
+Lmap("Cf", "First item",  "<Cmd>lfirst<CR>")
+
 -- Buffers
-Lmap("bn", "Next",   "<Cmd>bnext<CR>")
-Lmap("bN", "Prev",   "<Cmd>bprev<CR>")
-Lmap("bd", "Delete", "<Cmd>bdelete<CR>")
-Lmap("bu", "Unload", "<Cmd>bunload<CR>")
+Lmap("bn", "Next",               "<Cmd>bnext<CR>")
+Lmap("bN", "Prev",               "<Cmd>bprev<CR>")
+Lmap("bd", "Delete",             "<Cmd>bdelete<CR>")
+Lmap("bu", "Unload",             "<Cmd>bunload<CR>")
 Lmap("bp", "Last accessed",      "<Cmd>buffer#<CR>")
 Lmap("bm", "Last modified",      "<Cmd>bmodified<CR>")
 Lmap("bh", "H- split with next", "<Cmd>sbnext<CR>")
@@ -68,6 +82,8 @@ Lmap("wS", "H- split",            "<C-W>s")
 Lmap("wC", "Close last accessd",  "<C-W>p<C-W>c")
 
 -- LSP
+local lsp = vim.lsp.buf
+local diag = vim.diagnostic
 -- Normal
 Lmap("lh", "Help",                lsp.hover)
 Lmap("ls", "Signature help",      lsp.signature_help)
@@ -75,6 +91,9 @@ Lmap("lo", "Diagnostics float",   diag.open_float)
 Lmap("ln", "Rename",              lsp.rename)
 Lmap("lv", "Highlight",           lsp.document_highlight)
 Lmap("lV", "Clear highlight",     lsp.clear_references)
+Lmap("ld", "Definition",          lsp.definition)
+Lmap("lD", "Declaration",         lsp.declaration)
+Lmap("lt", "Type definition",     lsp.type_definition)
 Lmap("la", "nx", "Code action",   lsp.code_action)
 Lmap("lf", "nx", "Format",      w(lsp.format) { async = true })
 Lmap("lt", "Type under cursor", function() vim.lsp.util.open_floating_preview(
@@ -86,19 +105,15 @@ Lmap("lcs", "Show",    diag.show)
 Lmap("lch", "Hide",    diag.hide)
 Lmap("lce", "Enable",  diag.enable)
 Lmap("lcd", "Disable", diag.disable)
--- Go to
-Lmap("lgd", "Definition",      lsp.definition)
-Lmap("lgD", "Declaration",     lsp.declaration)
-Lmap("lgt", "Type definition", lsp.type_definition)
-Lmap("lgi", "Implementation",  lsp.implementation)
 -- List
-Lmap("lld", "Diagnostics",          diag.setqflist)
-Lmap("llr", "References",           lsp.references)
-Lmap("llw", "Workspace references", lsp.workspace_symbol)
-Lmap("lls", "Symbols",              lsp.document_symbol)
-Lmap("lli", "Incoming calls",       lsp.incoming_calls)
-Lmap("llo", "Outgoing calls",       lsp.outgoing_calls)
---Lmap("llD", "Diagnostics list",   diag.setloclist)
+Lmap("lld", "Diagnostics Q",    diag.setqflist)
+Lmap("llD", "Diagnostics L",    diag.setloclist)
+Lmap("llr", "References",       lsp.references)
+Lmap("llm", "Implementation",   lsp.implementation)
+Lmap("llb", "Buffer symbol",    lsp.document_symbol)
+Lmap("llw", "Workspace symbol", lsp.workspace_symbol)
+Lmap("lli", "Incoming calls",   lsp.incoming_calls)
+Lmap("llo", "Outgoing calls",   lsp.outgoing_calls)
 -- Workspace
 Lmap("lwa", "Add folder",    lsp.add_workspace_folder)
 Lmap("lwr", "Remove folder", lsp.remove_workspace_folder)

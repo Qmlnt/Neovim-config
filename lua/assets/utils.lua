@@ -23,9 +23,9 @@ function M.with(func, ...)
     end
 end
 
-local map = vim.keymap.set -- maybe will help with speed?
----vim.keymap.set("n","<Leader>t",":Lazy<CR",{desc="D"}) = Lmap("t", "D", ":Lazy<CR>")
----vim.keymap.set({"n","v"},"<Leader>XD",":Lazy<CR",{desc="XD"}) = Lmap("t", "nv", "D", ":Lazy<CR>")
+local map = vim.keymap.set -- no table lookups
+---vim.keymap.set("n","<Leader>t",":Lazy<CR>",{desc="D"}) = Lmap("t", "D", ":Lazy<CR>")
+---vim.keymap.set({"n","v"},"<Leader>D",":Lazy<CR>",{desc="D"}) = Lmap("t", "nv", "D", ":Lazy<CR>")
 function M.Lmap(...)
     local args = {...}
 
