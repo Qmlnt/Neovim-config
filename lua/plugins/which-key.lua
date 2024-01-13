@@ -24,13 +24,22 @@ return {
     config = function(_, opts)
         require("which-key").setup(opts)
         require("which-key").register({
-            l = "LSP",
-            lg = "Diagnostics",
+            u  = "Utils",
+            t  = "Toggle",
+            b  = "Buffer",
+            w  = "Window",
+            l  = "LSP",
+            ll = "List",
+            lg = "Go to",
+            lc = "Control",
+            lw = "Workspace",
+            ld = "Diagnostics",
             lp = "Peek definiton",
-            u = "Utils",
-            t = "Toggle",
-            b = "Buffer",
-            w = "Window",
+            h  = "Gitsigns",
+            ht = "Toggle",
+            hc = "Control",
+            hv = "View ver",
+            hd = "Diff with",
         }, { prefix = "<Leader>" })
     end
 }

@@ -40,7 +40,6 @@ local kinds = {
     TypeParameter = " TpPrm",
 }
 
-
 local function format_completion_entries(entry, vim_item) -- :h complete-items
     vim_item.menu = ({
         buffer = "[Buf]",
@@ -61,13 +60,12 @@ end
 
 ---@return true
 local function register_oneshots()
-    local oneshot_keymap = require("assets.utils").oneshot_keymap
     for _, key in ipairs { "<CR>", "<Tab>", "<Space>", "<Down>", "<Up>", "<Left>", "<Right>" } do
-        local keys = vim.api.nvim_replace_termcodes(key, true, false, true)
-        oneshot_keymap("i", key, function()
+        vim.keymap.set("i", key, function()
             exit_completion()
-            vim.api.nvim_feedkeys(keys, "n", false)
-        end, { buffer = 0 })
+            vim.keymap.del("i", key, { buffer = 0 })
+            return key
+        end, { buffer = 0, expr = true })
     end
     return true
 end
@@ -105,7 +103,6 @@ local function longest_common_completion()
         preselect = cmp.PreselectMode.None, -- not to mess up common_string
         formatting = { format = false }
     } }
-
     return cmp.complete_common_string()
 end
 

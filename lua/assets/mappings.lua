@@ -1,103 +1,111 @@
 local map = vim.keymap.set
 local diag = vim.diagnostic
 local lsp = vim.lsp.buf
+local w = require("assets.utils").with
+local Lmap = require("assets.utils").Lmap
 
 
---      LEADER  TODO yoink Lmap from gitsigns?
-map("n", "<Leader>r", "<C-R>")
+-- TODO quickfix mappings
+--      LEADER
+Lmap("r", "<C-R>")
+
 -- Utilities
-map("n", "<Leader>un", vim.cmd.Ex, { desc = "Netrw" })
-map("n", "<Leader>ul", "<Cmd>Lazy<CR>")
-map("n", "<Leader>um", "<Cmd>Mason<CR>")
-map("n", "<Leader>uL", "<Cmd>LspInfo<CR>")
-map("n", "<Leader>uc", "<Cmd>CmpStatus<CR>")
--- Toggle stuff
-map("n", "<Leader>tn", "<Cmd>set number!<CR>", { desc = "Number" })
-map("n", "<Leader>tw", "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>", { desc = "Wrap" })
-map("n", "<Leader>tc", function()
-    vim.o.colorcolumn = vim.o.colorcolumn == "" and "80,100" or ""
-end, { desc = "Column" })
--- Clipboard stuff
-map("x", "<Leader>p", [["_dP]], { desc = "Void paste" })
-map("n", "<Leader>p", [["+p]],  { desc = "Clipboard paste" })
-map({ "n", "x" }, "<Leader>d", [["_d]], { desc = "Void delete" })
-map({ "n", "x" }, "<Leader>y", [["+y]], { desc = "Clipboard yank" })
-map({ "n", "x" }, "<Leader>Y", [["+Y]], { desc = "Clipboard Yank" })
--- Buffers
-map("n", "<Leader>bn", "<Cmd>bnext<CR>", { desc = "Next" })
-map("n", "<Leader>bN", "<Cmd>bprev<CR>", { desc = "Prev" })
-map("n", "<Leader>bd", "<Cmd>bdelete<CR>", { desc = "Delete" })
-map("n", "<Leader>bu", "<Cmd>bunload<CR>", { desc = "Unload" })
-map("n", "<Leader>bp", "<Cmd>buffer#<CR>",   { desc = "Last accessed" })
-map("n", "<Leader>bm", "<Cmd>bmodified<CR>", { desc = "Last modified" })
-map("n", "<Leader>bh", "<Cmd>sbnext<CR>",        { desc = "H- split with next" })
-map("n", "<Leader>bH", "<Cmd>sbprev<CR>",        { desc = "H- split with prev" })
-map("n", "<Leader>bv", "<Cmd>vert sbnext<CR>",   { desc = "V| split with next" })
-map("n", "<Leader>bV", "<Cmd>vert sbprev<CR>",   { desc = "V| split with prev" })
-map("n", "<Leader>bs", "<Cmd>vert sbuffer#<CR>", { desc = "V| split with last" })
-map("n", "<Leader>bS", "<Cmd>sbuffer#<CR>",      { desc = "H- split with last" })
--- Windows 
-map("n", "<Leader>w<Down>",  "<C-W>J", { desc = "Move down"  })
-map("n", "<Leader>w<Up>",    "<C-W>K", { desc = "Move up"    })
-map("n", "<Leader>w<Left>",  "<C-W>H", { desc = "Move left"  })
-map("n", "<Leader>w<Right>", "<C-W>L", { desc = "Move right" })
-map("n", "<Leader>wj", "<C-W>J", { desc = "Move down"  })
-map("n", "<Leader>wk", "<C-W>K", { desc = "Move up"    })
-map("n", "<Leader>wh", "<C-W>H", { desc = "Move left"  })
-map("n", "<Leader>wl", "<C-W>L", { desc = "Move right" })
-map("n", "<Leader>ww", "<C-W>n", { desc = "New" })
-map("n", "<Leader>wn", "<C-W>w", { desc = "Next" })
-map("n", "<Leader>wN", "<C-W>W", { desc = "Prev" })
-map("n", "<Leader>wp", "<C-W>p", { desc = "Last accessed" })
-map("n", "<Leader>wc", "<C-W>c", { desc = "Close"        })
-map("n", "<Leader>wo", "<C-W>o", { desc = "Close others" })
-map("n", "<Leader>wx", "<C-W>x", { desc = "Exchange with next" })
-map("n", "<Leader>we", "<C-W>=", { desc = "Equal size" })
-map("n", "<Leader>wW", "<C-W>|", { desc = "Max width"  })
-map("n", "<Leader>wH", "<C-W>_", { desc = "Max height" })
-map("n", "<Leader>wr", "<C-W>r", { desc = "Rotate downwards" })
-map("n", "<Leader>wR", "<C-W>R", { desc = "Rotate upwards"   })
-map("n", "<Leader>ws", "<C-W>v", { desc = "V| split" })
-map("n", "<Leader>wS", "<C-W>s", { desc = "H- split" })
-map("n", "<Leader>wC", "<C-W>p<C-W>c", { desc = "Close last accessed" })
+Lmap("ul", "<Cmd>Lazy<CR>")
+Lmap("um", "<Cmd>Mason<CR>")
+Lmap("uL", "<Cmd>LspInfo<CR>")
+Lmap("uc", "<Cmd>CmpStatus<CR>")
+Lmap("un", "Netrw", vim.cmd.Ex)
 
--- Diagnostics
-map("n", "]d", diag.goto_next, { desc = "Next diagnostic" })
-map("n", "[d", diag.goto_prev, { desc = "Prev diagnostic" })
-map("n", "<Leader>lcs", diag.show,    { desc = "Show" })
-map("n", "<Leader>lch", diag.hide,    { desc = "Hide" })
-map("n", "<Leader>lce", diag.enable,  { desc = "Enable" })
-map("n", "<Leader>lcd", diag.disable, { desc = "Disable" })
-map("n", "<Leader>lo",  diag.open_float, { desc = "Floating diagnostics" })
-map("n", "<Leader>ll",  diag.setloclist, { desc = "Location list (local)" })
-map("n", "<Leader>lq",  diag.setqflist,  { desc = "Quickfix list (global)" })
+-- Toggle stuff
+Lmap("tn", "Number", "<Cmd>set number!<CR>")
+Lmap("tw", "Wrap",   "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
+Lmap("tc", "Column", function() vim.o.colorcolumn = vim.o.colorcolumn == "" and "80,100" or "" end)
+
+-- Clipboard stuff
+Lmap("p", "Clipboard paste", [["+p]])
+Lmap("p", "x", "Void paste", [["_dP]])
+Lmap("d", "nx", "Void delete",   [["_d]])
+Lmap("y", "nx", "Clipboard yank", [["+y]])
+Lmap("Y", "nx", "Clipboard Yank", [["+Y]])
+
+-- Buffers
+Lmap("bn", "Next",   "<Cmd>bnext<CR>")
+Lmap("bN", "Prev",   "<Cmd>bprev<CR>")
+Lmap("bd", "Delete", "<Cmd>bdelete<CR>")
+Lmap("bu", "Unload", "<Cmd>bunload<CR>")
+Lmap("bp", "Last accessed",      "<Cmd>buffer#<CR>")
+Lmap("bm", "Last modified",      "<Cmd>bmodified<CR>")
+Lmap("bh", "H- split with next", "<Cmd>sbnext<CR>")
+Lmap("bH", "H- split with prev", "<Cmd>sbprev<CR>")
+Lmap("bv", "V| split with next", "<Cmd>vert sbnext<CR>")
+Lmap("bV", "V| split with prev", "<Cmd>vert sbprev<CR>")
+Lmap("bs", "V| split with last", "<Cmd>vert sbuffer#<CR>")
+Lmap("bS", "H- split with last", "<Cmd>sbuffer#<CR>")
+
+-- Windows 
+Lmap("w<Down>", "Move win down",  "<C-W>J")
+Lmap("w<Up>",   "Move win up",    "<C-W>K")
+Lmap("w<Left>", "Move win left",  "<C-W>H")
+Lmap("w<Right>","Move win right", "<C-W>L")
+Lmap("wj", "Move win down",       "<C-W>J")
+Lmap("wk", "Move win up",         "<C-W>K")
+Lmap("wh", "Move win left",       "<C-W>H")
+Lmap("wl", "Move win right",      "<C-W>L")
+Lmap("ww", "New",                 "<C-W>n")
+Lmap("wn", "Next",                "<C-W>w")
+Lmap("wN", "Prev",                "<C-W>W")
+Lmap("wp", "Last accessed",       "<C-W>p")
+Lmap("wc", "Close",               "<C-W>c")
+Lmap("wo", "Close others",        "<C-W>o")
+Lmap("wx", "Xchange with next",   "<C-W>x")
+Lmap("we", "Equal size",          "<C-W>=")
+Lmap("wW", "Max width",           "<C-W>|")
+Lmap("wH", "Max height",          "<C-W>_")
+Lmap("wr", "Rotate downwards",    "<C-W>r")
+Lmap("wR", "Rotate upwards",      "<C-W>R")
+Lmap("ws", "V| split",            "<C-W>v")
+Lmap("wS", "H- split",            "<C-W>s")
+Lmap("wC", "Close last accessd",  "<C-W>p<C-W>c")
 
 -- LSP
-map("n", "<Leader>lh", lsp.hover,               { desc = "Hover" })
-map("n", "<Leader>ln", lsp.rename,              { desc = "Rename" })
-map("n", "<Leader>ld", lsp.definition,          { desc = "Definition" })
-map("n", "<Leader>lD", lsp.declaration,         { desc = "Declaration" })
-map("n", "<Leader>lt", lsp.type_definition,     { desc = "Type definition" })
-map("n", "<Leader>li", lsp.implementation,      { desc = "Implementation" })
-map("n", "<Leader>lr", lsp.references,          { desc = "References" })
-map("n", "<Leader>lv", lsp.document_highlight,  { desc = "Highlight references" })
-map("n", "<Leader>lV", lsp.clear_references,    { desc = "Clear highlight" })
-map("n", "<Leader>lQ", lsp.document_symbol,     { desc = "Quickfix of keywords" })
-map("n", "<Leader>ls", lsp.signature_help,      { desc = "Signature help" })
-map("n", "<Leader>lI", lsp.incoming_calls,      { desc = "Incoming calls" })
-map("n", "<Leader>lO", lsp.outgoing_calls,      { desc = "Outgoing calls" })
-map({ "n", "x" }, "<Leader>la", lsp.code_action, { desc = "Code action" })
-map({ "n", "x" }, "<Leader>lf", function() lsp.format { async = true } end, { desc = "Format" })
-map("n", "<Leader>lT", function() vim.lsp.util.open_floating_preview(
+-- Normal
+Lmap("lh", "Help",                lsp.hover)
+Lmap("ls", "Signature help",      lsp.signature_help)
+Lmap("lo", "Diagnostics float",   diag.open_float)
+Lmap("ln", "Rename",              lsp.rename)
+Lmap("lv", "Highlight",           lsp.document_highlight)
+Lmap("lV", "Clear highlight",     lsp.clear_references)
+Lmap("la", "nx", "Code action",   lsp.code_action)
+Lmap("lf", "nx", "Format",      w(lsp.format) { async = true })
+Lmap("lt", "Type under cursor", function() vim.lsp.util.open_floating_preview(
     { vim.lsp.semantic_tokens.get_at_pos()[1].type },
     nil, { border = require("assets.assets").border_bleed })
-end, { desc = "Type under cursor" })
+end)
+-- Control
+Lmap("lcs", "Show",    diag.show)
+Lmap("lch", "Hide",    diag.hide)
+Lmap("lce", "Enable",  diag.enable)
+Lmap("lcd", "Disable", diag.disable)
+-- Go to
+Lmap("lgd", "Definition",      lsp.definition)
+Lmap("lgD", "Declaration",     lsp.declaration)
+Lmap("lgt", "Type definition", lsp.type_definition)
+Lmap("lgi", "Implementation",  lsp.implementation)
+-- List
+Lmap("lld", "Diagnostics",          diag.setqflist)
+Lmap("llr", "References",           lsp.references)
+Lmap("llw", "Workspace references", lsp.workspace_symbol)
+Lmap("lls", "Symbols",              lsp.document_symbol)
+Lmap("lli", "Incoming calls",       lsp.incoming_calls)
+Lmap("llo", "Outgoing calls",       lsp.outgoing_calls)
+--Lmap("llD", "Diagnostics list",   diag.setloclist)
 -- Workspace
-map("n", "<Leader>lR", lsp.workspace_symbol, { desc = "Workspace references" })
-map("n", "<Leader>lw", lsp.add_workspace_folder, { desc = "Add workspace" })
-map("n", "<Leader>lW", lsp.remove_workspace_folder, { desc = "Remove workspace" })
-map("n", "<Leader>lL", function() vim.print(lsp.list_workspace_folders())
-end, { desc = "List folders" })
+Lmap("lwa", "Add folder",    lsp.add_workspace_folder)
+Lmap("lwr", "Remove folder", lsp.remove_workspace_folder)
+Lmap("lwl", "List folders",  function() vim.print(lsp.list_workspace_folders()) end)
+-- Other
+map("n", "]d", diag.goto_next, { desc = "Next diagnostic" })
+map("n", "[d", diag.goto_prev, { desc = "Prev diagnostic" })
 
 
 
@@ -128,6 +136,7 @@ map({ "n", "x" }, "<Down>", "j", { remap = true })
 map({ "n", "x" }, "<Up>",   "k", { remap = true })
 map({ "n", "x" }, "j", [[v:count == 0 ? "gj" : "j"]], { expr = true })
 map({ "n", "x" }, "k", [[v:count == 0 ? "gk" : "k"]], { expr = true })
+
 
 
 --      LAYOUT

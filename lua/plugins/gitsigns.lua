@@ -1,7 +1,6 @@
 local M = {
     "lewis6991/gitsigns.nvim",
     event = "User HalfLazy",
-    enabled = true
 }
 
 
@@ -28,55 +27,50 @@ local gitsigns_config = {
 
 local function setup_mappings()
     local gs = package.loaded.gitsigns
-
     local map = vim.keymap.set
     local w = require("assets.utils").with
     local Lmap = require("assets.utils").Lmap
-    --[[ local function Lmap(keys, desc, func, mode) -- wasn't a fan of these, but damn
-        map(mode or "n", "<Leader>"..keys, func, { desc = desc })
-    end ]]
 
-    Lmap("hga", "Attach",               gs.attach)
-    Lmap("hgd", "Detach",               gs.detach)
-    Lmap("hgD", "Detach all",           gs.detach_all)
-    Lmap("hgr", "Refresh",              gs.refresh)
-
-    Lmap("hts", "Signs",                gs.toggle_signs)
-    Lmap("htn", "Number hl",            gs.toggle_numhl)
-    Lmap("htl", "Line hl",              gs.toggle_linehl)
-    Lmap("htd", "Deleted",              gs.toggle_deleted)
-    Lmap("htw", "Word diff",            gs.toggle_word_diff)
-    Lmap("htb", "Blame",                gs.toggle_current_line_blame)
-
-    Lmap("hl",  "Location list",        gs.setloclist)
-    Lmap("hQ",  "Quickfix all",       w(gs.setqflist) "all")
-    Lmap("hq",  "Quickfix attched",   w(gs.setqflist) "attached")
+    -- Normal
+    Lmap("hb", "Blame line",         gs.blame_line)
+    Lmap("hB", "Blame full",       w(gs.blame_line) { full = true })
+    Lmap("hs", "Stage hunk",         gs.stage_hunk)
+    Lmap("hr", "Reset hunk",         gs.reset_hunk)
+    Lmap("hS", "Stage buffer",       gs.stage_buffer)
+    Lmap("hR", "Reset buffer",       gs.reset_buffer)
+    Lmap("hu", "Undo stage hunk",    gs.undo_stage_hunk) -- only for current session
+    Lmap("hp", "Preview hunk",       gs.preview_hunk)
+    Lmap("hi", "Inline preview",     gs.preview_hunk_inline)
+    Lmap("hl", "List of hunks",      gs.setloclist)
+    Lmap("hQ", "Qlist of all",     w(gs.setqflist) "all")
+    Lmap("hq", "Qlist of attched", w(gs.setqflist) "attached")
+    Lmap("hs", "x", "Stage hunks", function() gs.stage_hunk { vim.fn.line ".", vim.fn.line "v" } end)
+    Lmap("hr", "x", "Reset hunks", function() gs.reset_hunk { vim.fn.line ".", vim.fn.line "v" } end)
     -- View file
-    Lmap("hs",  "Staged version",       gs.show)
-    Lmap("hc",  "Commited version",   w(gs.show) "@")
-    Lmap("hc",  "Previous version",   w(gs.show) "~")
-    -- Diff
-    Lmap("hdd", "With indexed",       w(gs.diffthis, nil, { split = "belowright" }))
-    Lmap("hdD", "With HEAD",          w(gs.diffthis, "@", { split = "belowright" }))
-    Lmap("hdp", "With previous",      w(gs.diffthis, "~", { split = "belowright" }))
-    Lmap("hds", "Base to stage",        gs.change_base)
-    Lmap("hdS", "To staged globally", w(gs.change_base, nil, true))
-    Lmap("hdh", "Base to HEAD",       w(gs.change_base) "@")
-    Lmap("hdH", "To HEAD globally",   w(gs.change_base, "@", true))
-
-    Lmap("hb",  "Blame line",           gs.blame_line)
-    Lmap("hB",  "Blame line",         w(gs.blame_line) { full = true })
-    Lmap("hi",  "Preview inline",       gs.preview_hunk_inline)
-    Lmap("hp",  "Preview hunk",         gs.preview_hunk)
-    Lmap("hs",  "Stage hunk",           gs.stage_hunk)
-    Lmap("hr",  "Reset hunk",           gs.reset_hunk)
-    Lmap("hS",  "Stage buffer",         gs.stage_buffer)
-    Lmap("hR",  "Reset buffer",         gs.reset_buffer)
-    Lmap("hu",  "Undo stage hunk",      gs.undo_stage_hunk) -- only for current session
-
-    Lmap("hs",  "Stage hunk", function() gs.stage_hunk { vim.fn.line ".", vim.fn.line "v" } end, "x")
-    Lmap("hr",  "Reset hunk", function() gs.reset_hunk { vim.fn.line ".", vim.fn.line "v" } end, "x")
-
+    Lmap("hvs", "Staged",     gs.show)
+    Lmap("hvh", "HEAD",     w(gs.show) "@")
+    Lmap("hvp", "Previous", w(gs.show) "~")
+    -- Diffthis
+    Lmap("hds", "Staged",   w(gs.diffthis, nil, { split = "belowright" }))
+    Lmap("hdh", "HEAD",     w(gs.diffthis, "@", { split = "belowright" }))
+    Lmap("hdp", "Previous", w(gs.diffthis, "~", { split = "belowright" }))
+    -- Toggle
+    Lmap("hts", "Signs",     gs.toggle_signs)
+    Lmap("htn", "Number hl", gs.toggle_numhl)
+    Lmap("htl", "Line hl",   gs.toggle_linehl)
+    Lmap("htd", "Deleted",   gs.toggle_deleted)
+    Lmap("htw", "Word diff", gs.toggle_word_diff)
+    Lmap("htb", "Blame",     gs.toggle_current_line_blame)
+    -- Control
+    Lmap("hca", "Attach",             gs.attach)
+    Lmap("hcd", "Detach",             gs.detach)
+    Lmap("hcD", "Detach from all",    gs.detach_all)
+    Lmap("hcr", "Refresh",            gs.refresh)
+    Lmap("hcs", "Base to staged",     gs.change_base)
+    Lmap("hcS", "Base to staged G", w(gs.change_base, nil, true))
+    Lmap("hch", "Base to HEAD",     w(gs.change_base) "@")
+    Lmap("hcH", "Base to HEAD G",   w(gs.change_base, "@", true))
+    -- Other
     map("n", "[h", gs.prev_hunk, { desc = "Previous hunk" })
     map("n", "]h", gs.next_hunk, { desc = "Next hunk" })
     map({"x", "o"}, "ih", gs.select_hunk, { desc = "Select hunk" })

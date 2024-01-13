@@ -27,23 +27,17 @@ local map = vim.keymap.set -- maybe will help with speed?
 ---vim.keymap.set("n","<Leader>t",":Lazy<CR",{desc="D"}) = Lmap("t", "D", ":Lazy<CR>")
 ---vim.keymap.set({"n","v"},"<Leader>XD",":Lazy<CR",{desc="XD"}) = Lmap("t", "nv", "D", ":Lazy<CR>")
 function M.Lmap(...)
-    -- k,       f
-    -- k,    d, f
-    -- k, m, d, f
     local args = {...}
 
-    if #args == 3 then
-        return map("n", "<Leader>"..args[1], args[3], { desc = args[2] })
+    if #args == 3 then -- most used
+        map("n", "<Leader>"..args[1], args[3], { desc = args[2] })
+    elseif #args == 2 then
+        map("n", "<Leader>"..args[1], args[2])
+    else -- 4
+        local modes = {}
+        args[2]:gsub(".", function(c) table.insert(modes, c) end)
+        map(modes, "<Leader>"..args[1], args[4], { desc = args[3] })
     end
-    if #args == 2 then
-        return map("n", "<Leader>"..args[1], args[2])
-    end
-
-    local modes = {}
-    for i = 1, #args[2] do
-        table.insert(modes, args[2][i])
-    end
-    map(modes, "<Leader>"..args[1], args[4], { desc = args[3] })
 end
 
 
