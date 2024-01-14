@@ -36,10 +36,9 @@ return {
             lw = "Workspace",
             lp = "Peek definiton",
             h  = "Gitsigns",
+            hv = "View",
             ht = "Toggle",
             hc = "Control",
-            hv = "View ver",
-            hd = "Diff with",
         }, { prefix = "<Leader>" })
     end
 }

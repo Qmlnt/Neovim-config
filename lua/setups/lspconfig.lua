@@ -1,10 +1,6 @@
-local M = {
-    "neovim/nvim-lspconfig",
-    lazy = true
-}
+local lspconfig = require "lspconfig"
 
-
-local diagnostic_config = { -- :h vim.diagnostic.config()
+vim.diagnostic.config {
     underline = true,
     virtual_text = {
         spacing = 4,
@@ -20,7 +16,7 @@ local diagnostic_config = { -- :h vim.diagnostic.config()
     float = { border = require("assets.assets").border_bleed },
 }
 
-local lspconfig_overrides = {
+lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
     handlers = {
         ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
             border = require("assets.assets").border_bleed, max_width = 80
@@ -31,15 +27,6 @@ local lspconfig_overrides = {
     },
     capabilities = require("assets.utils").protected_require("cmp_nvim_lsp",
         function(cmp) return cmp.default_capabilities() end)
-}
+})
 
-
-function M.config()
-    local lspconfig = require "lspconfig"
-    lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, lspconfig_overrides)
-    require("lspconfig.ui.windows").default_options.border = require("assets.assets").border -- :LspInfo
-
-    vim.diagnostic.config(diagnostic_config)
-end
-
-return M
+require("lspconfig.ui.windows").default_options.border = require("assets.assets").border -- :LspInfo

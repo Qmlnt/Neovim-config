@@ -1,15 +1,4 @@
-local M = {
-    "hrsh7th/nvim-cmp",
-    --event = "VeryLazy",
-    event = { "InsertEnter" }, -- , "CmdlineEnter"
-    dependencies = {
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-
-        "L3MON4D3/LuaSnip", -- jsregexp is optional
-        "saadparwaiz1/cmp_luasnip", -- TODO
-    }
-}
+local cmp = require "cmp"
 
 
 local kinds = {
@@ -86,7 +75,6 @@ end
 
 
 local function longest_common_completion()
-    local cmp = package.loaded.cmp
     -- TODO use most common instead of just common
     cmp.complete { config = { -- should be fast asf
         sources = {
@@ -107,8 +95,6 @@ local function longest_common_completion()
 end
 
 local function setup_mappings()
-    local cmp = package.loaded.cmp
-
     local mappings = { -- My Caps is BS cuz caps is bs.
         ["<C-N>"] = cmp.mapping.scroll_docs(4),
         ["<C-E>"] = cmp.mapping.scroll_docs(-4),
@@ -122,11 +108,11 @@ local function setup_mappings()
     end
     mappings["<S-BS>"] = cmp.mapping(function()
         return cmp.visible() and exit_completion()
-        or require("luasnip").expand_or_jump()
+            or require("luasnip").expand_or_jump()
     end, { "i", "s" })
     mappings["<C-BS>"] = cmp.mapping(function()
         return cmp.visible() and cmp.abort() and exit_completion()
-        or require("luasnip").jump(-1)
+            or require("luasnip").jump(-1)
     end, { "i", "s" })
     -- it's that simple and that hard
     mappings["<S-Space>"] = function()
@@ -144,57 +130,51 @@ local function setup_mappings()
 end
 
 
-function M.config()
-    local cmp = require "cmp"
-
-    cmp.setup.global { -- = cmp.setup
-        completion = {
-            autocomplete = false,
-            completeopt = "menu,menuone,noselect" -- noselect for complete_common_string
+cmp.setup.global { -- = cmp.setup
+    completion = {
+        autocomplete = false,
+        completeopt = "menu,menuone,noselect" -- noselect for complete_common_string
+    },
+    performance = {
+        --debounce = 60,
+        throttle = 15, -- 30
+        --fetching_timeout = 500,
+        max_view_entries = 40, -- 200
+    },
+    mapping = setup_mappings(),
+    preselect = cmp.PreselectMode.Item, -- Honour LSP preselect requests
+    --experimental = { ghost_text = true }
+    snippet = {
+        expand = function(args) require("luasnip").lsp_expand(args.body) end
+    },
+    formatting = {
+        expandable_indicator = true, -- show ~ indicator
+        fields = { "abbr", "kind", "menu" },
+        format = format_completion_entries,
+    },
+    view = {
+        docs = { auto_open = true },
+        entries = { name = "custom", selection_order = "near_cursor" }
+    },
+    sources = {
+        { name = "nvim_lsp", group_index = 1 },
+        { name = "luasnip",  group_index = 1 },
+        { name = "buffer",   group_index = 2, option = {
+            indexing_interval = 100, -- default 100 ms
+            indexing_batch_size = 500, -- default 1000 lines
+            max_indexed_line_length = 2048, -- default 40*1024 bytes
+            get_bufnrs = get_completion_buffers
+        } }
+    },
+    window = {
+        completion = cmp.config.window.bordered {
+            side_padding = 0,
+            scrollbar = false,
+            border = require("assets.assets").border_bleed
         },
-        performance = {
-            --debounce = 60,
-            throttle = 15, -- 30
-            --fetching_timeout = 500,
-            max_view_entries = 40, -- 200
-        },
-        mapping = setup_mappings(),
-        preselect = cmp.PreselectMode.Item, -- Honour LSP preselect requests
-        --experimental = { ghost_text = true }
-        snippet = {
-            expand = function(args) require("luasnip").lsp_expand(args.body) end
-        },
-        formatting = {
-            expandable_indicator = true, -- show ~ indicator
-            fields = { "abbr", "kind", "menu" },
-            format = format_completion_entries,
-        },
-        view = {
-            docs = { auto_open = true },
-            entries = { name = "custom", selection_order = "near_cursor" }
-        },
-        sources = {
-            { name = "nvim_lsp", group_index = 1 },
-            { name = "luasnip",  group_index = 1 },
-            { name = "buffer",   group_index = 2, option = {
-                indexing_interval = 100, -- default 100 ms
-                indexing_batch_size = 500, -- default 1000 lines
-                max_indexed_line_length = 2048, -- default 40*1024 bytes
-                get_bufnrs = get_completion_buffers
-            } }
-        },
-        window = {
-            completion = cmp.config.window.bordered {
-                side_padding = 0,
-                scrollbar = false,
-                border = require("assets.assets").border_bleed
-            },
-            documentation = cmp.config.window.bordered {
-                side_padding = 0,
-                border = require("assets.assets").border_bleed
-            }
+        documentation = cmp.config.window.bordered {
+            side_padding = 0,
+            border = require("assets.assets").border_bleed
         }
     }
-end
-
-return M
+}

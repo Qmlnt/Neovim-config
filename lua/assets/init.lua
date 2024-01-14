@@ -1,3 +1,3 @@
 require "assets.options"
 require "assets.autocmds"
-vim.schedule(function() require "assets.mappings" end)
+vim.schedule_wrap(require) "assets.mappings"

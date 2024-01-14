@@ -1,11 +1,3 @@
-local M = {
-    "nvim-treesitter/nvim-treesitter",
-    event = "User HalfLazy", -- "VeryLazy" },
-    build = ":TSUpdate",
-    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" }
-}
-
-
 local treesitter_config = {
     auto_install = true,
     sync_install = false,
@@ -45,10 +37,10 @@ local treesitter_config = {
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = "<tab>",
-            node_incremental = "<tab>",
-            node_decremental = "<s-tab>",
-            scope_incremental = "<c-tab>",
+            init_selection = "<Tab>",
+            node_incremental = "<Tab>",
+            node_decremental = "<S-Tab>",
+            scope_incremental = "<C-Tab>",
         }
     }
 }
@@ -142,22 +134,25 @@ treesitter_config.textobjects = {
 }
 
 
-function M.config()
-    require("nvim-treesitter.configs").setup(treesitter_config)
+require("nvim-treesitter.configs").setup(treesitter_config)
 
-    local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
-    vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-    vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-    vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-    vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-    vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-    vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+local map = vim.keymap.set
 
-    -- repeat other moves
-    local next_diagnostics, prev_diagnostics =
-    ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-    vim.keymap.set("n", "]d", next_diagnostics, { desc = "Next diagnostic (repeatable)" })
-    vim.keymap.set("n", "[d", prev_diagnostics, { desc = "Prev diagnostic (repeatable)" })
-end
+local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+map({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+map({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+map({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+map({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
 
-return M
+-- repeat other moves
+local pair = ts_repeat_move.make_repeatable_move_pair
+
+local next_diagnostics, prev_diagnostics = pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+map("n", "]d", next_diagnostics, { desc = "Next diagnostic (repeatable)" })
+map("n", "[d", prev_diagnostics, { desc = "Prev diagnostic (repeatable)" })
+local next_hunk, prev_hunk = pair(function() package.loaded.gitsigns.next_hunk() end,
+                                  function() package.loaded.gitsigns.prev_hunk() end)
+map("n", "]h", next_hunk, { desc = "Next hunk (repeatable)" })
+map("n", "[h", prev_hunk, { desc = "Prev hunk (repeatable)" })
