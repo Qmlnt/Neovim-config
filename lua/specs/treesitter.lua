@@ -1,6 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    event = "User HalfLazy", -- "VeryLazy" },
+    event = "User LazyFile",
     build = ":TSUpdate",
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     config = function() require "setups.treesitter" end

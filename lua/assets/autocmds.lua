@@ -2,18 +2,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function() vim.highlight.on_yank() end
 })
 
+-- Doesn't trigger for manpages
 vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "BufNewFile" }, {
     callback = vim.schedule_wrap(function()
-        vim.api.nvim_exec_autocmds("User", { pattern = "HalfLazy" })
+        vim.api.nvim_exec_autocmds("User", { pattern = "LazyFile" })
+        vim.schedule_wrap(vim.api.nvim_exec_autocmds)("User", { pattern = "VeryLazyFile" })
     end)
 })
-
---[[ vim.api.nvim_create_autocmd({}, {
-    callback = vim.schedule_wrap(function()
-        vim.api.nvim_exec_autocmds("User", { pattern = "VeryLazy" })
-    end)
-}) ]]
-
 
 vim.api.nvim_create_autocmd("LspAttach", { -- Overrides of default keymaps
     callback = function(args)

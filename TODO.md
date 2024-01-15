@@ -8,7 +8,3 @@
         - Harpoon?
     - Statusline
     - Undootree
-    - Git intergration?
-- Optimization:
-    - yoink LazyFile from LazyVim
-

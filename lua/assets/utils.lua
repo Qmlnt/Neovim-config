@@ -1,18 +1,9 @@
--- I'm just having tons of fun here, nothing special
 local M = {}
-
---[[function M.protected_plugin(plugin)
-    return setmetatable({}, {
-    __index = function(k) return plugin[k] end,
-    })
-    if package.loaded[plugin_name] then
-        return package.loaded[plugin_name]
-    end
-end]]
 
 
 ---function() y("1") end = with(y) "1"
 ---function() y(1,2) end = with(y,1,2)
+---@param func fun(...)
 function M.with(func, ...)
     if ... then
         local args = {...}
@@ -41,7 +32,7 @@ function M.Lmap(...)
 end
 
 
----Handle require fails
+---Handle require calls
 ---@param module_name string
 ---@param success_callback fun(module: table): any | any
 ---@param error_callback? fun(error: string): any | any
@@ -74,27 +65,12 @@ function M.oneshot_keymap(mode, lhs, rhs, opts)
         vim.keymap.set(mode, lhs, rhs, opts)
 
         local keys = vim.api.nvim_replace_termcodes(lhs, true, false, true)
-        vim.api.nvim_feedkeys(keys, "m", false) -- TODO check the x option
+        vim.api.nvim_feedkeys(keys, "m", false)
 
-        vim.schedule(function() -- run a bit later
-            vim.keymap.del(mode, lhs, buffer)
-        end)
+        vim.schedule_wrap(vim.keymap.del)(mode, lhs, buffer) -- run a bit later
     end
 
     vim.keymap.set(mode, lhs, trigger_oneshot, buffer)
-end
-
-
-function M.tests()
-    vim.keymap.set("n", "z", function() print "hi" end)
-    vim.api.nvim_feedkeys("z", "m", false)
-    vim.print("bye")
-    print("1")
-    print("1")
-    print("1")
-    print("1")
-    print("end")
-    vim.schedule(function() print("last?") end)
 end
 
 

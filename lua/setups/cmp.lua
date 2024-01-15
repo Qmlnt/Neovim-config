@@ -115,7 +115,7 @@ local function setup_mappings()
             or require("luasnip").jump(-1)
     end, { "i", "s" })
     -- it's that simple and that hard
-    mappings["<S-Space>"] = function()
+    mappings["<S-Space>"] = function() -- in my kitty.conf: map shift+space send_text all \033[32;2u
         return (cmp.visible() or (
             cmp.complete() and register_oneshots() and not cmp.get_selected_entry()
         )) and cmp.select_next_item()

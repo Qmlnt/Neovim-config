@@ -119,8 +119,10 @@ Lmap("lwa", "Add folder",    lsp.add_workspace_folder)
 Lmap("lwr", "Remove folder", lsp.remove_workspace_folder)
 Lmap("lwl", "List folders",  function() vim.print(lsp.list_workspace_folders()) end)
 -- Other
-map("n", "]d", diag.goto_next, { desc = "Next diagnostic" })
-map("n", "[d", diag.goto_prev, { desc = "Prev diagnostic" })
+if not package.loaded["nvim-treesitter.textobjects.repeatable_move"] then
+    map("n", "]d", diag.goto_next, { desc = "Next diagnostic" })
+    map("n", "[d", diag.goto_prev, { desc = "Prev diagnostic" })
+end
 
 
 

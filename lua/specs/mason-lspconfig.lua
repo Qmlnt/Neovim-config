@@ -1,6 +1,6 @@
 local M = {
     "williamboman/mason-lspconfig.nvim",
-    event = { "BufReadPre", "User HalfLazy" },
+    event = "BufReadPre",
     dependencies = { -- load those first
         "mason.nvim",
         {
