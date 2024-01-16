@@ -106,22 +106,32 @@ Lmap("lch", "Hide",    diag.hide)
 Lmap("lce", "Enable",  diag.enable)
 Lmap("lcd", "Disable", diag.disable)
 -- List
-Lmap("lld", "Diagnostics Q",    diag.setqflist)
-Lmap("llD", "Diagnostics L",    diag.setloclist)
-Lmap("llr", "References",       lsp.references)
-Lmap("llm", "Implementation",   lsp.implementation)
-Lmap("llb", "Buffer symbol",    lsp.document_symbol)
-Lmap("llw", "Workspace symbol", lsp.workspace_symbol)
-Lmap("lli", "Incoming calls",   lsp.incoming_calls)
-Lmap("llo", "Outgoing calls",   lsp.outgoing_calls)
+Lmap("lld", "Diagnostics Q",     diag.setqflist)
+Lmap("llD", "Diagnostics L",     diag.setloclist)
+Lmap("llr", "References",        lsp.references)
+Lmap("llb", "Buffer symbols",    lsp.document_symbol)
+Lmap("llw", "Workspace symbols", lsp.workspace_symbol)
+Lmap("lli", "Incoming calls",    lsp.incoming_calls)
+Lmap("llo", "Outgoing calls",    lsp.outgoing_calls)
+Lmap("llm", "Implementations",   lsp.implementation)
 -- Workspace
 Lmap("lwa", "Add folder",    lsp.add_workspace_folder)
 Lmap("lwr", "Remove folder", lsp.remove_workspace_folder)
 Lmap("lwl", "List folders",  function() vim.print(lsp.list_workspace_folders()) end)
--- Other
+
+
+-- Next/Prev
 if not package.loaded["nvim-treesitter.textobjects.repeatable_move"] then
-    map("n", "]d", diag.goto_next, { desc = "Next diagnostic" })
-    map("n", "[d", diag.goto_prev, { desc = "Prev diagnostic" })
+    local function make_pair(char, desc, next, prev)
+        map("n", "]"..char, next, { desc = "Next "..desc })
+        map("n", "["..char, prev, { desc = "Prev "..desc })
+    end
+
+    make_pair("q", "quickfix", "<Cmd>cnext<CR>", "<Cmd>cprev<CR>")
+    make_pair("Q", "loclist",  "<Cmd>lnext<CR>", "<Cmd>lprev<CR>")
+    make_pair("b", "buffer",   "<Cmd>bnext<CR>", "<Cmd>bprev<CR>")
+    make_pair("w", "window",   "<Cmd>wnext<CR>", "<Cmd>wprev<CR>")
+    make_pair("d", "diagnostic", diag.goto_next, diag.goto_prev)
 end
 
 

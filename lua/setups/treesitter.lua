@@ -53,11 +53,11 @@ treesitter_config.textobjects = {
         keymaps = { -- i - invocation, o - object, n - note, a - argument
             ["ai"] = "@call.outer", ["ic"] = "@conditional.inner",
             ["al"] = "@loop.outer",   ["ia"] = "@parameter.inner",
-            ["ab"] = "@block.outer",   ["if"] = "@function.inner",
+            ["ak"] = "@block.outer",   ["if"] = "@function.inner",
             ["ao"] = "@class.outer",    ["in"] = "@comment.inner",
             ["ar"] = "@return.outer",    ["ir"] = "@return.inner",
             ["an"] = "@comment.outer",    ["io"] = "@class.inner",
-            ["af"] = "@function.outer",   ["ib"] = "@block.inner",
+            ["af"] = "@function.outer",   ["ik"] = "@block.inner",
             ["aa"] = "@parameter.outer",   ["il"] = "@loop.inner",
             ["ac"] = "@conditional.outer", ["ii"] = "@call.inner",
         }
@@ -67,22 +67,22 @@ treesitter_config.textobjects = {
         swap_next = { -- a bit too much i guess... XD
             [")i"] = "@call.outer", [")C"] = "@conditional.inner",
             [")l"] = "@loop.outer",   [")A"] = "@parameter.inner",
-            [")b"] = "@block.outer",   [")F"] = "@function.inner",
+            [")k"] = "@block.outer",   [")F"] = "@function.inner",
             [")o"] = "@class.outer",    [")N"] = "@comment.inner",
             [")r"] = "@return.outer",    [")R"] = "@return.inner",
             [")n"] = "@comment.outer",    [")O"] = "@class.inner",
-            [")f"] = "@function.outer",   [")B"] = "@block.inner",
+            [")f"] = "@function.outer",   [")K"] = "@block.inner",
             [")a"] = "@parameter.outer",   [")L"] = "@loop.inner",
             [")c"] = "@conditional.outer", [")I"] = "@call.inner",
         },
         swap_previous = {
             ["(i"] = "@call.outer", ["(C"] = "@conditional.inner",
             ["(l"] = "@loop.outer",   ["(A"] = "@parameter.inner",
-            ["(b"] = "@block.outer",   ["(F"] = "@function.inner",
+            ["(k"] = "@block.outer",   ["(F"] = "@function.inner",
             ["(o"] = "@class.outer",    ["(N"] = "@comment.inner",
             ["(r"] = "@return.outer",    ["(R"] = "@return.inner",
             ["(n"] = "@comment.outer",    ["(O"] = "@class.inner",
-            ["(f"] = "@function.outer",   ["(B"] = "@block.inner",
+            ["(f"] = "@function.outer",   ["(K"] = "@block.inner",
             ["(a"] = "@parameter.outer",   ["(L"] = "@loop.inner",
             ["(c"] = "@conditional.outer", ["(I"] = "@call.inner",
         },
@@ -95,28 +95,28 @@ treesitter_config.textobjects = {
         goto_next_start = {
             ["]i"] = "@call.outer", ["]c"] = "@conditional.outer",
             ["]l"] = "@loop.outer",  ["]s"] = "@assignment.inner",
-            ["]b"] = "@block.outer",  ["]a"] = "@parameter.outer",
+            ["]k"] = "@block.outer",  ["]a"] = "@parameter.outer",
             ["]o"] = "@class.outer",   ["]f"] = "@function.outer",
             ["]r"] = "@return.outer",   ["]n"] = "@comment.outer",
         },
         goto_next_end = {
             ["]I"] = "@call.outer", ["]C"] = "@conditional.outer",
             ["]L"] = "@loop.outer",  ["]S"] = "@assignment.inner",
-            ["]B"] = "@block.outer",  ["]A"] = "@parameter.outer",
+            ["]K"] = "@block.outer",  ["]A"] = "@parameter.outer",
             ["]O"] = "@class.outer",   ["]F"] = "@function.outer",
             ["]R"] = "@return.outer",   ["]N"] = "@comment.outer",
         },
         goto_previous_start = {
             ["[i"] = "@call.outer", ["[c"] = "@conditional.outer",
             ["[l"] = "@loop.outer",  ["[s"] = "@assignment.inner",
-            ["[b"] = "@block.outer",  ["[a"] = "@parameter.outer",
+            ["[k"] = "@block.outer",  ["[a"] = "@parameter.outer",
             ["[o"] = "@class.outer",   ["[f"] = "@function.outer",
             ["[r"] = "@return.outer",   ["[n"] = "@comment.outer",
         },
         goto_previous_end = {
             ["[I"] = "@call.outer", ["[C"] = "@conditional.outer",
             ["[L"] = "@loop.outer",  ["[S"] = "@assignment.inner",
-            ["[B"] = "@block.outer",  ["[A"] = "@parameter.outer",
+            ["[K"] = "@block.outer",  ["[A"] = "@parameter.outer",
             ["[O"] = "@class.outer",   ["[F"] = "@function.outer",
             ["[R"] = "@return.outer",   ["[N"] = "@comment.outer",
         },
@@ -133,12 +133,12 @@ treesitter_config.textobjects = {
     },
 }
 
-
 require("nvim-treesitter.configs").setup(treesitter_config)
 
-local map = vim.keymap.set
 
+local map = vim.keymap.set
 local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+
 map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
 map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
 map({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
@@ -146,13 +146,22 @@ map({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
 map({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
 map({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
 
+
 -- repeat other moves
 local pair = ts_repeat_move.make_repeatable_move_pair
+local function make_pair(char, desc, next_func, prev_func)
+    local next, prev = pair(next_func, prev_func)
+    map("n", "]"..char, next, { desc = "Next "..desc.." (repeatable)" })
+    map("n", "["..char, prev, { desc = "Prev "..desc.." (repeatable)" })
+end
+local function try(func, except) return pcall(func) or except() end
+local w = require("assets.utils").with
+local cmd = w(vim.cmd)
 
-local next_diagnostics, prev_diagnostics = pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-map("n", "]d", next_diagnostics, { desc = "Next diagnostic (repeatable)" })
-map("n", "[d", prev_diagnostics, { desc = "Prev diagnostic (repeatable)" })
-local next_hunk, prev_hunk = pair(function() package.loaded.gitsigns.next_hunk() end,
-                                  function() package.loaded.gitsigns.prev_hunk() end)
-map("n", "]h", next_hunk, { desc = "Next hunk (repeatable)" })
-map("n", "[h", prev_hunk, { desc = "Prev hunk (repeatable)" })
+make_pair("b", "buffer",   cmd "bnext", cmd "bprev")
+make_pair("w", "window",   cmd "wnext", cmd "wprev")
+make_pair("Q", "loclist",  w(try, cmd "lnext", cmd "lfirst"), w(try, cmd "lprev", cmd "llast"))
+make_pair("q", "quickfix", w(try, cmd "cnext", cmd "cfirst"), w(try, cmd "cprev", cmd "clast"))
+make_pair("d", "diagnostic", vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+make_pair("h", "hunk", function() package.loaded.gitsigns.next_hunk() end,
+                       function() package.loaded.gitsigns.prev_hunk() end)

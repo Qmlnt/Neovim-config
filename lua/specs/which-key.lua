@@ -23,22 +23,25 @@ return {
 
     config = function(_, opts)
         require("which-key").setup(opts)
-        require("which-key").register({
-            c =  "Qlist",
-            C =  "Llist",
-            u  = "Utils",
-            t  = "Toggle",
-            b  = "Buffer",
-            w  = "Window",
-            l  = "LSP",
-            ll = "List",
-            lc = "Control",
-            lw = "Workspace",
-            lp = "Peek definiton",
-            h  = "Gitsigns",
-            hv = "View",
-            ht = "Toggle",
-            hc = "Control",
+        require("which-key").register({ -- Naming groups here
+            c =  { name = "Quickfix" },
+            C =  { name = "Loclist" },
+            u  = { name = "Utils" },
+            t  = { name = "Toggle" },
+            b  = { name = "Buffer" },
+            w  = { name = "Window" },
+            h  = { name = "Gitsigns",
+                v = { name = "View" },
+                t = { name = "Toggle" },
+                c = { name = "Control" },
+            },
+            l  = {
+                name = "LSP",
+                l = { name = "List" },
+                c = { name = "Control" },
+                w = { name = "Workspace" },
+                p = { name = "Peek definiton" },
+            },
         }, { prefix = "<Leader>" })
     end
 }

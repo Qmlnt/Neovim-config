@@ -26,7 +26,7 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
         })
     },
     capabilities = require("assets.utils").protected_require("cmp_nvim_lsp",
-        function(cmp) return cmp.default_capabilities() end)
+        function(cmp_lsp) return cmp_lsp.default_capabilities() end)
 })
 
 require("lspconfig.ui.windows").default_options.border = require("assets.assets").border -- :LspInfo

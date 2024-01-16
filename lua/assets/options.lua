@@ -18,6 +18,7 @@ o.hlsearch  = true -- default
 o.incsearch = true -- default
 o.confirm = true -- :q when there are changes
 o.iskeyword:append "-" -- is part of the word
+o.shortmess = "atTIcCF" -- oO?
 o.wildmode = "longest:full,full" -- cmd completion
 o.completeopt = "menu,menuone,longest" -- omnifunc completion
 o.mouse = "a"
@@ -50,7 +51,7 @@ o.cursorline  = true
 o.laststatus = 3 -- statusline only on last win; 0 to hide
 o.conceallevel = 3 -- hide markup
 o.number = true
-o.numberwidth = 1 -- automatic width ^.^
+o.numberwidth = 1 -- minimal possible width
 o.relativenumber = true
 o.signcolumn = "number"
 o.termguicolors = true -- RGB True color
@@ -63,9 +64,3 @@ o.fillchars = {
     eob = " ",
     lastline = "❭"
 }
-
---vim.opt.shortmess = "atoOFIcC" -- completions
-
---vim.g.netrw_banner = 0 -- TODO
---vim.g.netrw_mouse = 2 -- TODO
--- TODO? check sessionoptions and :makesession
