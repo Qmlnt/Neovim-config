@@ -25,8 +25,8 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
             border = require("assets.assets").border_bleed, max_width = 80
         })
     },
-    capabilities = require("assets.utils").protected_require("cmp_nvim_lsp",
-        function(cmp_lsp) return cmp_lsp.default_capabilities() end)
+    capabilities = pcall(require, "cmp_nvim_lsp") and
+        package.loaded.cmp_nvim_lsp.default_capabilities() or nil
 })
 
 require("lspconfig.ui.windows").default_options.border = require("assets.assets").border -- :LspInfo

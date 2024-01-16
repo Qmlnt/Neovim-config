@@ -59,6 +59,7 @@ treesitter_config.textobjects = {
             ["an"] = "@comment.outer",    ["io"] = "@class.inner",
             ["af"] = "@function.outer",   ["ik"] = "@block.inner",
             ["aa"] = "@parameter.outer",   ["il"] = "@loop.inner",
+            ["as"] = "@assignment.outer",  -- TODO
             ["ac"] = "@conditional.outer", ["ii"] = "@call.inner",
         }
     },
@@ -138,30 +139,9 @@ require("nvim-treesitter.configs").setup(treesitter_config)
 
 local map = vim.keymap.set
 local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
-
-map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
 map({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
 map({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
 map({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
 map({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
-
-
--- repeat other moves
-local pair = ts_repeat_move.make_repeatable_move_pair
-local function make_pair(char, desc, next_func, prev_func)
-    local next, prev = pair(next_func, prev_func)
-    map("n", "]"..char, next, { desc = "Next "..desc.." (repeatable)" })
-    map("n", "["..char, prev, { desc = "Prev "..desc.." (repeatable)" })
-end
-local function try(func, except) return pcall(func) or except() end
-local w = require("assets.utils").with
-local cmd = w(vim.cmd)
-
-make_pair("b", "buffer",   cmd "bnext", cmd "bprev")
-make_pair("w", "window",   cmd "wnext", cmd "wprev")
-make_pair("Q", "loclist",  w(try, cmd "lnext", cmd "lfirst"), w(try, cmd "lprev", cmd "llast"))
-make_pair("q", "quickfix", w(try, cmd "cnext", cmd "cfirst"), w(try, cmd "cprev", cmd "clast"))
-make_pair("d", "diagnostic", vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-make_pair("h", "hunk", function() package.loaded.gitsigns.next_hunk() end,
-                       function() package.loaded.gitsigns.prev_hunk() end)
+map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)

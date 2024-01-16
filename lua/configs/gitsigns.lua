@@ -21,7 +21,6 @@ gs.setup {
 }
 
 
-local map = vim.keymap.set
 local w = require("assets.utils").with
 local Lmap = require("assets.utils").Lmap
 
@@ -64,9 +63,6 @@ Lmap("hcS", "Base->staged all", w(gs.change_base, nil, true))
 Lmap("hch", "Base->HEAD",       w(gs.change_base) "@")
 Lmap("hcH", "Base->HEAD all",   w(gs.change_base, "@", true))
 -- Other
-map({"x", "o"}, "ih", gs.select_hunk, { desc = "Select hunk" })
+vim.keymap.set({"x", "o"}, "ih", gs.select_hunk, { desc = "Select hunk" })
 
-if not package.loaded["nvim-treesitter.textobjects.repeatable_move"] then
-    map("n", "]h", gs.next_hunk, { desc = "Next hunk" })
-    map("n", "[h", gs.prev_hunk, { desc = "Prev hunk" })
-end
+require("assets.utils").make_repeatable_pair("h", "hunk", gs.next_hunk, gs.prev_hunk)

@@ -1,9 +1,11 @@
 local M = {}
 
+local map = vim.keymap.set
+
 
 ---function() y("1") end = with(y) "1"
 ---function() y(1,2) end = with(y,1,2)
----@param func fun(...)
+---@param func function
 function M.with(func, ...)
     if ... then
         local args = {...}
@@ -14,7 +16,7 @@ function M.with(func, ...)
     end
 end
 
-local map = vim.keymap.set -- no table lookups
+
 ---vim.keymap.set("n","<Leader>t",":Lazy<CR>",{desc="D"}) = Lmap("t", "D", ":Lazy<CR>")
 ---vim.keymap.set({"n","v"},"<Leader>D",":Lazy<CR>",{desc="D"}) = Lmap("t", "nv", "D", ":Lazy<CR>")
 function M.Lmap(...)
@@ -32,45 +34,24 @@ function M.Lmap(...)
 end
 
 
----Handle require calls
----@param module_name string
----@param success_callback fun(module: table): any | any
----@param error_callback? fun(error: string): any | any
-function M.protected_require(module_name, success_callback, error_callback)
-    local status, module = pcall(require, module_name)
+---Switch move pair to tresitter.textobjects.repeatable_move when it becomes available
+---@param char string
+---@param desc string
+---@param next_func function
+---@param prev_func function
+function M.make_repeatable_pair(char, desc, next_func, prev_func)
+    local function check_treesitter(func)
+        local ts_repeat = package.loaded["nvim-treesitter.textobjects.repeatable_move"]
+        if not ts_repeat then return func() end
 
-    if status then
-        if type(success_callback) == "function" then
-            return success_callback(module)
-        end
-        return success_callback
+        local next, prev = ts_repeat.make_repeatable_move_pair(next_func, prev_func)
+        map("n", "]"..char, next, { desc = "Next "..desc.." (repeatable)" })
+        map("n", "["..char, prev, { desc = "Prev "..desc.." (repeatable)" })
+        if func == next_func then next() else prev() end
     end
 
-    if type(error_callback) == "function" then
-        return error_callback(module)
-    end
-    return error_callback
-end
-
-
----vim.keymap.set but one-time-use
----@param mode string | table
----@param lhs string
----@param rhs fun(any) | string
----@param opts? table
-function M.oneshot_keymap(mode, lhs, rhs, opts)
-    local buffer = opts and opts.buffer and { buffer = opts.buffer }
-
-    local function trigger_oneshot()
-        vim.keymap.set(mode, lhs, rhs, opts)
-
-        local keys = vim.api.nvim_replace_termcodes(lhs, true, false, true)
-        vim.api.nvim_feedkeys(keys, "m", false)
-
-        vim.schedule_wrap(vim.keymap.del)(mode, lhs, buffer) -- run a bit later
-    end
-
-    vim.keymap.set(mode, lhs, trigger_oneshot, buffer)
+    map("n", "]"..char, function() check_treesitter(next_func) end, { desc = "Next "..desc })
+    map("n", "["..char, function() check_treesitter(prev_func) end, { desc = "Prev "..desc })
 end
 
 

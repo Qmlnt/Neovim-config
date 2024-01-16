@@ -2,6 +2,7 @@ local map = vim.keymap.set
 
 --      LEADER
 local w = require("assets.utils").with
+local cmd = w(vim.cmd)
 local Lmap = require("assets.utils").Lmap
 
 Lmap("r", "<C-R>")
@@ -121,22 +122,21 @@ Lmap("lwl", "List folders",  function() vim.print(lsp.list_workspace_folders()) 
 
 
 -- Next/Prev
-if not package.loaded["nvim-treesitter.textobjects.repeatable_move"] then
-    local function make_pair(char, desc, next, prev)
-        map("n", "]"..char, next, { desc = "Next "..desc })
-        map("n", "["..char, prev, { desc = "Prev "..desc })
-    end
-
-    make_pair("q", "quickfix", "<Cmd>cnext<CR>", "<Cmd>cprev<CR>")
-    make_pair("Q", "loclist",  "<Cmd>lnext<CR>", "<Cmd>lprev<CR>")
-    make_pair("b", "buffer",   "<Cmd>bnext<CR>", "<Cmd>bprev<CR>")
-    make_pair("w", "window",   "<Cmd>wnext<CR>", "<Cmd>wprev<CR>")
-    make_pair("d", "diagnostic", diag.goto_next, diag.goto_prev)
+local make_pair = require("assets.utils").make_repeatable_pair
+local function try(func, fallback)
+    return function() return pcall(vim.cmd, func) or vim.cmd(fallback) end
 end
+make_pair("b", "buffer",     cmd "bnext", cmd "bprev")
+make_pair("w", "window",     cmd "wincmd w", cmd "wincmd W")
+make_pair("Q", "loclist",    try("lnext", "lfirst"), try("lprev", "llast"))
+make_pair("q", "quickfix",   try("cnext", "cfirst"), try("cprev", "clast"))
+make_pair("d", "diagnostic", diag.goto_next, diag.goto_prev)
 
 
 
 --      ADDITIONAL
+map("i", "<A-Right>", "O")
+map("i", "<A-BS>", "<Del>")
 map("n", "<C-I>", "<C-I>") -- jump list
 map("", "<Esc>", "<Esc><Cmd>noh<CR>")
 map("n", "))", ")", { desc = "Sentence forward"  }) -- )* taken by treesitter

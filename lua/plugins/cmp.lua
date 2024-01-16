@@ -9,5 +9,5 @@ return {
         "L3MON4D3/LuaSnip", -- jsregexp is optional
         "saadparwaiz1/cmp_luasnip", -- TODO
     },
-    config = function() require "setups.cmp" end
+    config = function() require "configs.cmp" end
 }

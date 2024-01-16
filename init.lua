@@ -6,8 +6,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- dynamically merge lua/specs{,/*}.lua to the main plugin spec
-require("lazy").setup("specs", {
+-- dynamically merge lua/plugins{,/*}.lua to the main plugin spec
+require("lazy").setup("plugins", {
     change_detection = { notify = false },
     ui = { border = require("assets.assets").border }
 })

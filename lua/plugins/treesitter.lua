@@ -3,5 +3,5 @@ return {
     event = "User LazyFile",
     build = ":TSUpdate",
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
-    config = function() require "setups.treesitter" end
+    config = function() require "configs.treesitter" end
 }
