@@ -1,11 +1,5 @@
-local map = vim.keymap.set
-
 --      LEADER
-local w = require("assets.utils").with
-local cmd = w(vim.cmd)
-local Lmap = require("assets.utils").Lmap
-
-Lmap("r", "<C-R>")
+Lmap("r", "<C-r>")
 
 -- Utilities
 Lmap("ul", "<Cmd>Lazy<CR>")
@@ -14,8 +8,9 @@ Lmap("uL", "<Cmd>LspInfo<CR>")
 Lmap("uc", "<Cmd>CmpStatus<CR>")
 Lmap("un", "Netrw", vim.cmd.Ex)
 -- Toggle stuff
-Lmap("tn", "Number", "<Cmd>set number!<CR>")
-Lmap("tw", "Wrap",   "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
+Lmap("tn", "Number",       "<Cmd>set number!<CR>")
+Lmap("tr", "Relative num", "<Cmd>set relativenumber!<CR>")
+Lmap("tw", "Wrap",         "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
 Lmap("tc", "Column", function() vim.o.colorcolumn = vim.o.colorcolumn == "" and "80,100" or "" end)
 -- Clipboard stuff
 Lmap("p", "Clipboard paste",      [["+p]])
@@ -25,30 +20,24 @@ Lmap("y", "nx", "Clipboard yank", [["+y]])
 Lmap("Y", "nx", "Clipboard Yank", [["+Y]])
 
 -- Quickfix list
-Lmap("co", "Open",        "<Cmd>ccopen<CR>")
+Lmap("co", "Open",        "<Cmd>copen<CR>")
 Lmap("cc", "Close",       "<Cmd>cclose<CR>")
-Lmap("cn", "Next item",   "<Cmd>cnext<CR>")
-Lmap("ce", "Prev item",   "<Cmd>cprev<CR>")
-Lmap("cN", "Newer list",  "<Cmd>cnewer<CR>")
-Lmap("cE", "Older list",  "<Cmd>colder<CR>")
+Lmap("cn", "Newer list",  "<Cmd>cnewer<CR>")
+Lmap("ce", "Older list",  "<Cmd>colder<CR>")
 Lmap("cl", "Last item",   "<Cmd>clast<CR>")
 Lmap("cf", "First item",  "<Cmd>cfirst<CR>")
 -- Location list
-Lmap("Co", "Open",        "<Cmd>lcopen<CR>")
+Lmap("Co", "Open",        "<Cmd>lopen<CR>")
 Lmap("Cc", "Close",       "<Cmd>lclose<CR>")
-Lmap("Cn", "Next item",   "<Cmd>lnext<CR>")
-Lmap("Ce", "Prev item",   "<Cmd>lprev<CR>")
-Lmap("CN", "Newer list",  "<Cmd>lnewer<CR>")
-Lmap("CE", "Older list",  "<Cmd>lolder<CR>")
+Lmap("Cn", "Newer list",  "<Cmd>lnewer<CR>")
+Lmap("Ce", "Older list",  "<Cmd>lolder<CR>")
 Lmap("Cl", "Last item",   "<Cmd>llast<CR>")
 Lmap("Cf", "First item",  "<Cmd>lfirst<CR>")
 
 -- Buffers
-Lmap("bn", "Next",               "<Cmd>bnext<CR>")
-Lmap("bN", "Prev",               "<Cmd>bprev<CR>")
 Lmap("bd", "Delete",             "<Cmd>bdelete<CR>")
 Lmap("bu", "Unload",             "<Cmd>bunload<CR>")
-Lmap("bp", "Last accessed",      "<Cmd>buffer#<CR>")
+Lmap("bb", "Last accessed",      "<Cmd>buffer#<CR>")
 Lmap("bm", "Last modified",      "<Cmd>bmodified<CR>")
 Lmap("bh", "H- split with next", "<Cmd>sbnext<CR>")
 Lmap("bH", "H- split with prev", "<Cmd>sbprev<CR>")
@@ -56,21 +45,12 @@ Lmap("bv", "V| split with next", "<Cmd>vert sbnext<CR>")
 Lmap("bV", "V| split with prev", "<Cmd>vert sbprev<CR>")
 Lmap("bs", "V| split with last", "<Cmd>vert sbuffer#<CR>")
 Lmap("bS", "H- split with last", "<Cmd>sbuffer#<CR>")
-
 -- Windows 
-Lmap("w<Down>", "Move win down",  "<C-W>J")
-Lmap("w<Up>",   "Move win up",    "<C-W>K")
-Lmap("w<Left>", "Move win left",  "<C-W>H")
-Lmap("w<Right>","Move win right", "<C-W>L")
-Lmap("wj", "Move win down",       "<C-W>J")
-Lmap("wk", "Move win up",         "<C-W>K")
-Lmap("wh", "Move win left",       "<C-W>H")
-Lmap("wl", "Move win right",      "<C-W>L")
-Lmap("ww", "New",                 "<C-W>n")
-Lmap("wn", "Next",                "<C-W>w")
-Lmap("wN", "Prev",                "<C-W>W")
-Lmap("wp", "Last accessed",       "<C-W>p")
-Lmap("wc", "Close",               "<C-W>c")
+Lmap("ww", "Last accessed",       "<C-W>p")
+Lmap("wn", "New V|",              "<Cmd>vnew<CR>")
+Lmap("wN", "New H-",              "<Cmd>new<CR>")
+Lmap("wd", "Close",               "<C-W>c")
+Lmap("wD", "Close last accessd",  "<C-W>p<C-W>c")
 Lmap("wo", "Close others",        "<C-W>o")
 Lmap("wx", "Xchange with next",   "<C-W>x")
 Lmap("we", "Equal size",          "<C-W>=")
@@ -80,7 +60,14 @@ Lmap("wr", "Rotate downwards",    "<C-W>r")
 Lmap("wR", "Rotate upwards",      "<C-W>R")
 Lmap("ws", "V| split",            "<C-W>v")
 Lmap("wS", "H- split",            "<C-W>s")
-Lmap("wC", "Close last accessd",  "<C-W>p<C-W>c")
+Lmap("wj", "Move win down",       "<C-W>J")
+Lmap("wk", "Move win up",         "<C-W>K")
+Lmap("wh", "Move win left",       "<C-W>H")
+Lmap("wl", "Move win right",      "<C-W>L")
+Lmap("w<Down>", "Move win down",  "<C-W>J")
+Lmap("w<Up>",   "Move win up",    "<C-W>K")
+Lmap("w<Left>", "Move win left",  "<C-W>H")
+Lmap("w<Right>","Move win right", "<C-W>L")
 
 -- LSP
 local lsp = vim.lsp.buf
@@ -96,7 +83,7 @@ Lmap("ld", "Definition",          lsp.definition)
 Lmap("lD", "Declaration",         lsp.declaration)
 Lmap("lt", "Type definition",     lsp.type_definition)
 Lmap("la", "nx", "Code action",   lsp.code_action)
-Lmap("lf", "nx", "Format",      w(lsp.format) { async = true })
+Lmap("lf", "nx", "Format",      W(lsp.format) { async = true })
 Lmap("lt", "Type under cursor", function() vim.lsp.util.open_floating_preview(
     { vim.lsp.semantic_tokens.get_at_pos()[1].type },
     nil, { border = require("assets.assets").border_bleed })
@@ -122,22 +109,22 @@ Lmap("lwl", "List folders",  function() vim.print(lsp.list_workspace_folders()) 
 
 
 -- Next/Prev
-local make_pair = require("assets.utils").make_repeatable_pair
+local cmd = W(vim.cmd)
 local function try(func, fallback)
     return function() return pcall(vim.cmd, func) or vim.cmd(fallback) end
 end
-make_pair("b", "buffer",     cmd "bnext", cmd "bprev")
-make_pair("w", "window",     cmd "wincmd w", cmd "wincmd W")
-make_pair("Q", "loclist",    try("lnext", "lfirst"), try("lprev", "llast"))
-make_pair("q", "quickfix",   try("cnext", "cfirst"), try("cprev", "clast"))
-make_pair("d", "diagnostic", diag.goto_next, diag.goto_prev)
+Make_pair("b", "buffer",     cmd "bnext", cmd "bprev")
+Make_pair("w", "window",     cmd "wincmd w", cmd "wincmd W")
+Make_pair("Q", "loclist",    try("lnext", "lfirst"), try("lprev", "llast"))
+Make_pair("q", "quickfix",   try("cnext", "cfirst"), try("cprev", "clast"))
+Make_pair("d", "diagnostic", diag.goto_next, diag.goto_prev)
 
 
-
+local map = vim.keymap.set
 --      ADDITIONAL
 map("i", "<A-Right>", "O")
 map("i", "<A-BS>", "<Del>")
-map("n", "<C-I>", "<C-I>") -- jump list
+map("n", "<C-i>", "<C-i>") -- jump list
 map("", "<Esc>", "<Esc><Cmd>noh<CR>")
 map("n", "))", ")", { desc = "Sentence forward"  }) -- )* taken by treesitter
 map("n", "((", "(", { desc = "Sentence backward" })
@@ -154,8 +141,8 @@ map("n", "*", "*zvzz")
 map("n", "#", "#zvzz")
 map("n", "g*", "g*zvzz")
 map("n", "g#", "g#zvzz")
-map("n", "<C-D>", "<C-D>zz")
-map("n", "<C-U>", "<C-U>zz")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
 -- down/up on wrapped lines
 map("i", "<Down>", "<Cmd>norm! gj<CR>")
 map("i", "<Up>",   "<Cmd>norm! gk<CR>")

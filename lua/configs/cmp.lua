@@ -96,8 +96,8 @@ end
 
 local function setup_mappings()
     local mappings = { -- My Caps is BS cuz caps is bs.
-        ["<C-N>"] = cmp.mapping.scroll_docs(4),
-        ["<C-E>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-n>"] = cmp.mapping.scroll_docs(4),
+        ["<C-e>"] = cmp.mapping.scroll_docs(-4),
         ["<C-Space>"] = function() cmp.select_prev_item() end,
         ["<C-CR>"] = function() cmp.confirm { select = true } end, -- Insert
     }

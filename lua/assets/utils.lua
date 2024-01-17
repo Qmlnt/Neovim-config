@@ -1,12 +1,9 @@
-local M = {}
-
 local map = vim.keymap.set
 
-
----function() y("1") end = with(y) "1"
----function() y(1,2) end = with(y,1,2)
+---function() y("1") end = W(y) "1"
+---function() y(1,2) end = W(y,1,2)
 ---@param func function
-function M.with(func, ...)
+function W(func, ...)
     if ... then
         local args = {...}
         return function() func(unpack(args)) end
@@ -16,10 +13,9 @@ function M.with(func, ...)
     end
 end
 
-
 ---vim.keymap.set("n","<Leader>t",":Lazy<CR>",{desc="D"}) = Lmap("t", "D", ":Lazy<CR>")
 ---vim.keymap.set({"n","v"},"<Leader>D",":Lazy<CR>",{desc="D"}) = Lmap("t", "nv", "D", ":Lazy<CR>")
-function M.Lmap(...)
+function Lmap(...)
     local args = {...}
 
     if #args == 3 then -- most used
@@ -33,13 +29,12 @@ function M.Lmap(...)
     end
 end
 
-
 ---Switch move pair to tresitter.textobjects.repeatable_move when it becomes available
 ---@param char string
 ---@param desc string
 ---@param next_func function
 ---@param prev_func function
-function M.make_repeatable_pair(char, desc, next_func, prev_func)
+function Make_pair(char, desc, next_func, prev_func)
     local function check_treesitter(func)
         local ts_repeat = package.loaded["nvim-treesitter.textobjects.repeatable_move"]
         if not ts_repeat then return func() end
@@ -53,6 +48,3 @@ function M.make_repeatable_pair(char, desc, next_func, prev_func)
     map("n", "]"..char, function() check_treesitter(next_func) end, { desc = "Next "..desc })
     map("n", "["..char, function() check_treesitter(prev_func) end, { desc = "Prev "..desc })
 end
-
-
-return M

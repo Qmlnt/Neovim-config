@@ -30,6 +30,7 @@ return {
             t  = { name = "Toggle" },
             b  = { name = "Buffer" },
             w  = { name = "Window" },
+            s  = { name = "Search" },
             h  = { name = "Gitsigns",
                 v = { name = "View" },
                 t = { name = "Toggle" },
