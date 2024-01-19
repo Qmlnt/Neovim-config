@@ -1,4 +1,5 @@
 return {
+    "navarasu/onedark.nvim",
     {
         "folke/tokyonight.nvim",
         lazy = false,    -- for priority to work
@@ -11,7 +12,5 @@ return {
             require("tokyonight").setup(opts)
             vim.cmd.colorscheme "tokyonight"
         end
-    },
-
-    { "navarasu/onedark.nvim", lazy = true }
+    }
 }

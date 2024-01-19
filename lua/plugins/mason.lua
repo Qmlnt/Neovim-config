@@ -1,6 +1,5 @@
 return {
     "williamboman/mason.nvim",
-    lazy = true, -- lazy-loading not recommended tho
     opts = {
         ui = {
             height = 0.8,

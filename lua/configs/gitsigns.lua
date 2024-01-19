@@ -31,8 +31,8 @@ Lmap("hu", "Undo stage hunk",   gs.undo_stage_hunk) -- only in current session
 Lmap("hp", "Preview hunk",      gs.preview_hunk)
 Lmap("hi", "Inline preview",    gs.preview_hunk_inline)
 Lmap("hl", "List hunks",        gs.setloclist)
-Lmap("ha", "Qlist all hunks", W(gs.setqflist) "attached")
-Lmap("hA", "Qlist ALL hunks", W(gs.setqflist) "all")
+Lmap("hq", "Qlist all hunks", W(gs.setqflist) "attached")
+Lmap("hQ", "Qlist ALL hunks", W(gs.setqflist) "all")
 Lmap("hs", "x", "Stage region", function() gs.stage_hunk { vim.fn.line ".", vim.fn.line "v" } end)
 Lmap("hr", "x", "Reset region", function() gs.reset_hunk { vim.fn.line ".", vim.fn.line "v" } end)
 -- Toggle
