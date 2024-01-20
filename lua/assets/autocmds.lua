@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "BufNewFile" }, {
     end)
 })
 
-vim.api.nvim_create_autocmd("LspAttach", { -- Overrides of default keymaps
+vim.api.nvim_create_autocmd("LspAttach", { -- Overrides the default keymaps
     callback = function(args)
         vim.bo[args.buf].omnifunc = "v:lua.vim.lsp.omnifunc" -- <c-x><c-o>
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = args.buf })

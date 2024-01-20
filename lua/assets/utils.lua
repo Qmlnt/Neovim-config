@@ -29,6 +29,20 @@ function Lmap(...)
     end
 end
 
+
+-- if try() succeeds then else_() else except(), always finally()
+function Try(try, except, else_, finally)
+    return function()
+        if pcall(try) then
+            if else_ then else_() end
+        else
+            if except then except() end
+        end
+        if finally then finally() end
+    end
+end
+
+
 ---Switch move pair to tresitter.textobjects.repeatable_move when it becomes available
 ---@param char string
 ---@param desc string

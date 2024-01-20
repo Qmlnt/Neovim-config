@@ -1,11 +1,8 @@
-local M = {}
-
-
 ---Handle require calls
 ---@param module_name string
 ---@param success_callback fun(module: table): any | any
 ---@param error_callback? fun(error: string): any | any
-function M.protected_require(module_name, success_callback, error_callback)
+function Protected_require(module_name, success_callback, error_callback)
     local status, module = pcall(require, module_name)
 
     if status then
@@ -27,7 +24,7 @@ end
 ---@param lhs string
 ---@param rhs fun(any) | string
 ---@param opts? table
-function M.oneshot_keymap(mode, lhs, rhs, opts)
+function Oneshot_keymap(mode, lhs, rhs, opts)
     local buffer = opts and opts.buffer and { buffer = opts.buffer }
 
     local function trigger_oneshot()
@@ -41,6 +38,3 @@ function M.oneshot_keymap(mode, lhs, rhs, opts)
 
     vim.keymap.set(mode, lhs, trigger_oneshot, buffer)
 end
-
-
-return M

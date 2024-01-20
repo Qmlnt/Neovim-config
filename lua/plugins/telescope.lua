@@ -6,11 +6,11 @@ return {
         "nvim-tree/nvim-web-devicons",
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
     },
-    init = function()
-        Lmap("s", "nx", "Load telescope", function() -- so lazy
-            vim.keymap.del({ "n", "x" }, "<Leader>s")
-            require "configs.telescope"
-            vim.schedule_wrap(vim.api.nvim_feedkeys)(vim.g.mapleader.."s", "m", false)
-        end)
-    end
+    keys = { -- so lazy 🥱
+        { "<Leader>s", desc = "Load Telescope", mode = { "n", "x" } },
+        { "<Leader>f", desc = "Find files" },
+        { "<Leader>.", desc = "Find . files" },
+        { "<Leader>/", desc = "Telescope /" },
+    },
+    config = function() require "configs.telescope" end
 }
