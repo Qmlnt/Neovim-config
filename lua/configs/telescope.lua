@@ -56,23 +56,25 @@ if which_key then
 end
 
 
-Lmap("f", "Find all files", Try(builtin.git_files, builtin.find_files))
-Lmap(".", "Find . files",  function() builtin.find_files { cwd = vim.fn.expand("%:p:h") } end)
-Lmap("/", "Telecope /",      builtin.current_buffer_fuzzy_find)
+Lmap("f", Try(builtin.git_files, builtin.find_files))
+Lmap(".", function() builtin.find_files { cwd = vim.fn.expand("%:p:h") } end)
+Lmap("/", builtin.current_buffer_fuzzy_find)
+Lmap("o", builtin.oldfiles)
 
+Lmap("sb", "Buffers",        builtin.buffers)
 Lmap("sf", "Files workdir",  builtin.find_files)
 Lmap("sn", "Nvim dotfiles",  function() builtin.find_files { cwd = vim.fn.expand("~/.config/nvim") } end)
-Lmap("ss", "Search workdir", builtin.live_grep)
+Lmap("s.", "Dotfiles",       function() builtin.find_files { cwd = vim.fn.expand("~/.config/") } end)
+Lmap("sd", "Diagnostics",    builtin.diagnostics)
+Lmap("ss", "Str in workdir", builtin.live_grep)
 Lmap("sh", "Help tags",      builtin.help_tags)
 Lmap("sm", "Man pages",      builtin.man_pages)
-Lmap("sb", "Buffers",        builtin.buffers)
-Lmap("so", "Oldfiles",       builtin.oldfiles)
 Lmap("s/", "/ history",      builtin.search_history)
 Lmap("sq", "Quickfix hist",  builtin.quickfixhistory)
 Lmap("sc", "nx", "Cursor workdir", builtin.grep_string)
 Lmap("sp", "Pickers",        builtin.pickers)
+Lmap("sr", "Resume",         builtin.resume)
 Lmap("st", "Treesitter obj", builtin.treesitter)
-Lmap("sd", "Diagnostics",    builtin.diagnostics)
 -- Git
 Lmap("shf", "Files",       builtin.git_files)
 Lmap("shs", "Status",      builtin.git_status)

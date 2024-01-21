@@ -1,6 +1,4 @@
 --      LEADER
-Lmap("r", "<C-r>")
-
 -- Utilities
 Lmap("ul", "<Cmd>Lazy<CR>")
 Lmap("um", "<Cmd>Mason<CR>")
@@ -96,8 +94,8 @@ Lmap("lch", "Hide",    diag.hide)
 Lmap("lce", "Enable",  diag.enable)
 Lmap("lcd", "Disable", diag.disable)
 -- List
-Lmap("lld", "Diagnostics Q",     diag.setqflist)
-Lmap("llD", "Diagnostics L",     diag.setloclist)
+Lmap("lld", "Diagnostics all Q", diag.setqflist)
+Lmap("llD", "Diagnostics buf L", diag.setloclist)
 Lmap("llr", "References",        lsp.references)
 Lmap("lli", "Incoming calls",    lsp.incoming_calls)
 Lmap("llo", "Outgoing calls",    lsp.outgoing_calls)

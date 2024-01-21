@@ -17,10 +17,11 @@ end
 ---vim.keymap.set({"n","v"},"<Leader>D",":Lazy<CR>",{desc="D"}) = Lmap("t", "nv", "D", ":Lazy<CR>")
 function Lmap(...)
     local args = {...}
+    local len = select("#", ...)
 
-    if #args == 3 then -- most used
+    if len == 3 then -- most used
         map("n", "<Leader>"..args[1], args[3], { desc = args[2] })
-    elseif #args == 2 then
+    elseif len == 2 then
         map("n", "<Leader>"..args[1], args[2])
     else -- 4
         local modes = {}
