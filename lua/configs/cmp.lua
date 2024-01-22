@@ -1,4 +1,5 @@
 local cmp = require "cmp"
+local luasnip = require "luasnip"
 
 
 local kinds = {
@@ -108,11 +109,11 @@ local function setup_mappings()
     end
     mappings["<S-BS>"] = cmp.mapping(function()
         return cmp.visible() and exit_completion()
-            or require("luasnip").expand_or_jump()
+            or luasnip.expand_or_jump()
     end, { "i", "s" })
     mappings["<C-BS>"] = cmp.mapping(function()
         return cmp.visible() and cmp.abort() and exit_completion()
-            or require("luasnip").jump(-1)
+            or luasnip.jump(-1)
     end, { "i", "s" })
     -- it's that simple and that hard
     mappings["<S-Space>"] = function() -- in my kitty.conf: map shift+space send_text all \033[32;2u
@@ -145,7 +146,7 @@ cmp.setup.global { -- = cmp.setup
     preselect = cmp.PreselectMode.Item, -- Honour LSP preselect requests
     --experimental = { ghost_text = true }
     snippet = {
-        expand = function(args) require("luasnip").lsp_expand(args.body) end
+        expand = function(args) luasnip.lsp_expand(args.body) end
     },
     formatting = {
         expandable_indicator = true, -- show ~ indicator
