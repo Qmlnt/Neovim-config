@@ -18,6 +18,7 @@ M.opts = {
         "cmake",
         --"csharp_ls", -- piece of 󰱵
         "hls", -- Haskell
+        "taplo", -- toml
         "jsonls",
         "lua_ls",
         "ruff_lsp", -- Python

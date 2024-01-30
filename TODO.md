@@ -1,3 +1,4 @@
+pwd autocommand? check ruler
 tab mappings
 :Tutor
 - Lsp stuff

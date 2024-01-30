@@ -6,10 +6,15 @@ Lmap("uL", "<Cmd>LspInfo<CR>")
 Lmap("uc", "<Cmd>CmpStatus<CR>")
 Lmap("un", "Netrw", vim.cmd.Ex)
 -- Toggle stuff
+local function toggle(opt, a, b) --TODO
+    return function() if vim.o[opt] == a then vim.o[opt] = b else vim.o[opt] = a end end
+end
 Lmap("tn", "Number",       "<Cmd>set number!<CR>")
 Lmap("tr", "Relative num", "<Cmd>set relativenumber!<CR>")
 Lmap("tw", "Wrap",         "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
-Lmap("tc", "Column", function() vim.o.colorcolumn = vim.o.colorcolumn == "" and "80,100" or "" end)
+Lmap("ts", "Statusline",   function() vim.o.ls = vim.o.ls == 0 and 3 or 0 end)
+Lmap("t:", "Cmd",          function() vim.o.ch = vim.o.ch == 0 and 1 or 0 end)
+Lmap("tc", "Column",       function() vim.o.cc = vim.o.cc == "" and "80,100" or "" end)
 -- Clipboard stuff
 Lmap("p", "Clipboard paste",      [["+p]])
 Lmap("p", "x", "Void paste",      [["_dP]])
