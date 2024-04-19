@@ -42,13 +42,10 @@ end
 
 
 -- Close the damn completion window
----@return true
 local function exit_completion()
     vim.api.nvim_feedkeys("gi", "n", false)
-    return true
 end
 
----@return true
 local function register_oneshots()
     for _, key in ipairs { "<CR>", "<Tab>", "<Space>", "<Down>", "<Up>", "<Left>", "<Right>" } do
         vim.keymap.set("i", key, function()
@@ -57,7 +54,6 @@ local function register_oneshots()
             return key
         end, { buffer = 0, expr = true })
     end
-    return true
 end
 
 local function get_completion_buffers()
@@ -95,36 +91,57 @@ local function longest_common_completion()
     return cmp.complete_common_string()
 end
 
-local function setup_mappings()
-    local mappings = { -- My Caps is BS cuz caps is bs.
+local function get_mappings()
+    local mappings = {
         ["<C-n>"] = cmp.mapping.scroll_docs(4),
         ["<C-e>"] = cmp.mapping.scroll_docs(-4),
+        -- in my kitty.conf: map shift+space send_text all \033[32;2u
+        ["<S-Space>"] = function() cmp.select_next_item() end,
         ["<C-Space>"] = function() cmp.select_prev_item() end,
-        ["<C-CR>"] = function() cmp.confirm { select = true } end, -- Insert
     }
 
-    -- and = exec if prev=true; or = exec if prev=false
     mappings["<S-Tab>"] = function()
-        return cmp.visible() and cmp.open_docs() or cmp.close_docs()
+        if cmp.visible_docs() then
+            cmp.close_docs()
+        else
+            cmp.open_docs()
+        end
     end
+
+    -- My Caps is BS cuz caps is bs.
     mappings["<S-BS>"] = cmp.mapping(function()
-        return cmp.visible() and exit_completion()
-            or luasnip.expand_or_jump()
+        if cmp.visible() then
+            exit_completion()
+        else
+            luasnip.expand_or_jump()
+        end
     end, { "i", "s" })
+
     mappings["<C-BS>"] = cmp.mapping(function()
-        return cmp.visible() and cmp.abort() and exit_completion()
-            or luasnip.jump(-1)
+        if cmp.visible() then
+            cmp.abort()
+            exit_completion()
+        else
+            luasnip.jump(-1)
+        end
     end, { "i", "s" })
-    -- it's that simple and that hard
-    mappings["<S-Space>"] = function() -- in my kitty.conf: map shift+space send_text all \033[32;2u
-        return (cmp.visible() or (
-            cmp.complete() and register_oneshots() and not cmp.get_selected_entry()
-        )) and cmp.select_next_item()
-    end
+
     mappings["<S-CR>"] = function()
-        return cmp.visible()
-            and cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
-            or longest_common_completion() and exit_completion() or register_oneshots()
+        if cmp.visible() then
+            cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
+        elseif longest_common_completion() then
+            exit_completion()
+        else
+            register_oneshots()
+        end
+    end
+
+    mappings["<C-CR>"] = function()
+        if cmp.visible() then
+            cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Insert }
+        elseif cmp.complete() then
+            register_oneshots()
+        end
     end
 
     return mappings
@@ -138,11 +155,11 @@ cmp.setup.global { -- = cmp.setup
     },
     performance = {
         --debounce = 60,
-        throttle = 15, -- 30
+        throttle = 15,         -- 30
         --fetching_timeout = 500,
         max_view_entries = 40, -- 200
     },
-    mapping = setup_mappings(),
+    mapping = get_mappings(),
     preselect = cmp.PreselectMode.Item, -- Honour LSP preselect requests
     --experimental = { ghost_text = true }
     snippet = {
@@ -160,9 +177,9 @@ cmp.setup.global { -- = cmp.setup
     sources = {
         { name = "nvim_lsp", group_index = 1 },
         { name = "luasnip",  group_index = 1 },
-        { name = "buffer",   group_index = 2, option = {
-            indexing_interval = 100, -- default 100 ms
-            indexing_batch_size = 500, -- default 1000 lines
+        { name = "buffer", group_index = 2, option = {
+            indexing_interval = 100,        -- default 100 ms
+            indexing_batch_size = 500,      -- default 1000 lines
             max_indexed_line_length = 2048, -- default 40*1024 bytes
             get_bufnrs = get_completion_buffers
         } }

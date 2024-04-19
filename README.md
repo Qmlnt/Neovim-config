@@ -22,9 +22,9 @@ What it shouldn't be:
         - **init.lua** -- Pull fundamental parts together
             - **options.lua**
             - **autocmds.lua**
+            - **utils.lua** -- Useful functions which are used throughout the config
             - **mappings.lua** -- Deferred loading cuz there is too much '>.<
         - **assets.lua** -- Decorations and stuff that is used everywhere
-        - **utils.lua** -- Useful functions which are used throughout the config
         - **playground.lua** -- Useful functions which are... well... not very useful
     - **plugins/** -- Plugin specs which are autosourced (and cached!) by Lazy.nvim
     - **configs/** -- Large parts of plugin specs are here, so the main Lazy spec is sourced faster from **plugins/**

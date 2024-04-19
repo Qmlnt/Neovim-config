@@ -67,7 +67,7 @@ Lmap("sn", "Nvim dotfiles",  W(builtin.find_files) { cwd = vim.fn.expand("~/.con
 Lmap("s.", "Dotfiles",       W(builtin.find_files) { cwd = vim.fn.expand("~/.config/") })
 Lmap("sd", "Diagnostics",    builtin.diagnostics)
 Lmap("ss", "Str in workdir", builtin.live_grep)
-Lmap("sh", "Help tags",      builtin.help_tags)
+Lmap("sk", "Help tags",      builtin.help_tags)
 Lmap("sm", "Man pages",      builtin.man_pages)
 Lmap("s/", "/ history",      builtin.search_history)
 Lmap("sq", "Quickfix hist",  builtin.quickfixhistory)
