@@ -71,8 +71,8 @@ local function get_completion_buffers()
 end
 
 
+-- TODO use most common instead of just common
 local function longest_common_completion()
-    -- TODO use most common instead of just common
     cmp.complete { config = { -- should be fast asf
         sources = {
             { name = "nvim_lsp" },
@@ -88,45 +88,41 @@ local function longest_common_completion()
         preselect = cmp.PreselectMode.None, -- not to mess up common_string
         formatting = { format = false }
     } }
+
     return cmp.complete_common_string()
 end
 
-local function get_mappings()
-    local mappings = {
-        ["<C-n>"] = cmp.mapping.scroll_docs(4),
-        ["<C-e>"] = cmp.mapping.scroll_docs(-4),
-        -- in my kitty.conf: map shift+space send_text all \033[32;2u
-        ["<S-Space>"] = function() cmp.select_next_item() end,
-        ["<C-Space>"] = function() cmp.select_prev_item() end,
-    }
 
-    mappings["<S-Tab>"] = function()
+local mappings = {
+    ["<C-n>"] = cmp.mapping.scroll_docs(4),
+    ["<C-e>"] = cmp.mapping.scroll_docs(-4),
+    -- in my kitty.conf: map shift+space send_text all \033[32;2u
+    ["<S-Space>"] = function() cmp.select_next_item() end,
+    ["<C-Space>"] = function() cmp.select_prev_item() end,
+    ["<S-Tab>"] = function()
         if cmp.visible_docs() then
             cmp.close_docs()
         else
             cmp.open_docs()
         end
-    end
-
+    end,
     -- My Caps is BS cuz caps is bs.
-    mappings["<S-BS>"] = cmp.mapping(function()
+    ["<S-BS>"] = cmp.mapping(function()
         if cmp.visible() then
             exit_completion()
         else
             luasnip.expand_or_jump()
         end
-    end, { "i", "s" })
-
-    mappings["<C-BS>"] = cmp.mapping(function()
+    end, { "i", "s" }),
+    ["<C-BS>"] = cmp.mapping(function()
         if cmp.visible() then
             cmp.abort()
             exit_completion()
         else
             luasnip.jump(-1)
         end
-    end, { "i", "s" })
-
-    mappings["<S-CR>"] = function()
+    end, { "i", "s" }),
+    ["<S-CR>"] = function()
         if cmp.visible() then
             cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
         elseif longest_common_completion() then
@@ -134,18 +130,15 @@ local function get_mappings()
         else
             register_oneshots()
         end
-    end
-
-    mappings["<C-CR>"] = function()
+    end,
+    ["<C-CR>"] = function()
         if cmp.visible() then
             cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Insert }
         elseif cmp.complete() then
             register_oneshots()
         end
     end
-
-    return mappings
-end
+}
 
 
 cmp.setup.global { -- = cmp.setup
@@ -159,7 +152,7 @@ cmp.setup.global { -- = cmp.setup
         --fetching_timeout = 500,
         max_view_entries = 40, -- 200
     },
-    mapping = get_mappings(),
+    mapping = mappings,
     preselect = cmp.PreselectMode.Item, -- Honour LSP preselect requests
     --experimental = { ghost_text = true }
     snippet = {

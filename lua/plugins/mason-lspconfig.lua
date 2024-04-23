@@ -57,11 +57,18 @@ M.opts.handlers.rust_analyzer = function() -- TODO
                     command = "clippy",
                     extraArgs = {
                         "--",
-                        "--no-deps",
-                        "-Dclippy::correctness",
-                        "-Dclippy::complexity",
-                        "-Wclippy::perf",
-                        "-Wclippy::pedantic",
+                        "--no-deps",              -- run Clippy only on the given crate
+                        -- Deny, Warn, Allow, Forbid
+                        "-D clippy::correctness", -- code that is outright wrong or useless
+                        "-D clippy::complexity",  -- code that does something simple but in a complex way
+                        "-W clippy::suspicious",  -- code that is most likely wrong or useless
+                        "-W clippy::style",       -- code that should be written in a more idiomatic way
+                        "-W clippy::perf",        -- code that can be written to run faster
+                        "-W clippy::pedantic",    -- lints which are rather strict or have occasional false positives
+                        "-W clippy::nursery",     -- new lints that are still under development
+                        "-W clippy::cargo",       -- lints for the cargo manifest
+                        -- Use in production
+                        "-A clippy::restriction", -- lints which prevent the use of language and library features
                     },
                 },
                 procMacro = {
