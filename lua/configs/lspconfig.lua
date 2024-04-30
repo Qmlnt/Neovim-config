@@ -6,9 +6,9 @@ vim.diagnostic.config {
         spacing = 4,
         source = "if_many",
         severity = { min = vim.diagnostic.severity.INFO },
-        prefix = function(diagnostics)
-           return ({ "⤬", "!", "󰙎", "󱠃" })[diagnostics.severity] or "?"
-        end
+        -- prefix = function(diagnostics)
+        --    return ({ "⤬", "!", "󰙎", "󱠃" })[diagnostics.severity] or "?"
+        -- end
     },
     severity_sort = true,
     update_in_insert = false,

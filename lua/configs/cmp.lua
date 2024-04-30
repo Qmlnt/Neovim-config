@@ -97,8 +97,8 @@ local mappings = {
     ["<C-n>"] = cmp.mapping.scroll_docs(4),
     ["<C-e>"] = cmp.mapping.scroll_docs(-4),
     -- in my kitty.conf: map shift+space send_text all \033[32;2u
-    ["<S-Space>"] = function() cmp.select_next_item() end,
-    ["<C-Space>"] = function() cmp.select_prev_item() end,
+    ["<S-Space>"] = cmp.mapping.select_next_item(),
+    ["<C-Space>"] = cmp.mapping.select_prev_item(),
     ["<S-Tab>"] = function()
         if cmp.visible_docs() then
             cmp.close_docs()

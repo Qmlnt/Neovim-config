@@ -16,13 +16,13 @@ Lmap("ts", "Statusline",   function() vim.o.ls = vim.o.ls == 0 and 3 or 0 end)
 Lmap("t:", "Cmd",          function() vim.o.ch = vim.o.ch == 0 and 1 or 0 end)
 Lmap("tc", "Column",       function() vim.o.cc = vim.o.cc == "" and "80,100" or "" end)
 -- Clipboard stuff
-Lmap("p", "Clipboard paste",      [["+p]])
 Lmap("p", "x", "Void paste",      [["_dP]])
+Lmap("p", "Clipboard paste",      [["+p]])
 Lmap("P", "Clipboard Paste",      [["+P]])
 Lmap("d", "nx", "Void delete",    [["_d]])
 Lmap("D", "nx", "Void Delete",    [["_D]])
 Lmap("y", "nx", "Clipboard yank", [["+y]])
-Lmap("Y", "nx", "Clipboard Yank", [["+Y]])
+Lmap("Y", "nx", "Clipboard Yank", [["+y$]])
 
 -- Quickfix list
 Lmap("co", "Open",        "<Cmd>copen<CR>")
