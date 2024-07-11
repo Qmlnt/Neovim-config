@@ -2,6 +2,7 @@ local o = vim.opt
 
 vim.g.mapleader = " " -- must be before any plugins
 vim.g.maplocalleader = " "
+-- vim.g.editorconfig = true
 
 -- behaviour
 o.swapfile = false
