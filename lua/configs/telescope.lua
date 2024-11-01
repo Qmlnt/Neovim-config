@@ -48,11 +48,11 @@ telescope.load_extension("fzf")
 
 local which_key = package.loaded["which-key"]
 if which_key then
-    which_key.register({
-        s = { name = "Search",
-            h = { name = "Git" },
-            l = { name = "LSP" },
-        } }, { prefix = "<Leader>" })
+    which_key.add({
+        { "<Leader>s", group = "Search" },
+        { "<Leader>sh", group = "Git" },
+        { "<Leader>sl", group = "LSP" },
+    })
 end
 
 

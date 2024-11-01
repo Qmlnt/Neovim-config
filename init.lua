@@ -6,7 +6,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- dynamically merge lua/plugins{,/*}.lua to the main plugin spec
+-- Stop loading if opening a .gpg file
+for _, arg in ipairs(vim.v.argv) do
+    if arg:match("%.gpg$") then
+        return
+    end
+end
+
+-- Dynamically merge lua/plugins{,/*}.lua to the main plugin spec
 require("lazy").setup("plugins", {
     defaults = { lazy = true },
     change_detection = { notify = false },
