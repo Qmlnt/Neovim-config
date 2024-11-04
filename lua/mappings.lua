@@ -91,7 +91,7 @@ Lmap("la", "nx", "Code action",   lsp.code_action)
 Lmap("lf", "nx", "Format",      W(lsp.format) { async = true })
 Lmap("lt", "Type under cursor", function() vim.lsp.util.open_floating_preview(
     { vim.lsp.semantic_tokens.get_at_pos()[1].type },
-    nil, { border = require("assets.assets").border_bleed })
+    nil, { border = vim.g.border_bleed })
 end)
 -- Control
 Lmap("lcs", "Show",    diag.show)

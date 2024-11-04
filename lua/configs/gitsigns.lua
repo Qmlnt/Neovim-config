@@ -17,7 +17,7 @@ gs.setup {
         linematch = true, -- align lines
         algorithm = "histogram", -- myers, minimal, patience, histrogram
     },
-    preview_config = { border = require("assets.assets").border_bleed },
+    preview_config = { border = vim.g.border_bleed },
 }
 
 -- Normal

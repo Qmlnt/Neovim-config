@@ -3,7 +3,7 @@ return {
     event = "VeryLazy",
     opts = {
         win = {
-            border = require("assets.assets").border,
+            border = vim.g.border,
             padding = { 0, 1, 0, 1 } -- ^, <, _, >
         },
         layout = {

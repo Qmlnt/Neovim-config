@@ -124,7 +124,7 @@ treesitter_config.textobjects = {
     },
     lsp_interop = {
         enable = true,            -- vim.lsp.util.open_floating_preview
-        floating_preview_opts = { border = require("assets.assets").border_bleed },
+        floating_preview_opts = { border = vim.g.border_bleed },
         peek_definition_code = {
             ["<Leader>lpo"] = { query = "@class.outer", desc = "Class" },
             ["<Leader>lpf"] = { query = "@function.outer", desc = "Function" },

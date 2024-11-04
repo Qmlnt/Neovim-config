@@ -66,3 +66,7 @@ o.fillchars = {
     eob = " ",
     lastline = "❭"
 }
+
+-- CUSTOM
+vim.g.border = "single" -- :h nvim_open_win
+vim.g.border_bleed = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" } -- full-bleed

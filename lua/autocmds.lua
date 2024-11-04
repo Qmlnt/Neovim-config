@@ -40,9 +40,10 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, {
     pattern = {"*.gpg", "*.asc"},
     group = gpg_group,
     callback = function()
-        vim.cmd("'[,']!gpg --decrypt --batch --passphrase \""
+        -- TODO make encrypt function with password here.
+        vim.cmd("'[,']!gpg --decrypt --batch --passphrase '"
             .. vim.fn.inputsecret("Enter passphrase to decrypt: ")
-            .. "\" 2> /dev/null")
+            .. "' 2> /dev/null")
 
         vim.opt_local.bin = false -- normal mode for editing
 
@@ -62,9 +63,9 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
     group = gpg_group,
     -- TODO: ask how to encrypt and which key to use
     callback = function()
-        vim.cmd("'[,']!gpg --symmetric --cipher-algo AES256 --armour --batch --passphrase \""
+        vim.cmd("'[,']!gpg --symmetric --cipher-algo AES256 --armour --batch --passphrase '"
         .. vim.fn.inputsecret("Enter passphrase to encrypt: ")
-        .. "\" 2> /dev/null")
+        .. "' 2> /dev/null")
     end,
     -- command = "'[,']!gpg --default-recipient-self -ae 2>/dev/null",
 })

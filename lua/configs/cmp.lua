@@ -181,11 +181,11 @@ cmp.setup.global { -- = cmp.setup
         completion = cmp.config.window.bordered {
             side_padding = 0,
             scrollbar = false,
-            border = require("assets.assets").border_bleed
+            border = vim.g.border_bleed
         },
         documentation = cmp.config.window.bordered {
             side_padding = 0,
-            border = require("assets.assets").border_bleed
+            border = vim.g.border_bleed
         }
     }
 }

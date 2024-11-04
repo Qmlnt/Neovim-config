@@ -3,7 +3,7 @@ return {
     opts = {
         ui = {
             height = 0.8,
-            border = require("assets.assets").border,
+            border = vim.g.border,
             icons = {
                 package_pending = "󱦳",
                 package_installed = "",

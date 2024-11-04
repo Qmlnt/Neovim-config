@@ -1,4 +1,15 @@
-require "assets"
+require "utils" -- global functions here
+require "options"
+require "autocmds"
+vim.schedule_wrap(require) "mappings" -- Mappings hog startup time.
+
+-- Stop loading if opening a .gpg file
+for _, arg in ipairs(vim.v.argv) do
+    local ext = arg:sub(-4);
+    if ext == ".gpg" or ext == ".asc" then
+        return
+    end
+end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -6,16 +17,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Stop loading if opening a .gpg file
-for _, arg in ipairs(vim.v.argv) do
-    if arg:match("%.gpg$") then
-        return
-    end
-end
-
 -- Dynamically merge lua/plugins{,/*}.lua to the main plugin spec
 require("lazy").setup("plugins", {
     defaults = { lazy = true },
     change_detection = { notify = false },
-    ui = { border = require("assets.assets").border }
+    ui = { border = vim.g.border }
 })
