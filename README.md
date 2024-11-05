@@ -3,7 +3,7 @@ _This is **my** configuration of Neovim._
 It is:
 - Understandable (_kinda_)
 - Fast and Lazy (_Good as a manpager_)
-- Pleasant to read and edit (for me 😒)
+- Pleasant to read and edit (_for me 😒_)
 - Different (_If this is your *personal* config, why does it look like everyone's else?_)
 
 It is **not**:
