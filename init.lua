@@ -4,8 +4,12 @@ require "autocmds"
 vim.schedule_wrap(require) "mappings" -- Mappings hog startup time.
 
 -- Stop loading if opening an encrypted file
-if require "gpg" then
-    return
+for _, arg in ipairs(vim.v.argv) do
+    local ext = arg:sub(-4);
+    if ext == ".gpg" or ext == ".asc" then
+        require "gpg"
+        return
+    end
 end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
