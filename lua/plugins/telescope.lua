@@ -7,7 +7,7 @@ return {
     },
     keys = { -- so lazy 🥱
         { "<Leader>s", desc = "Load Telescope", mode = { "n", "x" } },
-        { "<Leader>o", desc = "Find old files" },
+        -- { "<Leader>o", desc = "Find old files" },
         { "<Leader>.", desc = "Find files in ." },
         { "<Leader>/", desc = "Telescope /" },
         { "<Leader>f", desc = "Find files" },

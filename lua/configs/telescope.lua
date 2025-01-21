@@ -59,8 +59,8 @@ end
 Lmap("f", Try(builtin.git_files, builtin.find_files))
 Lmap(".", function() builtin.find_files { cwd = vim.fn.expand("%:p:h") } end)
 Lmap("/", builtin.current_buffer_fuzzy_find)
-Lmap("o", builtin.oldfiles)
 
+Lmap("so", builtin.oldfiles)
 Lmap("sb", "Buffers",        builtin.buffers)
 Lmap("sf", "Files workdir",  builtin.find_files)
 Lmap("sn", "Nvim dotfiles",  W(builtin.find_files) { cwd = vim.fn.expand("~/.config/nvim") })

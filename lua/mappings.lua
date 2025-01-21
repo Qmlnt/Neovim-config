@@ -23,6 +23,8 @@ Lmap("d", "nx", "Void delete",    [["_d]])
 Lmap("D", "nx", "Void Delete",    [["_D]])
 Lmap("y", "nx", "Clipboard yank", [["+y]])
 Lmap("Y", "nx", "Clipboard Yank", [["+y$]])
+-- Other
+Lmap("g", "File name", "<Cmd>echo expand('%:p')<CR>")
 
 -- Quickfix list
 Lmap("co", "Open",        "<Cmd>copen<CR>")
@@ -80,7 +82,7 @@ local diag = vim.diagnostic
 -- Normal
 Lmap("lh", "Help",                lsp.hover)
 Lmap("ls", "Signature help",      lsp.signature_help)
-Lmap("lo", "Diagnostics float",   diag.open_float)
+Lmap("o", "Diagnostics float",   diag.open_float)
 Lmap("ln", "Rename",              lsp.rename)
 Lmap("lv", "Highlight",           lsp.document_highlight)
 Lmap("lV", "Clear highlight",     lsp.clear_references)

@@ -126,7 +126,7 @@ treesitter_config.textobjects = {
         enable = true,            -- vim.lsp.util.open_floating_preview
         floating_preview_opts = { border = vim.g.border_bleed },
         peek_definition_code = {
-            ["<Leader>lpo"] = { query = "@class.outer", desc = "Class" },
+            ["<Leader>lpo"] = { query = "@class.outer", desc = "Object" },
             ["<Leader>lpf"] = { query = "@function.outer", desc = "Function" },
             ["<Leader>lpa"] = { query = "@parameter.inner", desc = "Parameter" },
             ["<Leader>lps"] = { query = "@assignment.outer", desc = "Assignment" },

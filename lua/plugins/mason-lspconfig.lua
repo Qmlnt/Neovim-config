@@ -75,11 +75,11 @@ M.opts.handlers.rust_analyzer = function() -- TODO
                 },
                 procMacro = {
                     enable = true,
-                    ignored = {
-                        ["async-trait"] = { "async_trait" },
-                        ["napi-derive"] = { "napi" },
-                        ["async-recursion"] = { "async_recursion" },
-                    },
+                    -- ignored = {
+                    --     ["async-trait"] = { "async_trait" },
+                    --     ["napi-derive"] = { "napi" },
+                    --     ["async-recursion"] = { "async_recursion" },
+                    -- },
                 },
             },
         }

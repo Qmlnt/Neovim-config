@@ -63,7 +63,7 @@ local function get_completion_buffers()
         local buf_lines = vim.api.nvim_buf_line_count(buf_id)
         local buf_bytes = vim.api.nvim_buf_get_offset(buf_id, buf_lines)
 
-        if buf_bytes < 524288 then -- 512 KiB
+        if buf_bytes < 98304 then -- 96 KiB
             table.insert(buffers, buf_id)
         end
     end
@@ -75,9 +75,9 @@ end
 local function longest_common_completion()
     cmp.complete { config = { -- should be fast asf
         sources = {
-            { name = "nvim_lsp" },
             { name = "buffer", option = {
-                get_bufnrs = get_completion_buffers } }
+                get_bufnrs = get_completion_buffers } },
+            -- { name = "nvim_lsp" }, -- there is other completion for lsp
         },
         performance = {
             throttle = 0,
@@ -125,16 +125,16 @@ local mappings = {
     ["<S-CR>"] = function()
         if cmp.visible() then
             cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace }
-        elseif longest_common_completion() then
-            exit_completion()
-        else
+        elseif cmp.complete() then
             register_oneshots()
         end
     end,
     ["<C-CR>"] = function()
         if cmp.visible() then
             cmp.confirm { select = true, behavior = cmp.ConfirmBehavior.Insert }
-        elseif cmp.complete() then
+        elseif longest_common_completion() then
+            exit_completion()
+        else
             register_oneshots()
         end
     end
@@ -169,7 +169,7 @@ cmp.setup.global { -- = cmp.setup
     },
     sources = {
         { name = "nvim_lsp", group_index = 1 },
-        { name = "luasnip",  group_index = 1 },
+        { name = "luasnip",  group_index = 2 },
         { name = "buffer", group_index = 2, option = {
             indexing_interval = 100,        -- default 100 ms
             indexing_batch_size = 500,      -- default 1000 lines
