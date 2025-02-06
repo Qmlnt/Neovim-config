@@ -7,6 +7,7 @@ vim.diagnostic.config {
         source = "if_many",
         severity = { min = vim.diagnostic.severity.INFO },
     },
+    -- virtual_lines = true,
     severity_sort = true,
     update_in_insert = false,
     signs = { text = { "⤬", "!", "󰙎", "󱠃" } }, -- E, W, I, H

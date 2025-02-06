@@ -6,15 +6,20 @@ Lmap("uL", "<Cmd>LspInfo<CR>")
 Lmap("uc", "<Cmd>CmpStatus<CR>")
 Lmap("un", "Netrw", vim.cmd.Ex)
 -- Toggle stuff
-local function toggle(opt, a, b) --TODO
-    return function() if vim.o[opt] == a then vim.o[opt] = b else vim.o[opt] = a end end
+local function toggle(o, a, b, p)
+    return function()
+        if vim.o[o] == a then vim.o[o] = b else vim.o[o] = a end
+        if p then vim.cmd("set "..o.."?") end
+    end
 end
 Lmap("tn", "Number",       "<Cmd>set number!<CR>")
+Lmap("tl", "Cursorline",   "<Cmd>set cursorline!<CR>")
 Lmap("tr", "Relative num", "<Cmd>set relativenumber!<CR>")
-Lmap("tw", "Wrap",         "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
-Lmap("ts", "Statusline",   function() vim.o.ls = vim.o.ls == 0 and 3 or 0 end)
-Lmap("t:", "Cmd",          function() vim.o.ch = vim.o.ch == 0 and 1 or 0 end)
-Lmap("tc", "Column",       function() vim.o.cc = vim.o.cc == "" and "80,100" or "" end)
+-- Lmap("tw", "Wrap",         "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
+Lmap("tw", "Wrap",         toggle("wrap", true, false, 1))
+Lmap("ts", "Statusline",   toggle("ls", 0, 3))
+Lmap("t:", "Cmd",          toggle("ch", 0, 1))
+Lmap("tc", "Column",       toggle("cc", "80,100", ""))
 -- Clipboard stuff
 Lmap("p", "x", "Void paste",      [["_dP]])
 Lmap("p", "Clipboard paste",      [["+p]])
