@@ -22,6 +22,9 @@ o.shortmess          = "atTIcCF"       -- oO?
 o.wildmode           = "longest:full,full" -- cmd completion
 o.completeopt        = "menu,menuone,longest" -- omnifunc completion
 o.mouse              = "a"
+o.spell = false
+o.spelllang = "en_us,uk"
+o.spelloptions = "camel"
 --o.clipboard = "unnamed"plus?
 o.iskeyword:append "-" -- is part of the word
 o.formatoptions:append "n" -- indents for numbered lists

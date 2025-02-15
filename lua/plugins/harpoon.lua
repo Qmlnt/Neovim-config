@@ -17,7 +17,7 @@ return {
         Lmap("A", function() harpoon:list():prepend() end)
         Lmap("m", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
         Lmap("M", function() harpoon:list():clear() end)
-        Make_pair("m", "harpoon", function() harpoon:list():next() end, function() harpoon:list():prev() end)
+        MakePair("m", "harpoon", function() harpoon:list():next() end, function() harpoon:list():prev() end)
 
         local map = vim.keymap.set
         map("n", "<C-p>", function() harpoon:list():prev() end)

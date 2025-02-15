@@ -48,7 +48,7 @@ local treesitter_config = {
 treesitter_config.textobjects = {
     select = {
         enable = true,
-        lookahead = true, -- look for an object futher in the file
+        lookahead = true, -- look for an object further in the file
         include_surrounding_whitespace = false, -- disabled for Python
         keymaps = { -- i - invocation, o - object, n - note, a - argument
             ["ai"] = "@call.outer", ["ic"] = "@conditional.inner",
@@ -95,28 +95,28 @@ treesitter_config.textobjects = {
         goto_previous = {},
         goto_next_start = {
             ["]i"] = "@call.outer", ["]c"] = "@conditional.outer",
-            ["]l"] = "@loop.outer",  ["]s"] = "@assignment.inner",
+            ["]l"] = "@loop.outer",  -- ["]s"] = "@assignment.inner",
             ["]k"] = "@block.outer",  ["]a"] = "@parameter.outer",
             ["]o"] = "@class.outer",   ["]f"] = "@function.outer",
             ["]r"] = "@return.outer",   ["]n"] = "@comment.outer",
         },
         goto_next_end = {
             ["]I"] = "@call.outer", ["]C"] = "@conditional.outer",
-            ["]L"] = "@loop.outer",  ["]S"] = "@assignment.inner",
+            ["]L"] = "@loop.outer",  -- ["]S"] = "@assignment.inner",
             ["]K"] = "@block.outer",  ["]A"] = "@parameter.outer",
             ["]O"] = "@class.outer",   ["]F"] = "@function.outer",
             ["]R"] = "@return.outer",   ["]N"] = "@comment.outer",
         },
         goto_previous_start = {
             ["[i"] = "@call.outer", ["[c"] = "@conditional.outer",
-            ["[l"] = "@loop.outer",  ["[s"] = "@assignment.inner",
+            ["[l"] = "@loop.outer",  -- ["[s"] = "@assignment.inner",
             ["[k"] = "@block.outer",  ["[a"] = "@parameter.outer",
             ["[o"] = "@class.outer",   ["[f"] = "@function.outer",
             ["[r"] = "@return.outer",   ["[n"] = "@comment.outer",
         },
         goto_previous_end = {
             ["[I"] = "@call.outer", ["[C"] = "@conditional.outer",
-            ["[L"] = "@loop.outer",  ["[S"] = "@assignment.inner",
+            ["[L"] = "@loop.outer",  -- ["[S"] = "@assignment.inner",
             ["[K"] = "@block.outer",  ["[A"] = "@parameter.outer",
             ["[O"] = "@class.outer",   ["[F"] = "@function.outer",
             ["[R"] = "@return.outer",   ["[N"] = "@comment.outer",

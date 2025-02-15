@@ -60,4 +60,4 @@ Lmap("hch", "Base->HEAD",       W(gs.change_base) "@")
 Lmap("hcH", "Base->HEAD all",   W(gs.change_base, "@", true))
 -- Other
 vim.keymap.set({"x", "o"}, "ih", gs.select_hunk, { desc = "Select hunk" })
-Make_pair("h", "hunk", gs.next_hunk, gs.prev_hunk)
+MakePair("h", "hunk", gs.next_hunk, gs.prev_hunk)

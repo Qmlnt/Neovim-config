@@ -49,7 +49,7 @@ end
 ---@param desc string
 ---@param next_func function
 ---@param prev_func function
-function Make_pair(char, desc, next_func, prev_func)
+function MakePair(char, desc, next_func, prev_func)
     local function check_treesitter(func)
         local ts_repeat = package.loaded["nvim-treesitter.textobjects.repeatable_move"]
         if not ts_repeat then return func() end

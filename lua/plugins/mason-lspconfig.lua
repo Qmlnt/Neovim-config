@@ -48,8 +48,23 @@ M.opts.handlers.tinymist = function()
     package.loaded.lspconfig.tinymist.setup {
         settings = {
             formatterMode = "typstyle", -- or typstfmt
-            exportPdf = "onSave",
+            -- exportPdf = "onDocumentHasTitle", -- default: never
             semanticTokens = "enable"
+        },
+        single_file_support = true,
+        root_dir = function(_, bufnr)
+            return vim.fs.root(bufnr, { ".git" }) or vim.fn.expand "%:p:h"
+        end,
+    }
+end
+
+M.opts.handlers.yamlls = function()
+    package.loaded.lspconfig.yamlls.setup {
+        settings = {
+            yaml = {
+                format = { enable = true },
+                schemaStore = { enable = true },
+            }
         }
     }
 end

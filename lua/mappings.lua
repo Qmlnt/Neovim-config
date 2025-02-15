@@ -13,11 +13,12 @@ local function toggle(o, a, b, p)
     end
 end
 Lmap("tn", "Number",       "<Cmd>set number!<CR>")
+Lmap("ts", "Spellcheck",   "<Cmd>set spell!<CR>")
 Lmap("tl", "Cursorline",   "<Cmd>set cursorline!<CR>")
 Lmap("tr", "Relative num", "<Cmd>set relativenumber!<CR>")
 -- Lmap("tw", "Wrap",         "<Cmd>set wrap!<CR><Cmd>set wrap?<CR>")
 Lmap("tw", "Wrap",         toggle("wrap", true, false, 1))
-Lmap("ts", "Statusline",   toggle("ls", 0, 3))
+Lmap("tb", "Statusline",   toggle("ls", 0, 3))
 Lmap("t:", "Cmd",          toggle("ch", 0, 1))
 Lmap("tc", "Column",       toggle("cc", "80,100", ""))
 -- Clipboard stuff
@@ -125,11 +126,12 @@ local cmd = W(vim.cmd)
 local function try(func, fallback)
     return function() return pcall(vim.cmd, func) or vim.cmd(fallback) end
 end
-Make_pair("b", "buffer",     cmd "bnext", cmd "bprev")
-Make_pair("w", "window",     cmd "wincmd w", cmd "wincmd W")
-Make_pair("Q", "loclist",    try("lnext", "lfirst"), try("lprev", "llast"))
-Make_pair("q", "quickfix",   try("cnext", "cfirst"), try("cprev", "clast"))
-Make_pair("d", "diagnostic", diag.goto_next, diag.goto_prev)
+MakePair("s", "misspelled word", cmd "norm!]s", cmd "norm![s")
+MakePair("b", "buffer",     cmd "bnext", cmd "bprev")
+MakePair("w", "window",     cmd "wincmd w", cmd "wincmd W")
+MakePair("Q", "loclist",    try("lnext", "lfirst"), try("lprev", "llast"))
+MakePair("q", "quickfix",   try("cnext", "cfirst"), try("cprev", "clast"))
+MakePair("d", "diagnostic", diag.goto_next, diag.goto_prev)
 
 
 local map = vim.keymap.set
