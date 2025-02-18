@@ -5,13 +5,13 @@ vim.diagnostic.config {
     virtual_text = {
         spacing = 4,
         source = "if_many",
-        severity = { min = vim.diagnostic.severity.INFO },
+        severity = { min = vim.diagnostic.severity.WARN },
     },
     -- virtual_lines = true,
     severity_sort = true,
     update_in_insert = false,
     signs = { text = { "⤬", "!", "󰙎", "󱠃" } }, -- E, W, I, H
-    float = { border = vim.g.border_bleed },
+    float = { source = "if_many",  border = vim.g.border_bleed },
 }
 
 lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {

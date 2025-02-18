@@ -63,7 +63,7 @@ local function get_completion_buffers()
         local buf_lines = vim.api.nvim_buf_line_count(buf_id)
         local buf_bytes = vim.api.nvim_buf_get_offset(buf_id, buf_lines)
 
-        if buf_bytes < 98304 then -- 96 KiB
+        if buf_bytes < 196608 then -- 192 KiB
             table.insert(buffers, buf_id)
         end
     end

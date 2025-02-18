@@ -1,12 +1,11 @@
-return {}
--- return {
+return {} -- can't really make this to work normally
 --     'Wansmer/langmapper.nvim',
 --     lazy = false,
 --     priority = 1,
 --     opts = {},
 --     init = function()
---         local ru = [['йцукенгшщзхїґфівапролджєячсмитьбю.]]
---         local RU = [[ʼЙЦУКЕНГШЩЗХЇҐФІВАПРОЛДЖЄЯЧСМИТЬБЮ,]]
+--         local ua = [['йцукенгшщзхїґфівапролджєячсмитьбю.]]
+--         local UA = [[ʼЙЦУКЕНГШЩЗХЇҐФІВАПРОЛДЖЄЯЧСМИТЬБЮ,]]
 --         local en = [[`qwfpgjluy;[]\arstdhneio'zxcvbkm,./]]
 --         local EN = [[~QWFPGJLUY:{}|ARSTDHNEIO"ZXCVBKM<>?]]
 --
@@ -16,8 +15,8 @@ return {}
 --         end
 --
 --         vim.opt.langmap = vim.fn.join({
---             escape(RU) .. ';' .. escape(EN),
---             escape(ru) .. ';' .. escape(en),
+--             escape(UA) .. ';' .. escape(EN),
+--             escape(ua) .. ';' .. escape(en),
 --         }, ',')
 --     end
 -- }
